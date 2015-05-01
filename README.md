@@ -2,7 +2,8 @@
 Templates for VM Scale Sets. 
 
 Note: VM Scale Sets are announced but not yet in preview:
-- They will only work with whitelisted Azure subscriptions.
+- These templates will only work with whitelisted Azure subscriptions. 
+  If your subscription hasn't been whitelisted for using VM Scale Sets, the resource type: Microsoft.Compute/virtualMachineScaleSets won't be recognized and the deployment will fail.
 - API is not yet public and subject to breaking change.
 
 ### vmss-vnet-storage-ubuntu.json
