@@ -36,7 +36,7 @@
         }
    },
    "variables": {
-        "vmSourceImageName": "b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-15.04-Snappy-core-amd64-edge-20150423-39-en-us-30GB",
+        "vmSourceImageName": "b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_10-amd64-server-20150416-en-us-30GB",
         "addressPrefix": "10.0.0.0/16",
         "subnetName": "Subnet",
         "subnetPrefix": "10.0.0.0/24",
