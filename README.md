@@ -27,11 +27,13 @@ Examples:
  
 ### Using an integrated template to create storage, VNET, Scale Set
  
-Switch-AzureMode -Name AzureResourceManager
-new-azureresourcegroup -name myrg -location 'West US'
-new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateFile C:\ARM_Templates\VMSS\vmss-vnet-storage-win.json
-Or
-new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-vnet-storage-ubuntu.json
+Switch-AzureMode -Name AzureResourceManager<br/>
+new-azureresourcegroup -name myrg -location 'West US'<br/>
+new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-vnet-storage-ubuntu.json<br/>
+Or refer to a file..<br/>
+new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateFile C:\ARM_Templates\VMSS\vmss-vnet-storage-win.json<br/>
+Or<br/>
+
  
 ### Get existing Scale Set details
  
@@ -42,14 +44,15 @@ Get-AzureResource -name myvmss -ResourceGroupName myrg -ResourceType Microsoft.C
 new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-scale-out-win.json
 
 ### Scale an existing VMSS in
+
 new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-scale-in.json
  
 ### Remove a VM Scale Set
  
-Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2014-12-01-preview -ResourceType Microsoft.Compute/virtualMachineScaleSets
-Or
-Remove the Resource Group:
-Remove-AzureResourceGroup -Name myrg
+Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2014-12-01-preview -ResourceType Microsoft.Compute/virtualMachineScaleSets<br/>
+Or<br/>
+Remove the Resource Group:<br/>
+Remove-AzureResourceGroup -Name myrg<br/>
 
 
 ## Templates 
