@@ -2,19 +2,19 @@
 Templates for VM Scale Sets. 
 
 Note: VM Scale Sets are announced but not yet in preview:
-- These templates will only work with whitelisted Azure subscriptions. 
-  If your subscription hasn't been whitelisted for using VM Scale Sets, the resource type: Microsoft.Compute/virtualMachineScaleSets won't be recognized and the deployment will fail.
-- API is not yet public and subject to breaking change.
+- These templates will only work with whitelisted Azure subscriptions.<br/> 
+  If your subscription hasn't been whitelisted for using VM Scale Sets, the resource type: <i>Microsoft.Compute/virtualMachineScaleSets</i> won't be recognized and the deployment will fail.
+- API is not yet public and is subject to breaking change.
 
 ### Limitations
 
 This is pre-preview, with the following major limitations:
 
--	No load balancing
--	Single storage accounts for custom images
--	No command-line support for getting public IP addresses
--	No managed storage
--	Breaking changes will occur without notice
+-	No load balancing.
+-	Single storage accounts for custom images.
+-	No command-line support for getting public IP addresses.
+-	No managed storage.
+-	Breaking changes will occur without notice.
 -	etc..
 
 ### Creating a VM Scale Set using PowerShell
