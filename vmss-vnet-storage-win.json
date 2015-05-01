@@ -36,6 +36,7 @@
         }
    },
    "variables": {
+        "vmSourceImageName": "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201504.01-en.us-127GB.vhd",
         "addressPrefix": "10.0.0.0/16",
         "subnetName": "Subnet",
         "subnetPrefix": "10.0.0.0/24",
@@ -100,7 +101,7 @@
 	  	"[concat('https://', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss2')]"
           ],
           "sourceImage": {
-            "id": "[concat('/', subscription().subscriptionId,'/services/images/', 'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-201502.01-en.us-127GB.vhd')]"
+            "id": "[concat('/', subscription().subscriptionId,'/services/images/', variables('vmSourceImageName'))]"
           }
         },
         "osProfile": {

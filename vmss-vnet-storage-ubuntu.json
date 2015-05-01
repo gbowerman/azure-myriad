@@ -11,7 +11,7 @@
                 "description": "Number of VM instances"
             }
         },
-      	"storageAccountName" : {
+      	"newStorageAccountName" : {
            "type": "string"
         },
         "location": {
@@ -28,7 +28,7 @@
                 "description": "Location of resources"
             }
         },
-        "adminUsername": {
+	    "adminUsername": {
             "type": "string"
         },
         "adminPassword": {
@@ -36,7 +36,7 @@
         }
    },
    "variables": {
-        "vmSourceImageName": "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201504.01-en.us-127GB.vhd",
+        "vmSourceImageName": "b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-15.04-Snappy-core-amd64-edge-20150423-39-en-us-30GB",
         "addressPrefix": "10.0.0.0/16",
         "subnetName": "Subnet",
         "subnetPrefix": "10.0.0.0/24",
@@ -44,6 +44,36 @@
         "storageAccountType": "Standard_LRS"
    },
    "resources": [
+     {
+        "type": "Microsoft.Storage/storageAccounts",
+        "name": "[parameters('newStorageAccountName')]",
+        "apiVersion": "2015-05-01-preview",
+        "location": "[parameters('location')]",
+        "properties": {
+            "accountType": "[variables('storageAccountType')]"
+        }
+    },
+    {
+        "apiVersion": "2015-05-01-preview",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[variables('virtualNetworkName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+            "addressSpace": {
+                "addressPrefixes": [
+                    "[variables('addressPrefix')]"
+                ]
+            },
+            "subnets": [
+                {
+                    "name": "[variables('subnetName')]",
+                    "properties": {
+                        "addressPrefix": "[variables('subnetPrefix')]"
+                    }
+                }
+            ]
+          }
+    },
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
       "apiVersion": "2014-12-01-preview",
@@ -52,6 +82,10 @@
       "tags": {
         "vmsstag1": "Myriad"
        },
+       "dependsOn": [
+           "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]",
+           "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+       ],
       "Properties": {
          "scaleSettings": {
            "targetInstanceCount": "[parameters('instanceCount')]"
@@ -63,8 +97,8 @@
         },
         "storageProfile": {
           "destinationVhdsContainers": [
-             "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/vmss1')]",
-	  	"[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/vmss2')]"
+             "[concat('https://', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss1')]",
+	  	"[concat('https://', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss2')]"
           ],
           "sourceImage": {
             "id": "[concat('/', subscription().subscriptionId,'/services/images/', variables('vmSourceImageName'))]"
