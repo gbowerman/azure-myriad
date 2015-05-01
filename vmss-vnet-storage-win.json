@@ -1,0 +1,132 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+   "parameters" : {
+       "vmSSName": {
+            "type": "string"
+        },
+        "instanceCount" : {
+            "type": "int",
+            "metadata": {
+                "description": "Number of VM instances"
+            }
+        },
+      	"newStorageAccountName" : {
+           "type": "string"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "West US",
+            "allowedValues": [
+                "West US",
+                "East US",
+                "West Europe",
+                "East Asia",
+                "Southeast Asia"
+            ],
+            "metadata": {
+                "description": "Location of resources"
+            }
+        },
+	    "adminUsername": {
+            "type": "string"
+        },
+        "adminPassword": {
+           "type": "securestring"
+        }
+   },
+   "variables": {
+        "addressPrefix": "10.0.0.0/16",
+        "subnetName": "Subnet",
+        "subnetPrefix": "10.0.0.0/24",
+        "virtualNetworkName": "MyVNET",
+        "storageAccountType": "Standard_LRS"
+   },
+   "resources": [
+     {
+        "type": "Microsoft.Storage/storageAccounts",
+        "name": "[parameters('newStorageAccountName')]",
+        "apiVersion": "2015-05-01-preview",
+        "location": "[parameters('location')]",
+        "properties": {
+            "accountType": "[variables('storageAccountType')]"
+        }
+    },
+    {
+        "apiVersion": "2015-05-01-preview",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[variables('virtualNetworkName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+            "addressSpace": {
+                "addressPrefixes": [
+                    "[variables('addressPrefix')]"
+                ]
+            },
+            "subnets": [
+                {
+                    "name": "[variables('subnetName')]",
+                    "properties": {
+                        "addressPrefix": "[variables('subnetPrefix')]"
+                    }
+                }
+            ]
+          }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "apiVersion": "2014-12-01-preview",
+      "name": "[parameters('vmSSName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "vmsstag1": "Myriad"
+       },
+       "dependsOn": [
+           "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]",
+           "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+       ],
+      "Properties": {
+         "scaleSettings": {
+           "targetInstanceCount": "[parameters('instanceCount')]"
+        },
+        "availabilityProfile" : {},
+        "virtualMachineProfile": {
+        "hardwareProfile": {
+           "vmSize": "Standard_A0"
+        },
+        "storageProfile": {
+          "destinationVhdsContainers": [
+             "[concat('https://', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss1')]",
+	  	"[concat('https://', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss2')]"
+          ],
+          "sourceImage": {
+            "id": "[concat('/', subscription().subscriptionId,'/services/images/', 'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-201502.01-en.us-127GB.vhd')]"
+          }
+        },
+        "osProfile": {
+          "computerNamePrefix": "[parameters('vmSSName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+           {
+             "namePrefix": "[parameters('vmSSName')]",
+             "properties": {
+               "ipConfigurations": [
+                {
+	          "publicIPAddressNamePrefix": "[parameters('vmSSName')]",
+                  "subnet": {
+                    "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+  }
+  ]
+}
