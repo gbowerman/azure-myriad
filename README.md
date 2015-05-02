@@ -1,5 +1,11 @@
 # azure-myriad
-Templates for VM Scale Sets. 
+Templates for Azure Virtual Machine Scale Sets. 
+
+VM Scale Sets allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
+-	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
+-	Performance - deploying hundreds of VMs results in a single call to the fabric, allowing inherent performance optimizations.
+-	Customization - built on Azure IaaS, Scale Sets support all Windows and Linux VMs including custom images and extensions.
+-	Ease of management - building on the simple declarative modelling introduced with Azure Resource Manager, Scale Sets are the simplest way to manage sets of identical VMs. Focus on compute at scale without managing scaling of storage accounts and NICs.
 
 Note: VM Scale Sets are announced but not yet in preview:
 - These templates will only work with whitelisted Azure subscriptions.<br/> 
@@ -14,6 +20,7 @@ This is pre-preview, with the following major limitations:
 -	Single storage accounts for custom images.
 -	No command-line support for getting public IP addresses.
 -	No managed storage.
+-	No image based patching support.
 -	Breaking changes will occur without notice.
 -	etc..
 
