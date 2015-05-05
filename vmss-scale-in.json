@@ -35,7 +35,7 @@
       "Properties": {
          "scaleSettings": {
            "targetInstanceCount": "[parameters('instanceCount')]"
-         },
+         }
       }
    }
    ]
