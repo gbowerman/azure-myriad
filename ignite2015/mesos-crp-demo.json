@@ -11,12 +11,6 @@
         "Description": "Number of slaves"
       }
     },
-    "sshKeyData": {
-      "type": "string",
-      "metadata": {
-        "Description": "Public key for SSH authentication"
-      }
-    },
     "region": {
         "type": "string",
         "defaultValue": "East Asia",
@@ -24,6 +18,7 @@
     }
   },
   "variables": {
+    "sshKeyData": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAkbj0vf3KyxvjS7hTfKaVjn3dslomTaWTtrX3UBhUXzMPtwtYeyAeH1mAvVg3RdnNLGLVA/SBFNG4bLyYfsG8YMJCNOpIWLWQ/WfKmdh8Z8z7dj+c0ph85YyqHhH0aRDECb2oSglcjS6R/KHSUfyuCqA8JRvG8MsKRAnM7sbz2La/FpR5DF7wXnxr66lLPfHFEZqx3CjV5VMwKG8LDZ39UZPVBZIuEpkGBOBvEfTfWympzQT3gLN2EnMcfS+9I0+QUsis4pNEtXdROXNbk32VhmHr/qaG1MTy1Ewt4UOjZHGFtzIt1FwtdTpDptIleEy1Jqt4eqyDH2POFR/nz6KZGw== rsa-key-20141018",
     "adminUsername": "core",
     "authorizedSubnet": "Internet",
     "vmStorageAccountContainerName": "vhd",
@@ -182,7 +177,7 @@
               "publicKeys": [
                 {
                   "path": "[variables('sshKeyPath')]",
-                  "keyData": "[parameters('sshKeyData')]"
+                  "keyData": "[variables('sshKeyData')]"
                 }
               ]
             }
@@ -264,7 +259,7 @@
               "publicKeys": [
                 {
                   "path": "[variables('sshKeyPath')]",
-                  "keyData": "[parameters('sshKeyData')]"
+                  "keyData": "[variables('sshKeyData')]"
                 }
               ]
             }

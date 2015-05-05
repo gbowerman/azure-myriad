@@ -68,8 +68,9 @@ Remove-AzureResourceGroup -Name myrg<br/>
 
 ### mesos-crp-demo.json
 
-Creates a VNET, storage account, and scale set of identical Ubuntu virtual machines.
-InstanceCount parameter describes the number of VMs.
+Create a mesos master-slave configuration based on CoreOS VMs. Specify the number of Slave VMs.
+
+Parameters: # Slave VMs, Region.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2fmaster%2Fignite2015%2Fmesos-crp-demo.jso" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -77,8 +78,9 @@ InstanceCount parameter describes the number of VMs.
 
 ### mesos-vmss-demo.json
 
-Create an Ubuntu VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
-InstanceCount parameter describes the number of VMs.
+Create a mesos master-slave configuration based on CoreOS VMs. The slave VMs are part of a VM Scale Set to make it easier to scale up and down.
+
+Parameters: # Slave VMs, Region.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fignite2015%2fmesos-vmss-demo.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
