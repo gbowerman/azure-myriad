@@ -64,7 +64,7 @@ Remove-AzureResourceGroup -Name myrg<br/>
 
 ## Templates 
 
-### vmss-vnet-storage-ubuntu.json
+### vmss-ubuntu-vnet-storage.json
 
 Creates a VNET, storage account, and scale set of identical Ubuntu virtual machines.
 InstanceCount parameter describes the number of VMs.
@@ -73,7 +73,7 @@ InstanceCount parameter describes the number of VMs.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### vmss-scale-out-ubuntu.json
+### vmss-ubuntu-scale-out.json
 
 Create an Ubuntu VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
 InstanceCount parameter describes the number of VMs.
@@ -82,7 +82,7 @@ InstanceCount parameter describes the number of VMs.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### vmss-vnet-storage-win.json
+### vmss-win-vnet-storage.json
 
 Creates a VNET, storage account, and scale set of identical Windows virtual machines.
 InstanceCount parameter describes the number of VMs.
@@ -91,7 +91,7 @@ InstanceCount parameter describes the number of VMs.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### vmss-scale-out-win.json
+### vmss-win-scale-out.json
 
 Create a Windows VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
 InstanceCount parameter describes the number of VMs.
@@ -100,7 +100,7 @@ InstanceCount parameter describes the number of VMs.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### vmss-vnet-storage-coreos.json
+### vmss-coreos-vnet-storage.json
 
 Creates a VNET, storage account, and scale set of identical CoreOS virtual machines.
 InstanceCount parameter describes the number of VMs.
@@ -109,7 +109,7 @@ InstanceCount parameter describes the number of VMs.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### vmss-scale-out-coreos.json
+### vmss-coreos-scale-out.json
 
 Create a CoreOS VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
 InstanceCount parameter describes the number of VMs.
