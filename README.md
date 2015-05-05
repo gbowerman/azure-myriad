@@ -69,7 +69,7 @@ Remove-AzureResourceGroup -Name myrg<br/>
 Creates a VNET, storage account, and scale set of identical Ubuntu virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fvmss-vnet-storage-ubuntu.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-vnet-storage-ubuntu.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -78,7 +78,7 @@ InstanceCount parameter describes the number of VMs.
 Create an Ubuntu VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fvmss-scale-out-ubuntu.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-scale-out-ubuntu.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -87,7 +87,7 @@ InstanceCount parameter describes the number of VMs.
 Creates a VNET, storage account, and scale set of identical Windows virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fvmss-vnet-storage-win.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-vnet-storage-win.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -96,7 +96,7 @@ InstanceCount parameter describes the number of VMs.
 Create a Windows VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fvmss-scale-out-win.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-scale-out-win.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -105,7 +105,7 @@ InstanceCount parameter describes the number of VMs.
 Creates a VNET, storage account, and scale set of identical CoreOS virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fvmss-vnet-storage-coreos.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-vnet-storage-coreos.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -114,7 +114,7 @@ InstanceCount parameter describes the number of VMs.
 Create a CoreOS VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fvmss-scale-out-coreos.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-scale-out-coreos.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -122,7 +122,7 @@ InstanceCount parameter describes the number of VMs.
 
 Create a simple mesos cluster with a single master, with a VM Scale Set of slaves.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fmesos-vmss-simple-cluster.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fmesos-vmss-simple-cluster.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -131,6 +131,6 @@ Create a simple mesos cluster with a single master, with a VM Scale Set of slave
 Reduce the number of VM instances in a Scale Set (scale-in). Platform independent.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fvmss-scale-in.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-scale-in.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
