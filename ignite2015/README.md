@@ -1,5 +1,7 @@
 # azure-myriad
-Templates for Azure Virtual Machine Scale Sets. 
+Ignite 2015 templates for Azure Virtual Machine Scale Sets. 
+
+These templates are for demonstration purposes and have hardcoded values like sshKeyData which will not work without modification.
 
 VM Scale Sets allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
 -	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
@@ -64,65 +66,21 @@ Remove-AzureResourceGroup -Name myrg<br/>
 
 ## Templates 
 
-### vmss-ubuntu-vnet-storage.json
+### mesos-crp-demo.json
 
 Creates a VNET, storage account, and scale set of identical Ubuntu virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-ubuntu-vnet-storage.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2fmaster%2Fignite2015%2Fmesos-crp-demo.jso" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### vmss-ubuntu-scale-out.json
+### mesos-vmss-demo.json
 
 Create an Ubuntu VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-ubuntu-scale-out.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-### vmss-win-vnet-storage.json
-
-Creates a VNET, storage account, and scale set of identical Windows virtual machines.
-InstanceCount parameter describes the number of VMs.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-win-vnet-storage.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-### vmss-win-scale-out.json
-
-Create a Windows VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
-InstanceCount parameter describes the number of VMs.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-win-scale-out.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-### vmss-coreos-vnet-storage.json
-
-Creates a VNET, storage account, and scale set of identical CoreOS virtual machines.
-InstanceCount parameter describes the number of VMs.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-coreos-vnet-storage.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-### vmss-coreos-scale-out.json
-
-Create a CoreOS VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
-InstanceCount parameter describes the number of VMs.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-coreos-scale-out.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-### mesos-vmss-simple-cluster.json
-
-Create a simple mesos cluster with a single master, with a VM Scale Set of slaves.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fmesos-vmss-simple-cluster.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fignite2015%2fmesos-vmss-demo.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -131,6 +89,6 @@ Create a simple mesos cluster with a single master, with a VM Scale Set of slave
 Reduce the number of VM instances in a Scale Set (scale-in). Platform independent.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-scale-in.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriadmaster%2F%2fignite2015%2Fvmss-scale-in.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>

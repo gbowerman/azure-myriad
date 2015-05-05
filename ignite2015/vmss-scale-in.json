@@ -1,0 +1,42 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+   "parameters" : {
+       "vmSSName": {
+            "type": "string"
+        },
+        "instanceCount" : {
+            "type": "int",
+            "metadata": {
+                "description": "Number of VM instances"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "East Asia",
+            "allowedValues": [
+                "West US",
+                "East US",
+                "West Europe",
+                "East Asia",
+                "Southeast Asia"
+            ],
+            "metadata": {
+                "description": "Location of resources"
+            }
+        }
+   },
+   "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "apiVersion": "2014-12-01-preview",
+      "name": "[parameters('vmSSName')]",
+      "location": "[parameters('location')]",
+      "Properties": {
+         "scaleSettings": {
+           "targetInstanceCount": "[parameters('instanceCount')]"
+         }
+      }
+   }
+   ]
+}
