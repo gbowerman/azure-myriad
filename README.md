@@ -118,6 +118,14 @@ InstanceCount parameter describes the number of VMs.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+### mesos-vmss-simple-cluster.json
+
+Create a simple mesos cluster with a single master, with a VM Scale Set of slaves.
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2F%2Fmesos-vmss-simple-cluster.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
 ### vmss-scale-in.json
 
 Reduce the number of VM instances in a Scale Set (scale-in). Platform independent.
