@@ -72,7 +72,7 @@ Create a mesos master-slave configuration based on CoreOS VMs. Specify the numbe
 
 Parameters: # Slave VMs, Region.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2fmaster%2Fignite2015%2Fmesos-crp-demo.jso" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2fmaster%2Fignite2015%2Fmesos-crp-demo.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
