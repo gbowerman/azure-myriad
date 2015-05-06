@@ -91,6 +91,6 @@ Parameters: # Slave VMs, Region.
 Reduce the number of VM instances in a Scale Set (scale-in). Platform independent.
 InstanceCount parameter describes the number of VMs.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriadmaster%2F%2fignite2015%2Fvmss-scale-in.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fignite2015%2Fvmss-scale-in.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
