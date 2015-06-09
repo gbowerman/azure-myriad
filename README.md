@@ -9,8 +9,8 @@ VM Scale Sets allow you to deploy and manage a group of identical virtual machin
 
 Note: VM Scale Sets are announced but not yet in preview:
 - These templates will only work with whitelisted Azure subscriptions.<br/> 
-  If your subscription hasn't been whitelisted for using VM Scale Sets, the resource type: <i>Microsoft.Compute/virtualMachineScaleSets</i> won't be recognized and the deployment will fail.
-- API is not yet public and is subject to breaking change.
+  We've not started whitelisting subscriptions externally yet, so trying to deploy these templates won't work yet. The examples templates are to provide an early view of the work. 
+- API is not yet public and there will be breaking changes, for example to how storage and network are declared and scaled.
 
 ### Limitations
 
