@@ -6,7 +6,7 @@
             "type": "string"
         },
         "instanceCount" : {
-            "type": "int",
+            "type": "string",
             "metadata": {
                 "description": "Number of VM instances"
             }
