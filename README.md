@@ -8,9 +8,8 @@ VM Scale Sets allow you to deploy and manage a group of identical virtual machin
 -	Ease of management - building on the simple declarative modelling introduced with Azure Resource Manager, Scale Sets are the simplest way to manage sets of identical VMs. Focus on compute at scale without managing scaling of storage accounts and NICs.
 
 Note: VM Scale Sets are announced but not yet in preview:
-- These templates will only work with whitelisted Azure subscriptions.<br/> 
-  We've not started whitelisting subscriptions externally yet, so trying to deploy these templates won't work yet. The examples templates are to provide an early view of the work. 
-- API is not yet public and there will be breaking changes, for example to how storage and network are declared and scaled.
+- These templates won't work until we start whitelisting Azure subscriptions. We've blocked all access while the dev team are making breaking changes through July. The example templates below are to provide an early view of the work. 
+- Full API is not yet public and there will be breaking changes, for example to how storage and network are declared and scaled.
 
 ### Limitations
 
