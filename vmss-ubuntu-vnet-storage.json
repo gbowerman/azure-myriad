@@ -36,11 +36,13 @@
         }
    },
    "variables": {
-        "vmSourceImageName": "b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_10-amd64-server-20150416-en-us-30GB",
+        "imagePublisher": "Canonical",
+        "imageOffer": "UbuntuServer",
+        "ubuntuOSVersion": "15.04",
         "addressPrefix": "10.0.0.0/16",
-        "subnetName": "Subnet",
+        "subnetName": "subnet",
         "subnetPrefix": "10.0.0.0/24",
-        "virtualNetworkName": "MyVNET",
+        "virtualNetworkName": "vmssvnet",
         "storageAccountType": "Standard_LRS"
    },
    "resources": [
@@ -86,48 +88,59 @@
            "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]",
            "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
        ],
+       "sku": {
+         "name": "Standard_A2",
+         "tier": "Standard",
+         "capacity": 2
+      },
       "Properties": {
-         "scaleSettings": {
-           "targetInstanceCount": "[parameters('instanceCount')]"
+         "upgradePolicy": {
+         "mode": "Automatic"
         },
-        "availabilityProfile" : {},
         "virtualMachineProfile": {
-        "hardwareProfile": {
-           "vmSize": "Standard_A0"
-        },
-        "storageProfile": {
-          "destinationVhdsContainers": [
-             "[concat('https://', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss1')]",
+          "storageProfile": {
+            "osDisk": {
+              "vhdContainers": [
+                "[concat('https://', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss1')]",
 	  	"[concat('https://', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss2')]"
-          ],
-          "sourceImage": {
-            "id": "[concat('/', subscription().subscriptionId,'/services/images/', variables('vmSourceImageName'))]"
-          }
-        },
-        "osProfile": {
-          "computerNamePrefix": "[parameters('vmSSName')]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-           {
-             "namePrefix": "[parameters('vmSSName')]",
-             "properties": {
-               "ipConfigurations": [
-                {
-	          "publicIPAddressNamePrefix": "[parameters('vmSSName')]",
-                  "subnet": {
-                    "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
-                  }
-                }
-              ]
+              ],
+              "name": "vmssosdisk",
+              "caching": "ReadOnly",
+              "createOption": "FromImage"
+            },
+            "imageReference": {
+              "publisher": "[variables('imagePublisher')]",
+              "offer": "[variables('imageOffer')]",
+              "sku": "[variables('ubuntuOSVersion')]",
+              "version": "latest"
             }
-          }
-        ]
+          },
+          "osProfile": {
+            "computerNamePrefix": "[parameters('vmSSName')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+             {
+               "name": "[parameters('vmSSName')]",
+               "properties": {
+                 "ipConfigurations": [
+                  {
+	            "name": "[parameters('vmSSName')]",
+                    "properties": {
+                      "subnet": {
+                        "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
+                      }
+                    }
+                  }
+                 ]
+              }
+            }
+          ]
+        }
       }
     }
-  }
   }
   ]
 }
