@@ -1,7 +1,7 @@
 {
   "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
-   "parameters" : {
+  "parameters" : {
        "vmSSName": {
             "type": "string"
         },
@@ -28,7 +28,7 @@
                 "description": "Location of resources"
             }
         },
-	    "adminUsername": {
+	"adminUsername": {
             "type": "string"
         },
         "adminPassword": {
@@ -78,7 +78,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "2014-12-01-preview",
+      "apiVersion": "2015-05-01-preview",
       "name": "[parameters('vmSSName')]",
       "location": "[parameters('location')]",
       "tags": {
