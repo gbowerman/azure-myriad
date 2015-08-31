@@ -10,7 +10,7 @@ VM Scale Sets allow you to deploy and manage a group of identical virtual machin
 Note: VM Scale Sets are not yet in preview:
 - These templates won't work until we start whitelisting Azure subscriptions. We've blocked all access while the dev team are busy making breaking changes to support updates and additions to the API. The example templates below are to provide an early view of the work. 
 
-Preview update (8/31/15): Current plan is to start a private preview in October 2015, working with Azure VM Advisors.
+Preview update (8/31/15): Current plan is to start a private preview in October 2015, working with Azure VM Advisors. If you wish to participate in this preview, you can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
 
 ### Limitations
 
