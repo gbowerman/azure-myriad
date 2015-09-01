@@ -24,10 +24,12 @@
     }
   },
   "variables": {
+    "imagePublisher": "CoreOS",
+    "imageOffer": "CoreOS",
+    "imageSku": "Stable",
     "adminUsername": "core",
     "authorizedSubnet": "Internet",
     "vmStorageAccountContainerName": "vhd",
-    "vmSourceImageName": "2b171e93f07c4903bcad35bda10acf22__CoreOS-Beta-633.1.0",
     "subnet1Name": "Data",
     "uniqueName": "[resourceGroup().name]",
     "storageAccountName": "[concat(variables('uniqueName'), 'dcsan')]",
@@ -38,7 +40,6 @@
     "sourceImageName": "[concat('/', subscription().subscriptionId,'/services/images/',variables('vmSourceImageName'))]",
     "sshKeyPath": "[concat('/home/',variables('adminUsername'),'/.ssh/authorized_keys')]",
     "mesosQuorum": "1",
-    "numberOfMasters": 1,
     "subnet1Prefix": "10.0.0.0/24",
     "addressPrefix": "10.0.0.0/16",
     "vmSize": "Standard_A1"
@@ -79,7 +80,7 @@
 
 
     {
-      "apiVersion": "2014-12-01-preview",
+      "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[parameters('region')]",
@@ -120,22 +121,39 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "2014-12-01-preview",
+      "apiVersion": "2015-05-01-preview",
       "name": "slaveset",
       "location": "[parameters('region')]",
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
+       "sku": {
+         "name": "Standard_A2",
+         "tier": "[variables('vmSize')]",
+         "capacity": "[parameters('numberOfSlaves')]"
+      },
       "properties": {
-         "scaleSettings": {
-           "targetInstanceCount": "[parameters('numberOfSlaves')]"
+         "upgradePolicy": {
+         "mode": "Automatic"
         },
-        "availabilityProfile" : {},
-
         "virtualMachineProfile": {
-          "hardwareProfile": {
-            "vmSize": "[variables('vmSize')]"
+          "storageProfile": {
+            "osDisk": {
+              "vhdContainers": [
+                "[concat('https://', variables('StorageAccountName'), '.blob.core.windows.net/vmss1')]",
+	  	"[concat('https://', variables('StorageAccountName'), '.blob.core.windows.net/vmss2')]"
+              ],
+              "name": "vmssosdisk",
+              "caching": "ReadOnly",
+              "createOption": "FromImage"
+            },
+            "imageReference": {
+              "publisher": "[variables('imagePublisher')]",
+              "offer": "[variables('imageOffer')]",
+              "sku": "[variables('imageSku')]",
+              "version": "latest"
+            }
           },
           "osProfile": {
             "computerNamePrefix": "slave",
@@ -153,24 +171,19 @@
               }
             }
           },
-          "storageProfile": {
-          "sourceImage": {
-            "id": "[concat('/', subscription().subscriptionId,'/services/images/', variables('SourceImageName'))]"
-          },
-          "destinationVhdsContainers": [
-		"[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/')]"
-	   ]
-         },
         "networkProfile": {
-          "networkInterfaces": [
+          "networkInterfaceConfigurations": [
            {
-             "namePrefix": "slaveNodeNic",
+             "name": "slaveNodeNic",
              "properties": {
                "ipConfigurations": [
                 {
-                  "subnet": {
-                    "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnet1Name'))]"
-                  }
+                  "name": "nicipconfig",
+                  "properties": {
+                      "subnet": {
+                        "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnet1Name'))]"
+                      }
+                   }
                 }
               ]
             }
@@ -209,12 +222,8 @@
     {
       "apiVersion": "2014-12-01-preview",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat('master', copyindex())]",
+      "name": "mastervm",
       "location": "[parameters('region')]",
-      "copy": {
-        "name": "masterVmLoop",
-        "count": "[variables('numberOfMasters')]"
-      },
       "dependsOn": [
         "Microsoft.Network/networkInterfaces/masterNodeNic",
         "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
@@ -224,9 +233,9 @@
           "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
-          "computername": "[concat('master', copyIndex())]",
+          "computername": "mastervm",
           "adminUsername": "[variables('adminUsername')]",
-          "customData": "[base64(concat('#cloud-config\n\n', '{\"coreos\": {\"units\": [{\"command\": \"start\", \"content\": \"[Unit]\\nDescription=Mount /var/lib\\nBefore=dbus.service\\n[Mount]\\nWhat=/dev/sdb1\\nWhere=/var/lib\\nType=ext4\\n\", \"name\": \"var-lib.mount\"}, {\"command\": \"stop\", \"mask\": true, \"name\": \"systemd-resolved.service\"}, {\"command\": \"stop\", \"mask\": true, \"name\": \"etcd.service\"}, {\"command\": \"start\", \"content\": \"[Unit]\\nDescription=Write out dynamic config values\\n[Service]\\nType=oneshot\\nEnvironmentFile=/etc/environment\\n# Marathon depends on `hostname` resolution working\\nExecStart=/usr/bin/bash -c \\\"echo ${COREOS_PRIVATE_IPV4} $(hostname) ', reference('masterPublicIP').dnsSettings.fqdn,' > /etc/hosts\\\"\\n\", \"name\": \"config-writer.service\"}, {\"content\": \"[Unit]\\nDescription=Download the DCOS\\nAfter=network-online.target\\nWants=network-online.target\\nConditionPathExists=!/opt/mesosphere/\\n[Service]\\nType=oneshot\\nExecStartPre=/usr/bin/curl --retry 100 http://s3.amazonaws.com/downloads.mesosphere.io/dcos/EarlyAccess/bootstrap.tar.xz -o /tmp/bootstrap.tar.xz\\nExecStartPre=/usr/bin/mkdir -p /opt/mesosphere\\nExecStart=/usr/bin/tar -xf /tmp/bootstrap.tar.xz -C /opt/mesosphere\\n\", \"name\": \"dcos-download.service\"}, {\"command\": \"start\", \"content\": \"[Unit]\\nDescription=Prep the Pkgpanda working directories for this host.\\nRequires=dcos-download.service\\nAfter=dcos-download.service\\n[Service]\\nType=oneshot\\nEnvironmentFile=/opt/mesosphere/environment\\nExecStart=/opt/mesosphere/bin/pkgpanda setup\\n[Install]\\nWantedBy=multi-user.target\\n\", \"enable\": true, \"name\": \"dcos-setup.service\"}], \"update\": {\"reboot-strategy\": \"off\"}}, \"write_files\": [{\"content\": \"nameserver 168.63.129.16\", \"path\": \"/etc/resolv.conf\"}, {\"content\": \"http://s3.amazonaws.com/downloads.mesosphere.io/dcos/EarlyAccess\", \"owner\": \"root\", \"path\": \"/etc/mesosphere/setup-flags/repository-url\", \"permissions\": 420}, {\"path\": \"/etc/mesosphere/roles/master\"}, {\"content\": \"{}\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/pkginfo.json\"}, {\"content\": \"{\\n  \\\"zk\\\": \\\"zk://127.0.0.1:2181/mesos\\\",\\n  \\\"refreshSeconds\\\": 60,\\n  \\\"ttl\\\": 60,\\n  \\\"domain\\\": \\\"mesos\\\",\\n  \\\"port\\\": 53,\\n  \\\"resolvers\\\": [\\\"168.63.129.16\\\"],\\n  \\\"timeout\\\": 5,\\n  \\\"listener\\\": \\\"0.0.0.0\\\",\\n  \\\"email\\\": \\\"root.mesos-dns.mesos\\\"\\n}\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/mesos-dns.json\"}, {\"content\": \"MESOS_LOG_DIR=/var/log/mesos\\nMESOS_WORK_DIR=/var/lib/mesos/master\\nMESOS_ZK=zk://127.0.0.1:2181/mesos\\nMESOS_QUORUM=', variables('mesosQuorum'),'\\nMESOS_CLUSTER=', variables('uniqueName'),'\\nMESOS_HOSTNAME=', reference('masterPublicIP').dnsSettings.fqdn,'\\nMESOS_IP=$private_ipv4\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/mesos-master\"}, {\"content\": \"MASTER_ELB=127.0.0.1\\nZOOKEEPER_CLUSTER_SIZE=', variables('numberOfMasters'),'\\nFALLBACK_DNS=168.63.129.16\\nMARATHON_HOSTNAME=', reference('masterPublicIP').dnsSettings.fqdn,'\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/cloudenv\"}, {\"content\": \"AZURE_CONTAINER=apollo-exhibitor\\nAZURE_PREFIX=', variables('uniqueName'),'\\nAZURE_ACCOUNT_NAME=', variables('storageAccountName'),'\\nAZURE_ACCOUNT_KEY=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2014-12-01-preview').key1,'\\nEXHIBITOR_WEB_UI_PORT=8181\\nEXHIBITOR_HOSTNAME=$private_ipv4\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/exhibitor\"}]}'))]",
+          "customData": "[base64(concat('#cloud-config\n\n', '{\"coreos\": {\"units\": [{\"command\": \"start\", \"content\": \"[Unit]\\nDescription=Mount /var/lib\\nBefore=dbus.service\\n[Mount]\\nWhat=/dev/sdb1\\nWhere=/var/lib\\nType=ext4\\n\", \"name\": \"var-lib.mount\"}, {\"command\": \"stop\", \"mask\": true, \"name\": \"systemd-resolved.service\"}, {\"command\": \"stop\", \"mask\": true, \"name\": \"etcd.service\"}, {\"command\": \"start\", \"content\": \"[Unit]\\nDescription=Write out dynamic config values\\n[Service]\\nType=oneshot\\nEnvironmentFile=/etc/environment\\n# Marathon depends on `hostname` resolution working\\nExecStart=/usr/bin/bash -c \\\"echo ${COREOS_PRIVATE_IPV4} $(hostname) ', reference('masterPublicIP').dnsSettings.fqdn,' > /etc/hosts\\\"\\n\", \"name\": \"config-writer.service\"}, {\"content\": \"[Unit]\\nDescription=Download the DCOS\\nAfter=network-online.target\\nWants=network-online.target\\nConditionPathExists=!/opt/mesosphere/\\n[Service]\\nType=oneshot\\nExecStartPre=/usr/bin/curl --retry 100 http://s3.amazonaws.com/downloads.mesosphere.io/dcos/EarlyAccess/bootstrap.tar.xz -o /tmp/bootstrap.tar.xz\\nExecStartPre=/usr/bin/mkdir -p /opt/mesosphere\\nExecStart=/usr/bin/tar -xf /tmp/bootstrap.tar.xz -C /opt/mesosphere\\n\", \"name\": \"dcos-download.service\"}, {\"command\": \"start\", \"content\": \"[Unit]\\nDescription=Prep the Pkgpanda working directories for this host.\\nRequires=dcos-download.service\\nAfter=dcos-download.service\\n[Service]\\nType=oneshot\\nEnvironmentFile=/opt/mesosphere/environment\\nExecStart=/opt/mesosphere/bin/pkgpanda setup\\n[Install]\\nWantedBy=multi-user.target\\n\", \"enable\": true, \"name\": \"dcos-setup.service\"}], \"update\": {\"reboot-strategy\": \"off\"}}, \"write_files\": [{\"content\": \"nameserver 168.63.129.16\", \"path\": \"/etc/resolv.conf\"}, {\"content\": \"http://s3.amazonaws.com/downloads.mesosphere.io/dcos/EarlyAccess\", \"owner\": \"root\", \"path\": \"/etc/mesosphere/setup-flags/repository-url\", \"permissions\": 420}, {\"path\": \"/etc/mesosphere/roles/master\"}, {\"content\": \"{}\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/pkginfo.json\"}, {\"content\": \"{\\n  \\\"zk\\\": \\\"zk://127.0.0.1:2181/mesos\\\",\\n  \\\"refreshSeconds\\\": 60,\\n  \\\"ttl\\\": 60,\\n  \\\"domain\\\": \\\"mesos\\\",\\n  \\\"port\\\": 53,\\n  \\\"resolvers\\\": [\\\"168.63.129.16\\\"],\\n  \\\"timeout\\\": 5,\\n  \\\"listener\\\": \\\"0.0.0.0\\\",\\n  \\\"email\\\": \\\"root.mesos-dns.mesos\\\"\\n}\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/mesos-dns.json\"}, {\"content\": \"MESOS_LOG_DIR=/var/log/mesos\\nMESOS_WORK_DIR=/var/lib/mesos/master\\nMESOS_ZK=zk://127.0.0.1:2181/mesos\\nMESOS_QUORUM=', variables('mesosQuorum'),'\\nMESOS_CLUSTER=', variables('uniqueName'),'\\nMESOS_HOSTNAME=', reference('masterPublicIP').dnsSettings.fqdn,'\\nMESOS_IP=$private_ipv4\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/mesos-master\"}, {\"content\": \"MASTER_ELB=127.0.0.1\\nZOOKEEPER_CLUSTER_SIZE=1\\nFALLBACK_DNS=168.63.129.16\\nMARATHON_HOSTNAME=', reference('masterPublicIP').dnsSettings.fqdn,'\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/cloudenv\"}, {\"content\": \"AZURE_CONTAINER=apollo-exhibitor\\nAZURE_PREFIX=', variables('uniqueName'),'\\nAZURE_ACCOUNT_NAME=', variables('storageAccountName'),'\\nAZURE_ACCOUNT_KEY=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2014-12-01-preview').key1,'\\nEXHIBITOR_WEB_UI_PORT=8181\\nEXHIBITOR_HOSTNAME=$private_ipv4\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/exhibitor\"}]}'))]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": "true",
             "ssh": {
@@ -240,10 +249,20 @@
           }
         },
         "storageProfile": {
-          "sourceImage": {
-            "id": "[variables('sourceImageName')]"
-          },
-          "destinationVhdsContainer": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/')]"
+            "imageReference": {
+              "publisher": "[variables('imagePublisher')]",
+              "offer": "[variables('imageOffer')]",
+              "sku": "[variables('imageSku')]",
+              "version": "latest"
+            },
+          "osDisk": {
+            "name": "mastervm",
+            "vhd": {
+              "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/osdisk.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
         },
         "networkProfile": {
           "networkInterfaces": [
