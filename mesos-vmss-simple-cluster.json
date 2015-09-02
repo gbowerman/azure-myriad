@@ -229,7 +229,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[variables('vmSize')]"
+          "vmSize": "Standard_A2"
         },
         "osProfile": {
           "computername": "mastervm",
