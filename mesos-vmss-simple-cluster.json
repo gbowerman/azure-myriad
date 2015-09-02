@@ -41,7 +41,7 @@
     "mesosQuorum": "1",
     "subnet1Prefix": "10.0.0.0/24",
     "addressPrefix": "10.0.0.0/16",
-    "vmSize": "Standard_A1"
+    "vmSize": "Standard"
   },
   "resources": [
     {
@@ -219,7 +219,7 @@
       }
     },
     {
-      "apiVersion": "2014-12-01-preview",
+      "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "mastervm",
       "location": "[parameters('region')]",
