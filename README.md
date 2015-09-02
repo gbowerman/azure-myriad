@@ -10,7 +10,7 @@ VM Scale Sets allow you to deploy and manage a group of identical virtual machin
 Note: VM Scale Sets are not yet in preview:
 - These templates won't work until we start whitelisting Azure subscriptions. We've blocked all access while the dev team are busy making breaking changes to support updates and additions to the API. The example templates below are to provide an early view of the work. 
 
-Preview update (8/31/15): Current plan is to start a private preview in October 2015, working with Azure VM Advisors. If you wish to participate in this preview, you can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
+Preview update (8/31/15): Current plan is to start a private preview in October 2015, working with Azure Advisors. If you wish to participate in this preview, you can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
 
 ### Limitations
 
@@ -26,9 +26,9 @@ This is pre-preview, with the following major limitations:
 
 ### Creating a VM Scale Set using PowerShell
  
-Note: Specific imperative commands to manage scale sets are not implemented yet. The following commands manage templates where the VM Scale Sets are modelled.
+Note: Imperative commands to manage scale sets using CLI and PowerShell are being worked on. The following commands manage templates where the VM Scale Sets are modelled.
 
-Download <a href="http://az412849.vo.msecnd.net/downloads04/azure-powershell.0.9.0a.msi">PowerShell 0.9.0</a> or later.
+Download <a href="https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/">Aure PowerShell 0.9.0</a> or later.
 
 Examples:
  
@@ -44,7 +44,7 @@ Or<br/>
  
 ### Get existing Scale Set details
  
-Get-AzureResource -name myvmss -ResourceGroupName myrg -ResourceType Microsoft.Compute/virtualMachineScaleSets -ApiVersion 2014-12-01-preview
+Get-AzureResource -name myvmss -ResourceGroupName myrg -ResourceType Microsoft.Compute/virtualMachineScaleSets -ApiVersion 2015-05-01-preview
  
 ### Scale an existing VMSS in or out
  
@@ -56,7 +56,7 @@ new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -R
  
 ### Remove a VM Scale Set
  
-Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2014-12-01-preview -ResourceType Microsoft.Compute/virtualMachineScaleSets<br/>
+Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2015-05-01-preview -ResourceType Microsoft.Compute/virtualMachineScaleSets<br/>
 Or<br/>
 Remove the Resource Group:<br/>
 Remove-AzureResourceGroup -Name myrg<br/>
