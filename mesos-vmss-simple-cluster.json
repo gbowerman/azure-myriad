@@ -37,7 +37,6 @@
     "networkSecurityGroupName": "[concat(variables('uniqueName'), 'dcnsg')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',variables('subnet1Name'))]",
-    "sourceImageName": "[concat('/', subscription().subscriptionId,'/services/images/',variables('vmSourceImageName'))]",
     "sshKeyPath": "[concat('/home/',variables('adminUsername'),'/.ssh/authorized_keys')]",
     "mesosQuorum": "1",
     "subnet1Prefix": "10.0.0.0/24",
