@@ -214,7 +214,38 @@
             }
             }
           ]
+        },
+        "extensionsProfile": {
+          "extensions": [
+          {
+            "name": "DockerExtension",
+            "properties": {
+               "publisher": "Microsoft.Azure.Extensions",
+               "type": "DockerExtension",
+              "typeHandlerVersion": "1.0",
+              "settings": {
+                 "docker": {
+                   "port": "2375"
+                 },
+                 "compose": {
+                  "swarm": {
+                    "image": "swarm",
+                    "restart": "always",
+                    "command": "[concat('--debug join --advertise=', reference('masterNodeNic').ipConfigurations[0].properties.privateIPAddress, ':2375 consul://10.0.0.4:8500,10.0.0.5:8500,10.0.0.6:8500/nodes')]"
+                   }
+                 }
+               },
+               "protectedSettings": {
+                 "certs": {
+                   "ca": "[parameters('dockerCa')]",
+                   "cert": "[parameters('dockerCert')]",
+                   "key": "[parameters('dockerKey')]"
+                 }
+               }
+            }
         }
+        ]
+       }
        }
       }
     },
@@ -295,39 +326,9 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces','masterNodeNic')]"
             }
           ]
-        },
-        "extensionsProfile": {
-          "extensions": [
-          {
-            "name": "DockerExtension",
-            "properties": {
-			  "publisher": "Microsoft.Azure.Extensions",
-			  "type": "DockerExtension",
-			  "typeHandlerVersion": "1.0",
-			  "settings": {
-			    "docker": {
-			      "port": "2375"
-			    },
-			    "compose": {
-			      "swarm": {
-			      "image": "swarm",
-			      "restart": "always",
-			      "command": "[concat('--debug join --advertise=', reference('masterNodeNic').ipConfigurations[0].properties.privateIPAddress, ':2375 consul://10.0.0.4:8500,10.0.0.5:8500,10.0.0.6:8500/nodes')]"
-                  }
-			    }
-			  },
-			  "protectedSettings": {
-			    "certs": {
-			    "ca": "[parameters('dockerCa')]",
-                "cert": "[parameters('dockerCert')]",
-                "key": "[parameters('dockerKey')]"
-                }
-              }
-            }
-          }
-		}
-      }
-    },
+        }
+    }
+  },
 	{
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "mastervm/DockerExtension",
@@ -395,5 +396,3 @@
       }
   }
 }
-
-
