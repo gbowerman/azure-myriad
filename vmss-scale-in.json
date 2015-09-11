@@ -29,13 +29,11 @@
    "resources": [
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "2014-12-01-preview",
+      "apiVersion": "2015-05-01-preview",
       "name": "[parameters('vmSSName')]",
       "location": "[parameters('location')]",
-      "Properties": {
-         "scaleSettings": {
-           "targetInstanceCount": "[parameters('instanceCount')]"
-         }
+      "sku": {
+        "capacity": "[parameters('instanceCount')]"
       }
    }
    ]
