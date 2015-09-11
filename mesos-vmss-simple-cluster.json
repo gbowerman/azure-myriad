@@ -110,7 +110,7 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "masterPublicIP",
       "location": "[parameters('region')]",
-      "apiVersion": "2014-12-01-preview",
+      "apiVersion": "2015-05-01-preview",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
@@ -193,7 +193,7 @@
       }
     },
     {
-      "apiVersion": "2014-12-01-preview",
+      "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "masterNodeNic",
       "location": "[parameters('region')]",
