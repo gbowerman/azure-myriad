@@ -38,7 +38,7 @@
        "sku": {
          "name": "Standard_A2",
          "tier": "[variables('vmSize')]",
-         "capacity": "[parameters('numberOfSlaves')]"
+         "capacity": "[parameters('instanceCount')]"
       }
    }
    ]
