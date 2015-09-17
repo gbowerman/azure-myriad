@@ -79,14 +79,6 @@ InstanceCount parameter describes the number of VMs.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### vmss-win-scale-out.json
-
-Create a Windows VM Scale Set with an existing storage account and VNET, and change the number of instances. Used for scaling out.
-InstanceCount parameter describes the number of VMs.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-win-scale-out.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
 
 ### vmss-coreos-vnet-storage.json
 
