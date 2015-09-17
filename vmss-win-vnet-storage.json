@@ -122,7 +122,7 @@
         "networkProfile": {
           "networkInterfaceConfigurations": [
            {
-             "namePrefix": "[parameters('vmSSName')]",
+             "name": "[parameters('vmSSName')]",
              "properties": {
                "ipConfigurations": [
                 {
