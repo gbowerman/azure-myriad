@@ -10,31 +10,17 @@
             "metadata": {
                 "description": "Number of VM instances"
             }
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "West US",
-            "allowedValues": [
-                "West US",
-                "East US",
-                "West Europe",
-                "East Asia",
-                "Southeast Asia"
-            ],
-            "metadata": {
-                "description": "Location of resources"
-            }
         }
    },
    "variables": {
-     "vmSize": "Standard" 
+     "vmSize": "Standard"
    },
    "resources": [
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
       "apiVersion": "2015-05-01-preview",
       "name": "[parameters('vmSSName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
        "sku": {
          "name": "Standard_A2",
          "tier": "[variables('vmSize')]",
