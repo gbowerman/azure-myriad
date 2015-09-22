@@ -59,8 +59,7 @@
        "dependsOn": [
            "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '0')]",
            "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '1')]",
-           "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '2')]",
-           "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+           "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '2')]"
        ],
        "sku": {
          "name": "Standard_A2",
