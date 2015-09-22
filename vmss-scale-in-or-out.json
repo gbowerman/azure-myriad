@@ -12,9 +12,6 @@
             }
         }
    },
-   "variables": {
-     "vmSize": "Standard"
-   },
    "resources": [
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
@@ -23,7 +20,7 @@
       "location": "[resourceGroup().location]",
        "sku": {
          "name": "Standard_A2",
-         "tier": "[variables('vmSize')]",
+         "tier": "Standard",
          "capacity": "[parameters('instanceCount')]"
       }
    }
