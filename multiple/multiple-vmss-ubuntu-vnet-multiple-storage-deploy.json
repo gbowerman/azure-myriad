@@ -6,7 +6,7 @@
             "type": "string"
         },
         "numberOfVMSS": {
-            "type": "string"
+            "type": "int"
         },
         "instanceCountPerVMSS": {
             "type": "string",
