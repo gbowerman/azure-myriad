@@ -114,7 +114,7 @@
                "properties": {
                  "ipConfigurations": [
                   {
-	            "name": "ip1,
+	            "name": "ip1",
                     "properties": {
                       "subnet": {
                         "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
