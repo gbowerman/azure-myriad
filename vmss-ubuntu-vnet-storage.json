@@ -112,6 +112,7 @@
              {
                "name": "nic1",
                "properties": {
+               	 "primary": "true",
                  "ipConfigurations": [
                   {
 	            "name": "ip1",
