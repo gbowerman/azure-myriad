@@ -24,14 +24,10 @@ This is preview, with the following major limitations:
 Note: Imperative commands to manage scale sets using CLI and PowerShell are being worked on. The following commands manage templates where the VM Scale Sets are modelled.
 
 Download a recent <a href="https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/">Aure PowerShell</a>.
-
-Examples:
  
 You can deploy VMSS templates and query resources using any current Azure PowerShell version.
 
-Examples:
-
-switch to ARM and create a resource group (switching to ARM won't be needed with the latest PowerShell):
+To get started switch to ARM and create a resource group (switching to ARM won't be needed with the latest PowerShell):
 
 Switch-AzureMode -Name AzureResourceManager New-AzureResourcegroup -name myrg -location 'Southeast Asia'
 
