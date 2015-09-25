@@ -7,10 +7,8 @@ VM Scale Sets allow you to deploy and manage a group of identical virtual machin
 -	Customization - built on Azure IaaS, Scale Sets support all Windows and Linux VMs including custom images and extensions.
 -	Ease of management - building on the simple declarative modelling introduced with Azure Resource Manager, Scale Sets are the simplest way to manage sets of identical VMs. Focus on compute at scale without managing scaling of storage accounts and NICs.
 
-Note: VM Scale Sets are not yet in preview:
-- These templates won't work until we start whitelisting Azure subscriptions. We've blocked all access while the dev team are busy making breaking changes to support updates and additions to the API. The example templates below are to provide an early view of the work. 
-
-Preview update (8/31/15): Current plan is to start a private preview in October 2015, working with Azure Advisors. If you wish to participate in this preview, you can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
+Note: VM Scale Sets are in private preview (starting 10/1/15):
+If you wish to participate in this preview, your subscription needs to be whitelisted  to use this resource. You can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
 
 ### Limitations
 
@@ -21,45 +19,69 @@ This is preview, with the following major limitations:
 -	Breaking changes are possible.
 -	etc..
 
-### Creating a VM Scale Set using PowerShell
- 
+## Working with scale sets using PowerShell
+
 Note: Imperative commands to manage scale sets using CLI and PowerShell are being worked on. The following commands manage templates where the VM Scale Sets are modelled.
 
-Download <a href="https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/">Aure PowerShell 0.9.0</a> or later.
+Download a recent <a href="https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/">Aure PowerShell</a>.
 
 Examples:
  
-### Using an integrated template to create storage, VNET, Scale Set
- 
-Switch-AzureMode -Name AzureResourceManager<br/>
-new-azureresourcegroup -name myrg -location 'West US'<br/>
-new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-ubuntu-vnet-storage.json<br/>
-Or refer to a file..<br/>
-new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateFile C:\ARM_Templates\VMSS\vmss-win-vnet-storage.json<br/>
-Or<br/>
+You can deploy VMSS templates and query resources using any current Azure PowerShell version.
+Examples:
+switch to ARM and create a resource group (switching to ARM won't be needed with the latest PowerShell):
+Switch-AzureMode -Name AzureResourceManager 
+New-AzureResourcegroup -name myrg -location 'Southeast Asia'
 
- 
-### Get existing Scale Set details
- 
-Get-AzureResource -name myvmss -ResourceGroupName myrg -ResourceType Microsoft.Compute/virtualMachineScaleSets -ApiVersion 2015-05-01-preview
- 
-### Scale an existing VMSS in or out
- 
-new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-scale-in-or-out.json
+###	Create a scale set
+New-AzureResourceGroupDeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-vnet-storage-ubuntu.json
 
-### Scale an existing VMSS in
+It will ask you any parameters you missed (like location for example).
 
-new-azureresourcegroupdeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-scale-in-or-out.json
+### Get scale set details
+
+Get-AzureResource -name myvmss -ResourceGroupName myrg -ResourceType Microsoft.Compute/virtualMachineScaleSets -ApiVersion 2015-06-15
+
+or for more detail pipe it through | ConvertTo-Json -Depth 10
+
+or for even more detail add –debug to your command.
+
+###	Scaling out or scaling in
+
+New-AzureResourceGroupDeployment -name dep2 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg –TemplateUri https://github.com/gbowerman/azure-myriad/blob/master/vmss-scale-in-or-out.json 
+
+###	Remove a Scale Set
+
+Easy: Remove the resource group:
+Remove-AzureResourceGroup -Name myrg
+
+Precise: Remove a resource:
+Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2015-06-15 -ResourceType Microsoft.Compute/virtualMachineScaleSets
+
+## Working with scale sets using CLI
+
+You can deploy VMSS templates and query resources using any current Azure CLI version.
+The easiest way to install CLI is from a Docker container. For installing see: <a href="https://azure.microsoft.com/en-us/blog/run-azure-cli-as-a-docker-container-avoid-installation-and-setup/">the azure-cli container announcement</a>
+For using CLI see the: <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli/">Azure CLI documentation</a>
+
+### VM Scale Set CLI examples
+### create a resource group
+azure group create myrg "Southeast Asia" 
+
+### create a scale set
+azure group deployment create -g myrg -n dep2 --template-uri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-vnet-storage-ubuntu.json
+### this should ask for parameters dynamically, or you could specify them as arguments
+
+### get scale set details
+azure resource show -n vmssname -r Microsoft.Compute/virtualMachineScaleSets -o 2015-06-15 -g myrg
  
-### Remove a VM Scale Set
- 
-Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2015-05-01-preview -ResourceType Microsoft.Compute/virtualMachineScaleSets<br/>
-Or<br/>
-Remove the Resource Group:<br/>
-Remove-AzureResourceGroup -Name myrg<br/>
+### or for more details:
+azure resource show –n vmssname –r Microsoft.Compute/virtualMachineScaleSets –o 2015-06-15 –g myrg –json –vv
 
 
 ## Templates 
+
+Note: As of today 9/24/15 - only use the vmss-ubuntu-vnet-multiple-storage.json template, and only use it with location "southeast Asia". We're working on bringing the other templates up to the new schema.
 
 ### vmss-ubuntu-vnet-storage.json
 
