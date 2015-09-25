@@ -61,7 +61,7 @@ Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2015-06-15
 ## Working with scale sets using CLI
 
 You can deploy VMSS templates and query resources using any current Azure CLI version.
-The easiest way to install CLI is from a Docker container. For installing see: <a href="https://azure.microsoft.com/en-us/blog/run-azure-cli-as-a-docker-container-avoid-installation-and-setup/">the azure-cli container announcement</a>
+The easiest way to install CLI is from a Docker container. For installing see: <a href="https://azure.microsoft.com/en-us/blog/run-azure-cli-as-a-docker-container-avoid-installation-and-setup/">the azure-cli container announcement</a>.
 For using CLI see the: <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli/">Azure CLI documentation</a>
 
 ### VM Scale Set CLI examples
