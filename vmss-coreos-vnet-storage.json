@@ -1,5 +1,5 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json",
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
    "parameters" : {
        "vmSSName": {
@@ -43,7 +43,7 @@
         }
     },
     {
-        "apiVersion": "2015-05-01-preview",
+        "apiVersion": "2015-06-15",
         "type": "Microsoft.Network/virtualNetworks",
         "name": "[variables('virtualNetworkName')]",
         "location": "[variables('location')]",
@@ -65,7 +65,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2015-06-15",
       "name": "[parameters('vmSSName')]",
       "location": "[variables('location')]",
       "tags": {
@@ -110,14 +110,15 @@
           "networkProfile": {
             "networkInterfaceConfigurations": [
              {
-               "name": "[parameters('vmSSName')]",
+               "name": "nic1",
                "properties": {
+               	 "primary": "true",
                  "ipConfigurations": [
                   {
-	            "name": "[parameters('vmSSName')]",
+	            "name": "ip1",
                     "properties": {
                       "subnet": {
-                        "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
+                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
                       }
                     }
                   }
