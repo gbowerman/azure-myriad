@@ -1,5 +1,5 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "$schema": "http://schema.management.azure.com/schemas/2015-05-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "metadata": {
     "eula": "http://docs.mesosphere.com/community-edition-eula/"
@@ -54,7 +54,7 @@
       }
     },
     {
-        "apiVersion": "2015-05-01-preview",
+        "apiVersion": "2015-06-15",
         "type": "Microsoft.Network/networkSecurityGroups",
         "name": "[variables('networkSecurityGroupName')]",
         "location": "[parameters('region')]",
@@ -79,7 +79,7 @@
 
 
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[parameters('region')]",
@@ -110,7 +110,7 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "masterPublicIP",
       "location": "[parameters('region')]",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2015-06-15",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
@@ -120,7 +120,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2015-06-15",
       "name": "slaveset",
       "location": "[parameters('region')]",
       "dependsOn": [
@@ -170,22 +170,23 @@
               }
             }
           },
-        "networkProfile": {
-          "networkInterfaceConfigurations": [
-           {
-             "name": "slaveNodeNic",
-             "properties": {
-               "ipConfigurations": [
-                {
-                  "name": "nicipconfig",
-                  "properties": {
+         "networkProfile": {
+           "networkInterfaceConfigurations": [
+            {
+              "name": "slaveNodeNic",
+              "properties": {
+              	"primary": "true"
+                "ipConfigurations": [
+                 {
+                   "name": "nicipconfig",
+                   "properties": {
                       "subnet": {
-                        "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnet1Name'))]"
+                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnet1Name'))]"
                       }
                    }
-                }
-              ]
-            }
+                 }
+                ]
+              }
             }
           ]
         }
@@ -193,7 +194,7 @@
       }
     },
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "masterNodeNic",
       "location": "[parameters('region')]",
@@ -219,7 +220,7 @@
       }
     },
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "mastervm",
       "location": "[parameters('region')]",
