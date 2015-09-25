@@ -50,7 +50,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2015-06-15",
       "name": "[parameters('vmSSName')]",
       "location": "[variables('location')]",
       "tags": {
@@ -97,11 +97,12 @@
           "networkProfile": {
             "networkInterfaceConfigurations": [
              {
-               "name": "[parameters('vmSSName')]",
+               "name": "[concat('nic', parameters('vmSSName'))]",
                "properties": {
+               	"primary": "true",
                  "ipConfigurations": [
                   {
-	            "name": "[parameters('vmSSName')]",
+	            "name": "[concat('ipconfig', parameters('vmSSName'))]",
                     "properties": {
                       "subnet": {
                         "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('vnetName'), '/subnets/', variables('subnetName'))]"
