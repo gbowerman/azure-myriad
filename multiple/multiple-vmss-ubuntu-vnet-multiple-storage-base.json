@@ -62,7 +62,7 @@
            "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '2')]"
        ],
        "sku": {
-         "name": "Standard_A2",
+         "name": "Standard_A1",
          "tier": "Standard",
          "capacity": "[parameters('instanceCount')]"
       },
