@@ -175,7 +175,7 @@
             {
               "name": "slaveNodeNic",
               "properties": {
-              	"primary": "true"
+              	"primary": "true",
                 "ipConfigurations": [
                  {
                    "name": "nicipconfig",
