@@ -28,10 +28,12 @@ Download a recent <a href="https://azure.microsoft.com/en-us/documentation/artic
 Examples:
  
 You can deploy VMSS templates and query resources using any current Azure PowerShell version.
+
 Examples:
+
 switch to ARM and create a resource group (switching to ARM won't be needed with the latest PowerShell):
-Switch-AzureMode -Name AzureResourceManager 
-New-AzureResourcegroup -name myrg -location 'Southeast Asia'
+
+Switch-AzureMode -Name AzureResourceManager New-AzureResourcegroup -name myrg -location 'Southeast Asia'
 
 ###	Create a scale set
 New-AzureResourceGroupDeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-vnet-storage-ubuntu.json
@@ -53,9 +55,11 @@ New-AzureResourceGroupDeployment -name dep2 -vmSSName myvmss -instanceCount 2 -R
 ###	Remove a Scale Set
 
 Easy: Remove the resource group:
+
 Remove-AzureResourceGroup -Name myrg
 
 Precise: Remove a resource:
+
 Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2015-06-15 -ResourceType Microsoft.Compute/virtualMachineScaleSets
 
 ## Working with scale sets using CLI
@@ -70,7 +74,8 @@ azure group create myrg "Southeast Asia"
 
 ### create a scale set
 azure group deployment create -g myrg -n dep2 --template-uri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-vnet-storage-ubuntu.json
-### this should ask for parameters dynamically, or you could specify them as arguments
+
+this should ask for parameters dynamically, or you could specify them as arguments
 
 ### get scale set details
 azure resource show -n vmssname -r Microsoft.Compute/virtualMachineScaleSets -o 2015-06-15 -g myrg
