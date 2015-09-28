@@ -86,7 +86,7 @@
          "tier": "Standard",
          "capacity": "[parameters('instanceCount')]"
       },
-      "Properties": {
+      "properties": {
          "upgradePolicy": {
          "mode": "Automatic"
         },
