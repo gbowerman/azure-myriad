@@ -101,7 +101,7 @@
         "tier": "Standard",
         "capacity": 2
       },
-      "Properties": {
+      "properties": {
         "upgradePolicy": {
           "mode": "Automatic"
         },
@@ -131,15 +131,15 @@
           "networkProfile": {
             "networkInterfaceConfigurations": [
               {
-                "name": "[parameters('vmSSName')]",
+                "name": "nic1",
                 "properties": {
                   "primary": "true",
                   "ipConfigurations": [
                     {
-                      "name": "[parameters('vmSSName')]",
+                      "name": "ip1",
                       "properties": {
                         "subnet": {
-                          "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
+                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
                         }
                       }
                     }
@@ -151,7 +151,7 @@
           "extensionProfile": {
               "extensions" : [
               {
-                "name": "[concat(parameters('vmssName'),'/Microsoft.Insights.VMDiagnosticsSettings')]",
+                "name": "Microsoft.Insights.VMDiagnosticsSettings",
                 "properties": {
                   "publisher": "WAD2AI.Diagnostics.Test",
                   "type": "IaaSDiagnostics",
