@@ -149,23 +149,27 @@
             ]
           },
           "extensionProfile": {
-            "name": "[concat(parameters('vmssName'),'/Microsoft.Insights.VMDiagnosticsSettings')]",
-            "properties": {
-              "publisher": "WAD2AI.Diagnostics.Test",
-              "type": "IaaSDiagnostics",
-              "typeHandlerVersion": "0.5",
-              "autoUpgradeMinorVersion": true,
-              "settings": {
-                "xmlCfg": "[base64(concat(variables('wadcfgxstart'),variables('wadmetricsresourceid'),variables('wadcfgxend')))]",
-                "storageAccount": "[variables('diagnosticsStorageAccountName')]"
-              },
-              "protectedSettings": {
-                 "storageAccountName": "[variables('diagnosticsStorageAccountName')]",
-                 "storageAccountKey": "[listkeys(variables('accountid'), '2015-05-01-preview').key1]",
-                 "storageAccountEndPoint": "https://core.windows.net"
-              }
-            }
-          } 
+              "extensions" : [
+              {
+                "name": "[concat(parameters('vmssName'),'/Microsoft.Insights.VMDiagnosticsSettings')]",
+                "properties": {
+                  "publisher": "WAD2AI.Diagnostics.Test",
+                  "type": "IaaSDiagnostics",
+                  "typeHandlerVersion": "0.5",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                    "xmlCfg": "[base64(concat(variables('wadcfgxstart'),variables('wadmetricsresourceid'),variables('wadcfgxend')))]",
+                    "storageAccount": "[variables('diagnosticsStorageAccountName')]"
+                  },
+                 "protectedSettings": {
+                    "storageAccountName": "[variables('diagnosticsStorageAccountName')]",
+                    "storageAccountKey": "[listkeys(variables('accountid'), '2015-05-01-preview').key1]",
+                    "storageAccountEndPoint": "https://core.windows.net"
+                 }
+               }
+               }
+               ]
+           }
         }
       }
     }
