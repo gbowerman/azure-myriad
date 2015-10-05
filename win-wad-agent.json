@@ -99,7 +99,7 @@
       "sku": {
         "name": "Standard_A2",
         "tier": "Standard",
-        "capacity": 2
+        "capacity": "[parameters('instanceCount')]"
       },
       "properties": {
         "upgradePolicy": {
