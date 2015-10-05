@@ -33,12 +33,13 @@
           "maxInstanceCount": 100,
           "virtualMachinesPerStorageAccount": 20,
           "location": "[resourceGroup().location]",
-          "storageAccountPrefix": [ 
-          "0","6","c","i","o","u","1","7","d","j","p","v", 
-          "2","8","e","k","q","w","3","9","f","l","r","x", 
-          "4","a","g","m","s","y","5","b","h","n","t","z" 
-          ],
-          "storageAccountPrefixCount": "[length(variables('storageAccountPrefix'))]"
+           "accountConfiguration": [
+            [ "[concat('https://a', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]" ],
+            [ "[concat('https://f', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]" ], 
+            [ "[concat('https://k', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]" ],
+            [ "[concat('https://p', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]" ], 
+            [ "[concat('https://x', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]" ]
+           ]
           },
           "resources": [
           {
@@ -98,24 +99,18 @@
                            "virtualMachineProfile": {
                             "storageProfile": {
                               "osDisk": {
-                                "vhdContainers": [
-                                "[concat('https://a', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]",
-                                "[concat('https://j', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]",
-                                "[concat('https://p', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]",
-                                "[concat('https://u', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]",
-                                "[concat('https://z', parameters('newStorageAccountName'), '.blob.core.windows.net/vmss')]"
-                                ],
+                                "vhdContainers": "[variables('accountConfiguration')[div(parameters('instanceCount'), 20)]",
                                 "name": "vmssosdisk",
                                 "caching": "ReadOnly",
                                 "createOption": "FromImage"
-                                },
-                                "imageReference": {
+                              },
+                              "imageReference": {
                                   "publisher": "[variables('imagePublisher')]",
                                   "offer": "[variables('imageOffer')]",
                                   "sku": "[variables('imageVersion')]",
                                   "version": "latest"
-                                }
-                                },
+                              }
+                             },
                                 "osProfile": {
                                   "computerNamePrefix": "[parameters('vmSSName')]",
                                   "adminUsername": "[parameters('adminUsername')]",
