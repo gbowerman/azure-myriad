@@ -76,11 +76,11 @@
         "vmsstag1": "Myriad"
        },
        "dependsOn": [
-           "[concat('Microsoft.Storage/storageAccounts/', '0', parameters('newStorageAccountPrefix'))]",
-           "[concat('Microsoft.Storage/storageAccounts/', '1', parameters('newStorageAccountPrefix'))]",
-           "[concat('Microsoft.Storage/storageAccounts/', '2', parameters('newStorageAccountPrefix'))]",
-           "[concat('Microsoft.Storage/storageAccounts/', '3', parameters('newStorageAccountPrefix'))]",
-           "[concat('Microsoft.Storage/storageAccounts/', '4', parameters('newStorageAccountPrefix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/', '0', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/', '1', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/', '2', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/', '3', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/', '4', parameters('newStorageAccountSuffix'))]",
            "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
        ],
        "sku": {
