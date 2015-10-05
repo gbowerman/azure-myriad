@@ -82,7 +82,6 @@
            "[concat('Microsoft.Storage/storageAccounts/', '3', parameters('newStorageAccountPrefix'))]",
            "[concat('Microsoft.Storage/storageAccounts/', '4', parameters('newStorageAccountPrefix'))]",
            "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-           "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
        ],
        "sku": {
          "name": "Standard_A2",
