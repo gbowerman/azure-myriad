@@ -2,7 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "objectPrefix": {
+        "uniqueNamePrefix": {
             "type": "string"
         },
         "instanceCount": {
@@ -83,7 +83,7 @@
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
-                    "domainNameLabel": "[parameters('objectPrefix')]"
+                    "domainNameLabel": "[parameters('uniqueNamePrefix')]"
                 }
             }
         },
@@ -130,7 +130,7 @@
         {
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "apiVersion": "2015-06-15",
-            "name": "[parameters('objectPrefix')]",
+            "name": "[parameters('uniqueNamePrefix')]",
             "location": "[variables('location')]",
             "tags": {
                 "vmsstag1": "Myriad"
@@ -171,7 +171,7 @@
                         }
                     },
                     "osProfile": {
-                        "computerNamePrefix": "[parameters('objectPrefix')]",
+                        "computerNamePrefix": "[parameters('uniqueNamePrefix')]",
                         "adminUsername": "[parameters('adminUsername')]",
                         "adminPassword": "[parameters('adminPassword')]"
                     },
