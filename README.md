@@ -1,7 +1,9 @@
 ﻿# azure-myriad
 Templates for Azure Virtual Machine Scale Sets. 
 
-Note 9/25/15: Only use Location: "Southeast Asia" until you see an update - this has the latest bits, which are being rolled out to other locations.
+Note 10/6/15: All locations are enabled. Private preview has started.
+
+If you wish to participate in this preview, your subscription needs to be whitelisted  to use this resource. You can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
 
 VM Scale Sets allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
 -	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
@@ -9,15 +11,13 @@ VM Scale Sets allow you to deploy and manage a group of identical virtual machin
 -	Customization - built on Azure IaaS, Scale Sets support all Windows and Linux VMs including custom images and extensions.
 -	Ease of management - building on the simple declarative modelling introduced with Azure Resource Manager, Scale Sets are the simplest way to manage sets of identical VMs. Focus on compute at scale without managing scaling of storage accounts and NICs.
 
-Note: VM Scale Sets are in private preview (starting 10/1/15):
-If you wish to participate in this preview, your subscription needs to be whitelisted  to use this resource. You can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
 
 ### Limitations
 
 This is preview, with the following major limitations:
 
 -	Single storage accounts for custom images.
--	No image based patching support.
+-	No rolling image based patching support.
 -	Breaking changes are possible.
 -	etc..
 
@@ -84,7 +84,6 @@ azure resource show –n vmssname –r Microsoft.Compute/virtualMachineScaleSets
 
 ## Templates 
 
-Note: 9/25/15 - all the following templates are currently working. Only use "Southeast Asia".
 
 ### vmss-ubuntu-vnet-storage.json
 
