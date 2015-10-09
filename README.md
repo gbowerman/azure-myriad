@@ -34,7 +34,7 @@ To get started switch to ARM and create a resource group (switching to ARM won't
 Switch-AzureMode -Name AzureResourceManager New-AzureResourcegroup -name myrg -location 'Southeast Asia'
 
 ###	Create a scale set
-New-AzureResourceGroupDeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-vnet-storage-ubuntu.json
+New-AzureResourceGroupDeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-ubuntu-vnet-storage.json
 
 It will ask you any parameters you missed (like location for example).
 
@@ -71,7 +71,7 @@ For using CLI see the: <a href="https://azure.microsoft.com/en-us/documentation/
 azure group create myrg "Southeast Asia" 
 
 ### create a scale set
-azure group deployment create -g myrg -n dep2 --template-uri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-vnet-storage-ubuntu.json
+azure group deployment create -g myrg -n dep2 --template-uri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-ubuntu-vnet-storage.json
 
 this should ask for parameters dynamically, or you could specify them as arguments
 
