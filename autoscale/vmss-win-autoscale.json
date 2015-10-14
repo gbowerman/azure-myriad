@@ -149,7 +149,7 @@
     "apiVersion": "2015-04-01",
     "name": "autoscalewad",
     "location": "[variables('location')]",
-    "enabled": "true",
+    "enabled": true,
     "targetResourceUri":"[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
     "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]"
