@@ -14,7 +14,7 @@
       	"newStorageAccountSuffix" : {
            "type": "string"
         },
-        "uniqueNamePrefix": {
+        "uniqueDNSName": {
            "type": "string"
         },
         "adminUsername": {
@@ -89,7 +89,7 @@
      "properties": {
          "publicIPAllocationMethod": "Dynamic",
          "dnsSettings": {
-             "domainNameLabel": "[parameters('uniqueNamePrefix')]"
+             "domainNameLabel": "[parameters('uniqueDNSName')]"
          }
      }
  },
