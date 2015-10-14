@@ -147,3 +147,12 @@ Create a VMSS with load balancer, public IP and inbound NAT rules.
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fnat-pools%2Fvmss-nat-pools.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
+
+### vmss-win-iis-vnet-storage-lb.json
+
+Create a VMSS with load balancer, public IP and Windows VMs with IIS and a basic MVC app configured\installed via the custom script extension.
+Port 80 is load balanced to the web app running on each VM Instance.
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fnat-pools%2Fvmss-win-iis-vnet-storage-lb.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
