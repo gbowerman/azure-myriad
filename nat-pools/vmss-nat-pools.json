@@ -11,8 +11,8 @@
                 "description": "Number of VM instances"
             }
         },
-        "newStorageAccountPrefix": {
-            "type": "string"
+      	"newStorageAccountSuffix" : {
+           "type": "string"
         },
         "adminUsername": {
             "type": "string"
@@ -38,21 +38,24 @@
         "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
         "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
         "nicId": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]",
-        "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]"
+        "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
+        "storageAccountPrefix": [ 
+	       "a","g","m","s","y" 
+        ]
     },
     "resources": [
-        {
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[concat(parameters('newStorageAccountPrefix'), copyindex())]",
-            "apiVersion": "2015-05-01-preview",
-            "copy": {
-                "name": "storageLoop",
-                "count": 3
-            },
-            "location": "[variables('location')]",
-            "properties": {
-                "accountType": "[variables('storageAccountType')]"
-            }
+    {
+        "type": "Microsoft.Storage/storageAccounts",
+        "name": "[concat(variables('storageAccountPrefix')[copyIndex()], parameters('newStorageAccountSuffix'))]",
+         "apiVersion": "2015-05-01-preview",
+         "copy": {
+             "name": "storageLoop",
+             "count": 5
+           },
+          "location": "[variables('location')]",
+          "properties": {
+            "accountType": "[variables('storageAccountType')]"
+           }
         },
         {
             "apiVersion": "2015-06-15",
@@ -136,12 +139,13 @@
                 "vmsstag1": "Myriad"
             },
             "dependsOn": [
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '0')]",
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '1')]",
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '2')]",
-                "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]",
-                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-            ],
+               "[concat('Microsoft.Storage/storageAccounts/a', parameters('newStorageAccountSuffix'))]",
+               "[concat('Microsoft.Storage/storageAccounts/g', parameters('newStorageAccountSuffix'))]",
+               "[concat('Microsoft.Storage/storageAccounts/m', parameters('newStorageAccountSuffix'))]",
+               "[concat('Microsoft.Storage/storageAccounts/s', parameters('newStorageAccountSuffix'))]",
+               "[concat('Microsoft.Storage/storageAccounts/y', parameters('newStorageAccountSuffix'))]",
+               "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+           ],
             "sku": {
                 "name": "Standard_A2",
                 "tier": "Standard",
@@ -154,11 +158,13 @@
                 "virtualMachineProfile": {
                     "storageProfile": {
                         "osDisk": {
-                            "vhdContainers": [
-                                "[concat('https://', parameters('newStorageAccountPrefix'), '0.blob.core.windows.net/vmss')]",
-                                "[concat('https://', parameters('newStorageAccountPrefix'), '1.blob.core.windows.net/vmss')]",
-                                "[concat('https://', parameters('newStorageAccountPrefix'), '2.blob.core.windows.net/vmss')]"
-                            ],
+                         "vhdContainers": [
+                            "[concat('https://a', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+                            "[concat('https://g', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+                            "[concat('https://m', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+                            "[concat('https://s', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+                            "[concat('https://y', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]"
+                           ],
                             "name": "vmssosdisk",
                             "caching": "ReadOnly",
                             "createOption": "FromImage"
