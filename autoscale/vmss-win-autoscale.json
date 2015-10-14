@@ -45,7 +45,7 @@
         "storageAccountPrefix": [
 	       "a","g","m","s","y"
         ],
-        "diagnosticsStorageAccountName": "[concat('Microsoft.Storage/storageAccounts/a', parameters('newStorageAccountSuffix'))]",
+        "diagnosticsStorageAccountName": "[concat('a', parameters('newStorageAccountSuffix'))]",
         "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]",
         "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('diagnosticsStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
         "wadlogs": "<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\"4096\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\"Error\"/> <WindowsEventLog scheduledTransferPeriod=\"PT1M\" > <DataSource name=\"Application!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"Security!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"System!*[System[(Level = 1 or Level = 2)]]\" /></WindowsEventLog>",
