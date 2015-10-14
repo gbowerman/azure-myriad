@@ -242,7 +242,7 @@
                      "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
                      "timeGrain":"PT1M",
                      "statistic":"Average",
-                     "timeWindow":"PT30M",
+                     "timeWindow":"PT5M",
                      "timeAggregation":"Average",
                      "operator":"GreaterThan",
                      "threshold":50.0
