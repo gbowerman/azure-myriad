@@ -149,8 +149,8 @@
     "apiVersion": "2015-04-01",
     "name": "autoscalewad",
     "location": "[variables('location')]",
-    "enabled": true,
-    "targetResourceUri":"[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/autoscalewad')]",
+    "enabled": "true",
+    "targetResourceUri":"[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
     "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]"
     ],
@@ -168,7 +168,7 @@
                   "metricTrigger":{
                      "metricName":"\\Processor(_Total)\\% Processor Time",
                      "metricNamespace":"",
-                     "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/autoscalewad')]",
+                     "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
                      "timeGrain":"PT1M",
                      "statistic":"Average",
                      "timeWindow":"PT30M",
