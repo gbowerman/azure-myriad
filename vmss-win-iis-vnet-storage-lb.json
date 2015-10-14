@@ -14,7 +14,7 @@
                 "description": "Number of VM instances"
             }
         },
-      	"newStorageAccountPrefix" : {
+      	"newStorageAccountSuffix" : {
            "type": "string",
             "metadata": {
                 "description": "The Prefix for the names of the new storage accounts created"
@@ -50,44 +50,46 @@
 			     "metadata" : {
               "description" : "The Base URL for the DSC configuration package"
             },
-			     "defaultValue":"https://sdaviesms.blob.core.windows.net/windows-powershell-dsc/"
+			     "defaultValue":"https://sdaviesms.blob.core.windows.net/customscripts/"
 		    },
    },
    "variables": {
-        "iisModulesURL":"[concat(parameters('baseURL'),'installiis.ps1.zip')]",
-        "iisConfigurationFunction":"installiis.ps1\\IISInstall",
-        "imagePublisher": "MicrosoftWindowsServer",
-        "imageOffer": "WindowsServer",
-        "imageVersion": "2012-R2-Datacenter",
-        "addressPrefix": "10.0.0.0/16",
-        "subnetName": "Subnet",
-        "subnetPrefix": "10.0.0.0/24",
-        "virtualNetworkName": "vmssvnet",
-        "storageAccountType": "Standard_LRS",
-        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "subnetRef":"[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-        "publicIPAddressName": "publicip1",
-        "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
-        "nicName": "networkInterface1",
-        "nicId": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]",
-        "lbName": "loadBalancer1",
-        "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
-        "lbFEName":"loadBalancerFrontEnd",
-        "lbWebProbeName":"loadBalancerWebProbe",
-        "lbBEAddressPool":"loadBalancerBEAddressPool",
-        "lbFEIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/', variables('lbFEName'))]",
-        "lbBEAddressPoolID": "[concat(variables('lbID'),'/backendAddressPools/', variables('lbBEAddressPool'))]",
-        "lbWebProbeID": "[concat(variables('lbID'),'/probes/', variables('lbWebProbeName'))]"
-
+      "iisConfigurationScriptLocation":"[concat(parameters('baseURL'),'install-iis-and-default-web-app.ps1')]",
+      "iisConfigurationScriptFile":"install-iis-and-default-web-app.ps1",
+      "imagePublisher": "MicrosoftWindowsServer",
+      "imageOffer": "WindowsServer",
+      "imageVersion": "2012-R2-Datacenter",
+      "addressPrefix": "10.0.0.0/16",
+      "subnetName": "Subnet",
+      "subnetPrefix": "10.0.0.0/24",
+      "virtualNetworkName": "vmssvnet",
+      "storageAccountType": "Standard_LRS",
+      "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+      "subnetRef":"[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+      "publicIPAddressName": "publicip1",
+      "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
+      "nicName": "networkInterface1",
+      "nicId": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]",
+      "lbName": "loadBalancer1",
+      "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
+      "lbFEName":"loadBalancerFrontEnd",
+      "lbWebProbeName":"loadBalancerWebProbe",
+      "lbBEAddressPool":"loadBalancerBEAddressPool",
+      "lbFEIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/', variables('lbFEName'))]",
+      "lbBEAddressPoolID": "[concat(variables('lbID'),'/backendAddressPools/', variables('lbBEAddressPool'))]",
+      "lbWebProbeID": "[concat(variables('lbID'),'/probes/', variables('lbWebProbeName'))]",
+      "storageAccountPrefix": [ 
+              "a","g","m","s","y" 
+      ]
    },
    "resources": [
      {
         "type": "Microsoft.Storage/storageAccounts",
-        "name": "[concat(parameters('newStorageAccountPrefix'), copyindex())]",
+        "name": "[concat(variables('storageAccountPrefix')[copyIndex()], parameters('newStorageAccountSuffix'))]",
         "apiVersion": "2015-05-01-preview",
         "copy": {
-            "name": "storageLoop",
-            "count": 3
+          "name": "storageLoop",
+          "count": 5
         },
         "location": "[parameters('location')]",
         "properties": {
@@ -194,11 +196,13 @@
         "vmsstag1": "Myriad"
        },
        "dependsOn": [
-            "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '0')]",
-            "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '1')]",
-            "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountPrefix'), '2')]",
-            "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]",
-            "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+           "[concat('Microsoft.Storage/storageAccounts/a', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/g', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/m', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/s', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Storage/storageAccounts/y', parameters('newStorageAccountSuffix'))]",
+           "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]",
+           "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
 
        ],
        "sku": {
@@ -214,9 +218,11 @@
          "storageProfile": {
             "osDisk": {
               "vhdContainers": [
-                 "[concat('https://', parameters('newStorageAccountPrefix'), '0.blob.core.windows.net/vmss')]",
-                 "[concat('https://', parameters('newStorageAccountPrefix'), '1.blob.core.windows.net/vmss')]",
-                 "[concat('https://', parameters('newStorageAccountPrefix'), '2.blob.core.windows.net/vmss')]"
+                "[concat('https://a', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+                "[concat('https://g', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+                "[concat('https://m', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+                "[concat('https://s', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+                "[concat('https://y', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]"
               ],
               "name": "vmssosdisk",
               "caching": "ReadOnly",
@@ -260,18 +266,17 @@
         "extensionProfile":{
           "extensions":[
             {
-              "name": "IISInstall",
-              "properties": {
-                "publisher": "Microsoft.Powershell",
-                "type": "DSC",
-                "typeHandlerVersion": "2.7",
-                "autoUpgradeMinorVersion": false,
-                "settings": {
-                  "ModulesUrl": "[variables('iisModulesURL')]",
-                  "ConfigurationFunction": "[variables('iisConfigurationFunction')]"
-                },
-                "protectedSettings": null
-              }
+                "name": "iisInstall",
+                "properties": {
+                  "publisher": "Microsoft.Compute",
+                  "type": "CustomScriptExtension",
+                  "typeHandlerVersion": "1.4",
+                  "autoUpgradeMinorVersion": false,
+                    "settings": {
+                        "fileUris": [ "[variables('iisConfigurationScriptLocation')]" ],
+                        "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -file ',variables('iisConfigurationScriptFile'))]"
+                    }
+                }
             }
           ]
         }
