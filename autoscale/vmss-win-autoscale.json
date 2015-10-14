@@ -183,9 +183,9 @@
                   }
                }
             ]
-            "enabled", true
          }
-      ]
+      ],
+      "enabled": true
     }
   }
   ]
