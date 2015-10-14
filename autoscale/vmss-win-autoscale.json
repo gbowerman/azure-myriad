@@ -14,7 +14,10 @@
       	"newStorageAccountSuffix" : {
            "type": "string"
         },
-	"adminUsername": {
+        "uniqueNamePrefix": {
+           "type": "string"
+        },
+        "adminUsername": {
            "type": "string"
         },
         "adminPassword": {
@@ -144,7 +147,8 @@
            "[concat('Microsoft.Storage/storageAccounts/m', parameters('newStorageAccountSuffix'))]",
            "[concat('Microsoft.Storage/storageAccounts/s', parameters('newStorageAccountSuffix'))]",
            "[concat('Microsoft.Storage/storageAccounts/y', parameters('newStorageAccountSuffix'))]",
-           "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+           "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+           "[concat('Microsoft.Network/loadBalancers/'', variables('loadBalancerName'))]"
        ],
        "sku": {
          "name": "Standard_A2",
