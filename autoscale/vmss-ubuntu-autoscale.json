@@ -14,6 +14,9 @@
     "newStorageAccountName": {
       "type": "string"
     },
+    "uniqueDNSName": {
+      "type": "string"
+    },
     "location": {
       "type": "string",
       "allowedValues": [
@@ -35,13 +38,19 @@
     }
   },
   "variables": {
+    "location": "[resourceGroup().location]",
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
     "imageVersion": "14.04.2-LTS",
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "Subnet",
     "subnetPrefix": "10.0.0.0/24",
+    "loadBalancerName": "loadBalancer1",
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
+    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
     "virtualNetworkName": "vmssvnet",
+    "publicIPAddressName": "publicIp1",
+    "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "storageAccountType": "Standard_LRS",
     "diagnosticsStorageAccountName": "[parameters('newStorageAccountName')]",
     "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]",
@@ -84,6 +93,59 @@
         ]
       }
     },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('uniqueDNSName')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "name": "[variables('loadBalancerName')]",
+      "type": "Microsoft.Network/loadBalancers",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+      ],
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "loadBalancerFrontEnd",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[variables('publicIPAddressID')]"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "bepool1"
+          }
+        ],
+        "inboundNatPools": [
+          {
+            "name": "natpool1",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[variables('frontEndIPConfigID')]"
+              },
+              "protocol": "tcp",
+              "frontendPortRangeStart": 50000,
+              "frontendPortRangeEnd": 50500,
+              "backendPort": 22
+            }
+          }
+        ]
+      }
+    },
+
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
       "apiVersion": "2015-06-15",
