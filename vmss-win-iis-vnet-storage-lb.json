@@ -5,50 +5,50 @@
 			"vmSSName":{
 						"type":"string",
 						"metadata":{
-								"description":"TheNameoftheScaleset"
+								"description":"The Name of the Scaleset"
 						}
 				},
 				"instanceCount":{
 						"type":"string",
 						"metadata":{
-								"description":"NumberofVMinstances"
+								"description":"Number of VM instances"
 						}
 				},
 				"newStorageAccountSuffix":{
 					"type":"string",
 						"metadata":{
-								"description":"ThePrefixforthenamesofthenewstorageaccountscreated"
+								"description":"The Prefix for the names of the new storage accounts created"
 						}
 				},
 				"dnsNamePrefix":{
 					"type":"string",
 						"metadata":{
-								"description":"ThePrefixfortheDNSnamesofthenewIPaddresscreated"
+								"description":"The Prefix for the DNS names of the new IP address created"
 						}
 				},
 				"adminUsername":{
 					"type":"string",
 						"metadata":{
-								"description":"TheUsernameoftheadmininstrativeuserforeachvmcreated"
+								"description":"The User name of the admininstrative user for each vm created"
 						}
 				},
 				"adminPassword":{
 					"type":"securestring",
 						"metadata":{
-								"description":"ThePasswordoftheadmininstrativeuserforeachvmcreated"
+								"description":"The Password of the admininstrative user for each vm created"
 						}
 				},
 				"location":{
 					"type":"string",
 					"metadata":{
-							"description":"Deploymentlocation"
+							"description":"Deployment location"
 						},
 					"defaultValue":"[resourceGroup().location]"
 				},
 				"baseURL":{
 					"type":"string",
 					"metadata":{
-							"description":"TheBaseURLfortheDSCconfigurationpackage"
+							"description":"The Base URL for the DSC configuration package"
 						},
 					"defaultValue":"https://sdaviesms.blob.core.windows.net/customscripts/"
 				},
