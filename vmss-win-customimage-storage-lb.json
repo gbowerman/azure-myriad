@@ -49,16 +49,29 @@
 			"type":"string",
 			"metadata":{
 				"description":"The BaseURL (including container) for the blob containing the custom image"
-			},
-			"defaultValue":"https://sdaviesarmne.blob.core.windows.net/images/"
+			}
 		},
 		"imageBlobName":{
 			"type":"string",
 			"metadata":{
 				"description":"The BaseURL for the blob containing the custom image"
+			}
+		},
+		"frontEndLBPort":{
+			"type":"int",
+			"metadata":{
+				"description":"The front end port to Load Balance"
 			},
-			"defaultValue":"IISBase-osDisk.vhd"
+			"defaultValue":80
+		},
+		"backEndLBPort":{
+			"type":"int",
+			"metadata":{
+				"description":"The front end port to Load Balance"
+			},
+			"defaultValue":80
 		}
+		
 	},
 	"variables":{
 		"imageSource":"[concat(parameters('baseURL'),parameters('imageBlobName'))]",
@@ -153,8 +166,8 @@
 								"id":"[variables('lbWebProbeID')]"
 							},
 							"protocol":"tcp",
-							"frontendPort":80,
-							"backendPort":80,
+							"frontendPort":"[parameters('frontEndLBPort')]",
+							"backendPort":"[parameters('backEndLBPort')]",
 							"enableFloatingIP":false
 						}
 					}
@@ -164,7 +177,7 @@
 						"name":"[variables('lbWebProbeName')]",
 						"properties":{
 							"protocol":"http",
-							"port":80,
+							"port":"[parameters('backEndLBPort')]",
 							"intervalInSeconds":"15",
 							"numberOfProbes":"5",
 							"requestPath":"/iisstart.htm"
