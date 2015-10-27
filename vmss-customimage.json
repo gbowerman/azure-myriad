@@ -112,6 +112,7 @@
                             "name": "vmssosdisk",
                             "caching": "ReadOnly",
                             "createOption": "FromImage",
+                            "osType": "Linux",
                             "image": {
                                 "uri": "[parameters('vmImage')]"
                             }
