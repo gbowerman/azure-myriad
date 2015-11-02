@@ -48,14 +48,27 @@
 				"baseURL":{
 					"type":"string",
 					"metadata":{
-							"description":"The Base URL for the DSC configuration package"
+							"description":"The Base URL for the script and website"
 						},
 					"defaultValue":"https://sdaviesms.blob.core.windows.net/customscripts/"
 				},
+				"customScriptFile":{
+					"type":"string",
+					"metadata":{
+							"description":"The name of the custom script file in the baseURL location"
+						},
+					"defaultValue":"install-iis-and-default-web-app.ps1"
+				},
+				"websiteZipFile":{
+					"type":"string",
+					"metadata":{
+							"description":"The name of the website file in the baseURL location"
+						},
+					"defaultValue":"website.zip"
+				}
 	},
 	"variables":{
-			"iisConfigurationScriptLocation":"[concat(parameters('baseURL'),'install-iis-and-default-web-app.ps1')]",
-			"iisConfigurationScriptFile":"install-iis-and-default-web-app.ps1",
+			"iisConfigurationScriptLocation":"[concat(parameters('baseURL'),parameters('customScriptFile'))]",
 			"imagePublisher":"MicrosoftWindowsServer",
 			"imageOffer":"WindowsServer",
 			"imageVersion":"2012-R2-Datacenter",
@@ -266,17 +279,17 @@
 				"extensionProfile":{
 					"extensions":[
 						{
-								"name":"iisInstall",
-								"properties":{
-									"publisher":"Microsoft.Compute",
-									"type":"CustomScriptExtension",
-									"typeHandlerVersion":"1.4",
-									"autoUpgradeMinorVersion":false,
-										"settings":{
-												"fileUris":["[variables('iisConfigurationScriptLocation')]"],
-												"commandToExecute":"[concat('powershell -ExecutionPolicy Unrestricted -file ',variables('iisConfigurationScriptFile'))]"
-										}
-								}
+							"name":"iisInstall",
+							"properties":{
+								"publisher":"Microsoft.Compute",
+								"type":"CustomScriptExtension",
+								"typeHandlerVersion":"1.4",
+								"autoUpgradeMinorVersion":false,
+									"settings":{
+											"fileUris":["[variables('iisConfigurationScriptLocation')]"],
+											"commandToExecute":"[concat('powershell -ExecutionPolicy Unrestricted -File ',parameters('customScriptFile'),' -FileLocation ',parameters('baseUrl'),' -FileName ',parameters('websiteZipFile'))]"
+									}
+							}
 						}
 					]
 				}
