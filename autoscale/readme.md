@@ -1,6 +1,6 @@
 ### vmss-win-autoscale.json
 
-## DO NOT USE YET ##
+11/2/15: Autoscale is now working for all regions. Give it a try.
 
 Create a VMSS integrated with Azure autoscale - in testing (requires App Insights whitelist to work)
 
