@@ -15,7 +15,7 @@ Create a VMSS integrated with Azure autoscale
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### vmss-ubuntu-autoscale.json ###
+### vmss-lap-autoscale.json ###
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fautoscale%2Fvmss-lap-autoscale.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
