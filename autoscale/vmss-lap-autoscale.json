@@ -55,7 +55,7 @@
       "version": "latest"
     },
     "imageReference": "[variables('osType')]",
-    "diagnosticsStorageAccountName": "[concat('Microsoft.Storage/storageAccounts/a', parameters('newStorageAccountSuffix'))]",
+    "diagnosticsStorageAccountName": "[concat('a', parameters('newStorageAccountSuffix'))]",
     "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]",
     "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('diagnosticsStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
     "wadlogs": "<WadCfg><DiagnosticMonitorConfiguration>",
