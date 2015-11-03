@@ -1,6 +1,6 @@
-### vmss-win-autoscale.json
+### Autoscale templates ###
 
-11/2/15: Autoscale is now working for all regions. Give it a try.
+11/2/15: Autoscale is now working for all regions. Give it a try (you still need a subscrpition that's whitelisted for scale sets though).
 
 Create a VMSS integrated with Azure autoscale
 
