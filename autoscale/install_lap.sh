@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while [ ps aux | grep -v grep | grep "apt-get" > /dev/null ]; do
+while ps aux | grep -v grep | grep "apt-get" > /dev/null; do
     sleep 2
 done
 
