@@ -227,6 +227,7 @@
             "computerNamePrefix": "[parameters('vmSSName')]",
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]",
+			"customData": "[base64('#cloud-config\n\nwrite_files:\n -  encoding: gzip\n    content: !!binary |\n        H4sIAGFCOFYC/61TPW/bMBDd9SuucYYEqE3bQJfGtWGgBbI4DTpkKTtQ0skkQpOqSFt1g/z3Hkmpbpyk9VANInlf7909cvCG5cqwXDiZZYPTvmwArVAeKtuAQd/a5h68hRwLu0FoUJT7k0uhcdsGlz/pd5NKXVxmDxnAAJILvESQ1nkwgqorRwDO6p3INVJY8HyJBrxGob3cf5iQOVBToAw8TEajyXT8eAWlJXtKgPO71c1y9SkaVAVf4XwBQ/wOY/gWbYRp4ibwCBkRWwpHTaKh6ltTQmGNV2aLXeALTMadCwtp4expI6kLdGddTE5zu4/7SsXFacQaQjOlNQEkEX0OA0ODHfPfvBPiAa206MBY38O+BZHbhuivaUjOC60TD/xBusYBquxYhF7q8HPk7M5/Gfth6u0aPQw/sxJ3zGy1Bul9/Z6Fu7ce0bX5r0ocEXuuQt8JXSaZgv6lwvhYhqcYr0twBBck6CBfk0BV1E6l1ulQgzgIM03CPL7warJM1H4Yp7yHbV0Kj/Se+8qwrEVBTAQN6/b69s/YPkLEiCnUsn4HEHLbRnkEF950yIn98FmBxmPD53wmJ3y+2sNH3FiqX/MZCxY+yxsWFtZHwhzYTjSsbVsm/UYzglCmsiNa+6p8QQcgSr3E/IJf8ivgi5B/coHOcXIydUkPwovGdxPK0hgKr3tH9gsIcJI9IgUAAA==\n    path: /opt/azure/install_lap.sh\n    permissions: \"0744\"\n\n')]"
           },
           "networkProfile": {
             "networkInterfaceConfigurations": [
@@ -264,10 +265,7 @@
                   "typeHandlerVersion": "1.3",
                   "autoUpgradeMinorVersion": true,
                   "settings": {
-                    "fileUris": [
-                       "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/autoscale/install_lap.sh"
-                     ],
-                     "commandToExecute": "bash install_lap.sh"
+                    "commandToExecute": "/bin/bash /opt/azure/install_lap.sh >> /var/log/azure/install_lap.log 2>&1"
                   }
                 }
               },
