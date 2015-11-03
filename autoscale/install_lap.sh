@@ -7,12 +7,17 @@ done
 apt-get -y update
 
 # install Apache and PHP
+
+while ps aux | grep -v grep | grep "apt-get" > /dev/null; do
+    sleep 2
+done
 apt-get -y install apache2 php5
 
 # write some PHP
-echo \<center\>\<h1\>My Demo App\</h1\>\<br/\>\</center\> > /var/www/html/phpinfo.php
-echo \<\?php gethostname\(\)\; \?\> >> /var/www/html/phpinfo.php
-echo \<\?php phpinfo\(\)\; \?\> >> /var/www/html/phpinfo.php
+\<\?php \$hostname = gethostname\(\)\; \?\> > /var/www/html/index.php
+\<center\>\<h1\>Scale Set App - \<\?php echo \"\$hostname\"\;\?\>\</h1\>\</center\> >> /var/www/html/index.php
+\<br/\>\<br/\>\<br/\> >> /var/www/html/index.php
+\<\?php phpinfo\(\)\; \?\> >> /var/www/html/index.php
 
 # restart Apache
 apachectl restart
