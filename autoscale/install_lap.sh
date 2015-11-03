@@ -1,7 +1,6 @@
 #!/bin/bash
-
-while ps aux | grep -v grep | grep "apt-get" > /dev/null; do
-    sleep 2
+while ( ! grep "Start mdsd" /var/log/azure/Microsoft.OSTCExtensions.LinuxDiagnostic/2.1.5/extension.log); do
+    sleep 5
 done
 
 apt-get -y update
