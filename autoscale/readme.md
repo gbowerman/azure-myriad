@@ -2,22 +2,44 @@
 
 11/2/15: Autoscale is now working for all regions. Give it a try (you still need a subscrpition that's whitelisted for scale sets though).
 
-Create a VMSS integrated with Azure autoscale
+The following templates each deploy a VM Scale Set integrated with Azure autoscale.
 
 ### vmss-win-autoscale.json ###
+
+Deploy a simple Windows based scale set.
+
+How to use:
+- Deploy with an instance count of 1.
+- RDP into port 50000 and max the CPU.
+- After a few minutes additional VMs will be created.
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fautoscale%2Fvmss-win-autoscale.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
+<br/><br/>
 
 ### vmss-ubuntu-autoscale.json ###
+
+Deploy a simple Linux based scale set.
+
+How to use:
+- Deploy with an instance count of 1.
+- SSH into port 50000 and max the CPU.
+- After a few minutes additional VMs will be created.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fautoscale%2Fvmss-ubuntu-autoscale.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
+<br/><br/>
 
 ### vmss-lap-autoscale.json ###
 
-Simple Ubuntu/Apache/PHP example that autoscales (To do, add an option to the website to create a load)
+Simple self-contained Ubuntu/Apache/PHP autoscale & load balancing example.
+
+- Deploy the scale set with an instance count of 1
+- Browse to the website (port 80), which shows the current backend VM name.
+- Hit the "Do work" button with an iteration count of say 600.
+- After a few minutes the scale set capacity will increase, and refreshing the browser and going to the home page a few times will show additional VM additional backend VM nane(s).
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fautoscale%2Fvmss-lap-autoscale.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
