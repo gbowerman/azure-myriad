@@ -1,7 +1,5 @@
 ### Autoscale templates ###
 
-11/2/15: Autoscale is now working for all regions. Give it a try (you still need a subscrpition that's whitelisted for scale sets though).
-
 The following templates each deploy a VM Scale Set integrated with Azure autoscale.
 
 ### vmss-win-autoscale.json ###
