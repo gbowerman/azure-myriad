@@ -10,7 +10,7 @@ apt-get -y install apache2 php5
 
 # write some PHP
 cd /var/www/html
-wget https://raw.githubusercontent.com/gbowerman/azure-myriad/master/autoscale/index.php -O index.php
+wget https://raw.githubusercontent.com/gbowerman/azure-myriad/master/autoscale/index.php
 rm /var/www/html/index.html
 # restart Apache
 apachectl restart
