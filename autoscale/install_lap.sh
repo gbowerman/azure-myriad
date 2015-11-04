@@ -9,10 +9,8 @@ apt-get -y update
 apt-get -y install apache2 php5
 
 # write some PHP
-echo \<\?php \$hostname = gethostname\(\)\; \?\> > /var/www/html/index.php
-echo \<center\>\<h1\>Scale Set App - \<\?php echo \"\$hostname\"\;\?\>\</h1\>\</center\> >> /var/www/html/index.php
-echo \<br/\>\<br/\>\<br/\> >> /var/www/html/index.php
-echo \<\?php phpinfo\(\)\; \?\> >> /var/www/html/index.php
+cd /var/www/html
+wget https://raw.githubusercontent.com/gbowerman/azure-myriad/master/autoscale/index.php -O index.php
 rm /var/www/html/index.html
 # restart Apache
 apachectl restart
