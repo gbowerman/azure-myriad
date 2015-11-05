@@ -7,7 +7,7 @@
     <br/><br/>
     <?php $hostname = gethostname(); ?>
     <center>
-	  <h1>Scale Set App running on - <? $hostname ?> &nbsp; doing work..</h1>
+	  <h1>Scale Set App running on <?php echo "$hostname" ?> is doing work..</h1>
     <br/><br/>
     <?php
     ob_flush();
