@@ -265,9 +265,9 @@
                   "autoUpgradeMinorVersion": true,
                   "settings": {
                     "fileUris": [
-                       "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/autoscale/install_lap.sh"
-                     ],
-                     "commandToExecute": "bash install_lap.sh"
+                      "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/autoscale/install_lap.sh"
+                    ],
+                    "commandToExecute": "bash install_lap.sh"
                   }
                 }
               },
@@ -322,13 +322,32 @@
                   "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
                   "timeGrain": "PT1M",
                   "statistic": "Average",
-                  "timeWindow": "PT5M",
+                  "timeWindow": "PT2M",
                   "timeAggregation": "Average",
                   "operator": "GreaterThan",
-                  "threshold": 50.0
+                  "threshold": 60.0
                 },
                 "scaleAction": {
                   "direction": "Increase",
+                  "type": "ChangeCount",
+                  "value": "1",
+                  "cooldown": "PT1M"
+                }
+              },
+              {
+                "metricTrigger": {
+                  "metricName": "\\Processor\\PercentProcessorTime",
+                  "metricNamespace": "",
+                  "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
+                  "timeGrain": "PT1M",
+                  "statistic": "Average",
+                  "timeWindow": "PT2M",
+                  "timeAggregation": "Average",
+                  "operator": "LessThan",
+                  "threshold": 30.0
+                },
+                "scaleAction": {
+                  "direction": "Decrease",
                   "type": "ChangeCount",
                   "value": "1",
                   "cooldown": "PT1M"
