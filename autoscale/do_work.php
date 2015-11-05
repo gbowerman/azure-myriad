@@ -10,8 +10,8 @@
 	  <h1>Scale Set App running on - <? $hostname ?> &nbsp; doing work..</h1>
     <br/><br/>
     <?php
-	ob_flush();
-	flush();
+    ob_flush();
+    flush();
     set_time_limit(0);
 
     if ($_SERVER['REQUEST_METHOD'] == "GET")
