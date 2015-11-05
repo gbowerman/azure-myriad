@@ -8,7 +8,7 @@
     <br/><br/><br/>
 	<ul><ul><ul>
 	<form action="do_work.php" method="get">
-	  Iterations (secs): <input type="text" name="num">
+	  Duration (seconds): <input type="text" name="num" maxlength="4" size="4">
 	  <input type="submit" value="Do work">
 	</form>
 	</ul></ul></ul>
