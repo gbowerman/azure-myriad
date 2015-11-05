@@ -32,7 +32,7 @@ How to use:
 
 ### vmss-lap-autoscale.json ###
 
-Simple self-contained Ubuntu/Apache/PHP autoscale & load balancing example. Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 30%.
+Simple self-contained Ubuntu/Apache/PHP autoscale & load balancing example. Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 50%.
 
 - Deploy the scale set with an instance count of 1
 - Browse to the website (port 80), which shows the current backend VM name.
