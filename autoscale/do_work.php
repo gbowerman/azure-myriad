@@ -23,7 +23,7 @@
       }
     }
     ?>
-    <h2>Processing complete</h2>
+    <h1>Processing complete</h1>
     </center>
   </body>
 </html>
