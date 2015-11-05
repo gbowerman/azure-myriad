@@ -11,10 +11,10 @@
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
       $num = $_POST["num"];
-	    for ($x = 0; $x <= $num * 5000000; $x++)
-	    {
+      for ($x = 0; $x <= $num * 5000000; $x++)
+      {
         $var = $num+1;
-	    }
+      }
     }
     ?>
     <h2>Processing complete</h2>
