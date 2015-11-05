@@ -310,9 +310,9 @@
           {
             "name": "Profile1",
             "capacity": {
-              "minimum": "2",
+              "minimum": "1",
               "maximum": "10",
-              "default": "2"
+              "default": "1"
             },
             "rules": [
               {

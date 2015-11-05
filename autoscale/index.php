@@ -7,7 +7,7 @@
 	</center>
     <br/><br/><br/>
 	<ul><ul><ul>
-	<form action="do_work.php" method="post">
+	<form action="do_work.php" method="get">
 	  Iterations (secs): <input type="text" name="num">
 	  <input type="submit" value="Do work">
 	</form>
