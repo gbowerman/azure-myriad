@@ -344,7 +344,7 @@
                   "timeWindow": "PT5M",
                   "timeAggregation": "Average",
                   "operator": "LessThan",
-                  "threshold": 30.0
+                  "threshold": 50.0
                 },
                 "scaleAction": {
                   "direction": "Decrease",
