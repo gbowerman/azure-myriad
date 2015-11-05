@@ -14,9 +14,9 @@
 	flush();
     set_time_limit(0);
 
-    if ($_SERVER['REQUEST_METHOD'] == "POST")
+    if ($_SERVER['REQUEST_METHOD'] == "GET")
     {
-      $num = $_POST["num"];
+      $num = $_GET["num"];
       for ($x = 0; $x <= $num * 5000000; $x++)
       {
         $var = $num+1;
