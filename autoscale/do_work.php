@@ -3,9 +3,11 @@
   <body>
     <br/><br/>
     <center>
-    <h2>Doing work..</h2>
+	<h2><?php $hostname = gethostname(); ?> &nbsp;Doing work..</h2>
     <br/><br/>
     <?php
+	set_time_limit(0);
+
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
         $num = $_POST["num"];
