@@ -170,7 +170,7 @@
         ],
         "inboundNatPools": [
           {
-            "name": "natpool1",
+            "name": "natpool22",
             "properties": {
               "frontendIPConfiguration": {
                 "id": "[variables('frontEndIPConfigID')]"
@@ -179,6 +179,18 @@
               "frontendPortRangeStart": 50000,
               "frontendPortRangeEnd": 50100,
               "backendPort": 22
+            }
+          },
+          {
+            "name": "natpool80",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[variables('frontEndIPConfigID')]"
+              },
+              "protocol": "tcp",
+              "frontendPortRangeStart": 40000,
+              "frontendPortRangeEnd": 40100,
+              "backendPort": 80
             }
           }
         ]
@@ -245,7 +257,8 @@
                           { "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('loadBalancerName'), '/backendAddressPools/bepool1')]" }
                         ],
                         "loadBalancerInboundNatPools": [
-                          { "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('loadBalancerName'), '/inboundNatPools/natpool1')]" }
+                          { "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('loadBalancerName'), '/inboundNatPools/natpool22')]" },
+                          { "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('loadBalancerName'), '/inboundNatPools/natpool80')]" }
                         ]
                       }
                     }
