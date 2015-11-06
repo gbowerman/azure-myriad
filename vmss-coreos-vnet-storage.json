@@ -1,120 +1,137 @@
 {
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
-   "parameters" : {
-       "vmSSName": {
-            "type": "string"
-        },
-        "instanceCount" : {
-            "type": "string",
-            "metadata": {
-                "description": "Number of VM instances"
-            }
-        },
-      	"newStorageAccountSuffix" : {
-           "type": "string"
-        },
-	"adminUsername": {
-            "type": "string"
-        },
-        "adminPassword": {
-           "type": "securestring"
-        }
-   },
-   "variables": {
-        "imagePublisher": "CoreOS",
-        "imageOffer": "CoreOS",
-        "imageVersion": "Stable",
-        "addressPrefix": "10.0.0.0/16",
-        "subnetName": "Subnet",
-        "subnetPrefix": "10.0.0.0/24",
-        "virtualNetworkName": "vmssvnet",
-        "storageAccountType": "Standard_LRS",
-        "location": "[resourceGroup().location]",
-        "storageAccountPrefix": [ 
-	       "a","g","m","s","y" 
-       ]
-   },
-   "resources": [
-    {
-        "type": "Microsoft.Storage/storageAccounts",
-        "name": "[concat(variables('storageAccountPrefix')[copyIndex()], parameters('newStorageAccountSuffix'))]",
-        "apiVersion": "2015-05-01-preview",
-        "copy": {
-          "name": "storageLoop",
-          "count": 5
-        },
-        "location": "[variables('location')]",
-        "properties": {
-            "accountType": "[variables('storageAccountType')]"
-        }
-    },
-    {
-        "apiVersion": "2015-06-15",
-        "type": "Microsoft.Network/virtualNetworks",
-        "name": "[variables('virtualNetworkName')]",
-        "location": "[variables('location')]",
-        "properties": {
-            "addressSpace": {
-                "addressPrefixes": [
-                    "[variables('addressPrefix')]"
-                ]
-            },
-            "subnets": [
-                {
-                    "name": "[variables('subnetName')]",
-                    "properties": {
-                        "addressPrefix": "[variables('subnetPrefix')]"
-                    }
-                }
-            ]
-          }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "2015-06-15",
-      "name": "[parameters('vmSSName')]",
-      "location": "[variables('location')]",
-      "tags": {
-        "vmsstag1": "Myriad"
-       },
-       "dependsOn": [
-           "[concat('Microsoft.Storage/storageAccounts/a', parameters('newStorageAccountSuffix'))]",
-           "[concat('Microsoft.Storage/storageAccounts/g', parameters('newStorageAccountSuffix'))]",
-           "[concat('Microsoft.Storage/storageAccounts/m', parameters('newStorageAccountSuffix'))]",
-           "[concat('Microsoft.Storage/storageAccounts/s', parameters('newStorageAccountSuffix'))]",
-           "[concat('Microsoft.Storage/storageAccounts/y', parameters('newStorageAccountSuffix'))]",
-           "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-       ],
-       "sku": {
-         "name": "Standard_A2",
-         "tier": "Standard",
-         "capacity": "[parameters('instanceCount')]"
+  "parameters": {
+    "vmSSName": {
+      "type": "string",
+      "metadata": {
+        "description": "Scale Set name, also used in this template as a base for naming resources (hence limited to 9 characters or less)."
       },
+      "maxLength": 9
+    },
+    "instanceCount": {
+      "type": "string",
+      "metadata": {
+        "description": "Number of VM instances"
+      },
+      "maxValue": 100
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Admin username on all VMs."
+      }
+
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password on all VMs."
+      }
+    }
+  },
+  "variables": {
+    "apiVersion": "2015-06-15",
+    "newStorageAccountSuffix": "[concat(parameters('vmssName'), 'sa')]",
+    "uniqueStringArray": [
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '0')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '1')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '2')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '3')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '4')))]"
+    ],
+    "vmSize":  "Standard_A1",
+    "vhdContainerName": "[concat(parameters('vmssName'), 'vhd')]",
+    "osDiskName": "[concat(parameters('vmssName'), 'osdisk')]",
+    "virtualNetworkName": "[concat(parameters('vmssName'), 'vnet')]",
+    "subnetName": "[concat(parameters('vmssName'), 'subnet')]",
+    "nicName": "[concat(parameters('vmssName'), 'nic')]",
+    "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
+    "addressPrefix": "10.0.0.0/16",
+    "subnetPrefix": "10.0.0.0/24",
+    "storageAccountType": "Standard_LRS",
+    "location": "[resourceGroup().location]",
+    "osType": {
+      "publisher": "CoreOS",
+      "offer": "CoreOS",
+      "sku": "Stable",
+      "version": "latest"
+    },
+    "imageReference": "[variables('osType')]"
+  },
+  "resources": [
+    {
+      "type":"Microsoft.Storage/storageAccounts",
+      "name":"[concat(variables('uniqueStringArray')[copyIndex()], variables('newStorageAccountSuffix'))]",
+      "location":"[variables('location')]",
+      "apiVersion":"[variables('apiVersion')]",
+      "copy":{
+        "name":"storageLoop",
+        "count":"5"
+      },
+      "properties":{
+        "accountType":"[variables('storageAccountType')]"
+      }
+    },
+    {
+      "type":"Microsoft.Network/virtualNetworks",
+      "name":"[variables('virtualNetworkName')]",
+      "location":"[variables('location')]",
+      "apiVersion":"[variables('apiVersion')]",
+      "properties":{
+        "addressSpace":{
+          "addressPrefixes":[
+            "[variables('addressPrefix')]"
+          ]
+        },
+        "subnets":[
+          {
+            "name":"[variables('subnetName')]",
+            "properties":{
+              "addressPrefix":"[variables('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type":"Microsoft.Compute/virtualMachineScaleSets",
+      "name":"[parameters('vmssName')]",
+      "location":"[variables('location')]",
+      "apiVersion":"[variables('apiVersion')]",
+      "dependsOn":[
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[0], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[1], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[2], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[3], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[4], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+      ],
+      "sku":{
+        "name":"[variables('vmSize')]",
+        "tier":"Standard",
+        "capacity":"[parameters('instanceCount')]"
+      },
+
       "properties": {
-         "upgradePolicy": {
-         "mode": "Manual"
+        "upgradePolicy": {
+          "mode": "Manual"
         },
         "virtualMachineProfile": {
           "storageProfile": {
             "osDisk": {
-              "vhdContainers": [
-                "[concat('https://a', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
-	  	"[concat('https://g', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
-	  	"[concat('https://m', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
-	  	"[concat('https://s', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
-	  	"[concat('https://y', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]"
+               "vhdContainers":[
+                "[concat('https://', variables('uniqueStringArray')[0], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[1], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[2], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[3], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[4], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]"
               ],
-              "name": "vmssosdisk",
-              "caching": "ReadOnly",
-              "createOption": "FromImage"
+              "name":"[variables('osDiskName')]",
+              "caching":"ReadOnly",
+              "createOption":"FromImage"
             },
-            "imageReference": {
-              "publisher": "[variables('imagePublisher')]",
-              "offer": "[variables('imageOffer')]",
-              "sku": "[variables('imageVersion')]",
-              "version": "latest"
-            }
+           "imageReference":"[variables('imageReference')]"
           },
           "osProfile": {
             "computerNamePrefix": "[parameters('vmSSName')]",
@@ -123,26 +140,26 @@
           },
           "networkProfile": {
             "networkInterfaceConfigurations": [
-             {
-               "name": "nic1",
-               "properties": {
-               	 "primary": "true",
-                 "ipConfigurations": [
-                  {
-	            "name": "ip1",
-                    "properties": {
-                      "subnet": {
-                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
+              {
+                "name":"[variables('nicName')]",
+                "properties": {
+                  "primary": "true",
+                  "ipConfigurations": [
+                    {
+                      "name":"[variables('ipConfigName')]",
+                      "properties": {
+                        "subnet": {
+                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
+                        }
                       }
                     }
-                  }
-                 ]
+                  ]
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       }
     }
-  }
   ]
 }
