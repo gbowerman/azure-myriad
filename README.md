@@ -7,7 +7,7 @@ If you wish to participate in this preview, your subscription needs to be whitel
 
 VM Scale Sets allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
 -	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
--	Performance - deploying hundreds of VMs results in a single call to the fabric, allowing inherent performance optimizations.
+-	Performance - deploying multiple VMs results in a single call to the fabric, allowing inherent performance optimizations.
 -	Customization - built on Azure IaaS, Scale Sets support all Windows and Linux VMs including custom images and extensions.
 -	Ease of management - building on the simple declarative modelling introduced with Azure Resource Manager, Scale Sets are the simplest way to manage sets of identical VMs. Focus on compute at scale without managing scaling of storage accounts and NICs.
 
