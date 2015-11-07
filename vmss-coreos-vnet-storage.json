@@ -10,7 +10,7 @@
       "maxLength": 9
     },
     "instanceCount": {
-      "type": "string",
+      "type": "int",
       "metadata": {
         "description": "Number of VM instances"
       },
