@@ -118,13 +118,15 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+
 ### mesos-vmss-simple-cluster.json
 
-Create a simple mesos cluster with a single master, with a VM Scale Set of slaves.
+Create a simple mesos cluster with a single master, with a VM Scale Set of slaves. Connect to port 505 of the public IP address created in your resource group to see the dashboard.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fmesos-vmss-simple-cluster.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
+
 
 ### vmss-scale-in-or-out.json
 
@@ -134,6 +136,7 @@ InstanceCount parameter describes the number of VMs.
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-scale-in-or-out.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
+
 
 ### multiple-vmss-ubuntu-vnet-multiple-storage.json
 
@@ -145,13 +148,15 @@ InstanceCount parameter describes the number of VMs.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+
 ### vmss-nat-pools.json
 
-Create a VMSS with load balancer, public IP and inbound NAT rules.
+Create an Ubuntu VMSS with load balancer, public IP and inbound NAT rules. SSH to port 50000 of the public IP address will connect to port 22 of the 1st VM in the scale set. SSH to port 50001 will connect to port 22 of the second VM and so on.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fnat-pools%2Fvmss-nat-pools.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
+
 
 ### vmss-win-iis-vnet-storage-lb.json
 
@@ -162,6 +167,7 @@ Port 80 is load balanced to the web app running on each VM Instance.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+
 ### vmss-customimage.json
 
 Create a VMSS from a custom image.
@@ -169,3 +175,50 @@ Create a VMSS from a custom image.
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Falanst%2Fazure-myriad%2Fpatch-8%2Fvmss-customimage.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
+
+
+### autoscale/vmss-win-autoscale.json ###
+
+Deploy a simple Windows based scale set.
+
+How to use:
+- Deploy with an instance count of 1.
+- RDP into port 50000 and max the CPU.
+- After a few minutes additional VMs will be created.
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fautoscale%2Fvmss-win-autoscale.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+<br/><br/>
+
+
+### autoscale/vmss-ubuntu-autoscale.json ###
+
+Deploy a simple Linux based scale set.
+
+How to use:
+- Deploy with an instance count of 1.
+- SSH into port 50000 and max the CPU.
+- After a few minutes additional VMs will be created.
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fautoscale%2Fvmss-ubuntu-autoscale.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+<br/><br/>
+
+
+### autoscale/vmss-lap-autoscale.json ###
+
+Simple self-contained Ubuntu/Apache/PHP autoscale & load balancing example. Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 50%.
+
+- Deploy the scale set with an instance count of 1
+- Browse to the website (port 80), which shows the current backend VM name.
+- Hit the "Do work" button with an iteration count of say 600.
+- After a few minutes the scale set capacity will increase, and refreshing the browser and going to the home page a few times will show additional backend VM name(s).
+- You can increase the work by connecting to more backend websites, or decrease by letting the iterations time-out, in which case the scale set will scale down.
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fautoscale%2Fvmss-lap-autoscale.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+
