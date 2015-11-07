@@ -3,7 +3,7 @@ Templates for Azure Virtual Machine Scale Sets.
 
 Note 10/6/15: All locations are enabled. Limited public preview has started.
 
-If you wish to participate in this preview, your subscription needs to be whitelisted  to use this resource. You can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
+If you wish to participate in this preview, your subscription needs to be whitelisted  to use the virtualMachineScaleSet Azure resource. You can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
 
 VM Scale Sets allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
 -	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
@@ -14,12 +14,10 @@ VM Scale Sets allow you to deploy and manage a group of identical virtual machin
 
 ### Limitations
 
-This is preview, with the following major limitations:
+Please note the following limitations:
 
--	Single storage accounts for custom images.
--	No rolling image based patching support.
--	Breaking changes are possible.
--	etc..
+-	For custom images you can only have a single storage account and are hence limited to 40 VMs in a scale set. This will be increased in the future.
+-	Maximum number of platform image VMs in a scale set is 100. This will be increased in the future.
 
 ## Working with scale sets using PowerShell
 
