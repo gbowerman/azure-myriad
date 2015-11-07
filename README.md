@@ -89,7 +89,7 @@ azure resource show –n vmssname –r Microsoft.Compute/virtualMachineScaleSets
 Creates a VNET, storage account, and scale set of identical Ubuntu virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this VM as a fragment you can use as part a larger solution rather than a self-contained solution.
+Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-ubuntu-vnet-storage.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -100,7 +100,7 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
 Creates a VNET, storage account, and scale set of identical Windows virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this VM as a fragment you can use as part a larger solution rather than a self-contained solution.
+Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-win-vnet-storage.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -112,7 +112,7 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
 Creates a VNET, storage account, and scale set of identical CoreOS virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this VM as a fragment you can use as part a larger solution rather than a self-contained solution.
+Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-coreos-vnet-storage.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
