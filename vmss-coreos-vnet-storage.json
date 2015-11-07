@@ -67,7 +67,7 @@
       "apiVersion":"[variables('apiVersion')]",
       "copy":{
         "name":"storageLoop",
-        "count":"5"
+        "count": 5
       },
       "properties":{
         "accountType":"[variables('storageAccountType')]"
