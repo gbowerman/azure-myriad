@@ -7,7 +7,7 @@
       "metadata": {
         "description": "Scale Set name, also used in this template as a base for naming resources (hence limited to 9 characters or less)."
       },
-      "maxLength": 9
+      "maxLength": 10
     },
     "instanceCount": {
       "type": "int",
