@@ -305,7 +305,7 @@
 							"properties": {
 								"publisher": "WAD2AI.Diagnostics.Test",
 								"type": "IaaSDiagnostics",
-								"typeHandlerVersion": "0.6",
+								"typeHandlerVersion": "0.13",
 								"autoUpgradeMinorVersion": false,
 								"settings": {
 									"xmlCfg": "[base64(concat(variables('wadcfgxstart'),variables('wadmetricsresourceid'),variables('wadcfgxend')))]",
