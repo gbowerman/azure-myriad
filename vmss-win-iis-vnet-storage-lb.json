@@ -280,9 +280,9 @@
 													"id": "[variables('subnetRef')]"
 												},
 												"loadBalancerBackendAddressPools": [
-													{"i
-														d":"[ variables('lbBEAddressPoolID')]"}
-													
+													{
+														"id": "[ variables('lbBEAddressPoolID')]"
+													}
 												]
 											}
 										}
