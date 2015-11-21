@@ -140,8 +140,7 @@
           "storageProfile": {
             "osDisk": {
               "vhdContainers": [
-                "[concat('https://', variables('StorageAccountName'), '.blob.core.windows.net/vmss1')]",
-	  	"[concat('https://', variables('StorageAccountName'), '.blob.core.windows.net/vmss2')]"
+                "[concat('https://', variables('StorageAccountName'), '.blob.core.windows.net/', variables('vmStorageAccountContainerName'))]"
               ],
               "name": "vmssosdisk",
               "caching": "ReadOnly",
@@ -283,4 +282,3 @@
       }
   }
 }
-
