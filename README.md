@@ -1,9 +1,7 @@
 ﻿# azure-myriad
 Templates for Azure Virtual Machine Scale Sets. 
 
-Note 10/6/15: All locations are enabled. Limited public preview has started.
-
-If you wish to participate in this preview, your subscription needs to be whitelisted  to use the virtualMachineScaleSet Azure resource. You can self-nominate <a href="http://aka.ms/vmadvisors">here</a>.  
+Note: For the latest curated templates for VM Scale Sets go here: <a href="https://github.com/Azure/azure-quickstart-templates">https://github.com/Azure/azure-quickstart-templates</a>
 
 VM Scale Sets allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
 -	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
