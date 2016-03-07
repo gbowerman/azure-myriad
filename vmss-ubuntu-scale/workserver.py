@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # workserver.py - simple HTTP server with a do_work / stop_work API
 # GET /do_work activates a worker thread which uses CPU
 # GET /stop_work signals worker thread to stop
@@ -42,17 +41,17 @@ class workServer(BaseHTTPRequestHandler):
             keepWorking = True
             standardResponse(self, 200)
             webOut(self, '<html><head><title>Work started</title></head>')
-            webOut(self, '<p>Worker thread started.</p>')
+            webOut(self, '<h2>Worker thread started on ' + hostName + '.</h2>')
         elif self.path == '/stop_work' or self.path == '/stop_work/':
             # stop worker thread
             keepWorking = False
             standardResponse(self, 200)
             webOut(self, '<html><head><title>Work stopped</title></head>')
-            webOut(self, '<p>Worker thread stopped.</p>')
+            webOut(self, '<h2>Worker thread stopped on ' + hostName + '.</h2>')
         elif self.path == '/':           
             standardResponse(self, 200)
             webOut(self, '<html><head><title>Work interface</title></head>')
-            webOut(self, '<body><h2>Worker interface: ' + hostName + '</h2><p>Usage:</p>')
+            webOut(self, '<body><h2>Worker interface on ' + hostName + '.</h2><p>Usage:</p>')
             webOut(self, '<p>/do_work = start worker thread<br/>/stop_work = stop worker thread</p>')            
         else:
             standardResponse(self, 404)
