@@ -83,9 +83,9 @@
     "lbID":"[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
     "natPoolName":"[concat(parameters('vmssName'), 'natpool')]",
     "bePoolName":"[concat(parameters('vmssName'), 'bepool')]",
-    "natStartPort":9000,
-    "natEndPort":9099,
-    "natBackendPort":9000,
+    "natStartPort":50000,
+    "natEndPort":50099,
+    "natBackendPort":22,
     "nicName":"[concat(parameters('vmssName'), 'nic')]",
     "ipConfigName":"[concat(parameters('vmssName'), 'ipconfig')]",
     "frontEndIPConfigID":"[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
@@ -222,6 +222,18 @@
               "frontendPortRangeStart":"[variables('natStartPort')]",
               "frontendPortRangeEnd":"[variables('natEndPort')]",
               "backendPort":"[variables('natBackendPort')]"
+            }
+          },
+          {
+            "name":"natpool2",
+            "properties":{
+              "frontendIPConfiguration":{
+                "id":"[variables('frontEndIPConfigID')]"
+              },
+              "protocol":"tcp",
+              "frontendPortRangeStart":"9000",
+              "frontendPortRangeEnd":"9099",
+              "backendPort":"9000"
             }
           }
         ]
