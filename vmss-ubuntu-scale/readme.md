@@ -1,4 +1,4 @@
-### Autoscale demo app on Ubuntu 16.04-LTS ###
+### Autoscale demo app on Ubuntu 15.10 ###
 
 Simple self-contained Ubuntu autoscale example. VM Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 50%.
 
