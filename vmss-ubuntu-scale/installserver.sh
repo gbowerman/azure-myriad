@@ -11,5 +11,7 @@ printf 'ExecStart=python %s/workserver.py' $workserver_path >> /etc/systemd/syst
 printf 'ExecReload=/bin/kill -HUP $MAINPID\nKillMode=process\nRestart=on-failure\n' >> /etc/systemd/system/workserver.service
 printf '[Install]\nWantedBy=multi-user.target\nAlias=workserver.service' >> /etc/systemd/system/workserver.service
 
+systemctl start workserver
+
 
 
