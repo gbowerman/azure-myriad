@@ -32,6 +32,15 @@ def standardResponse(self, code):
 def webOut(self, outStr):
     self.wfile.write(bytes(outStr, 'utf-8'))
 
+# HTTP server response
+def httpResponse(self, retCode, body):
+    standardResponse(self, retCode)
+    responseString = '<html><head><title>Work interface</title></head>'
+    responseString += '<body><h2>Worker interface on ' + hostName + '</h2><ul><h3>'
+    responseString += body
+    responseString += '</h3></ul></body></html>'
+    webOut(self, responseString)
+
 # web API for switching on and off workload
 class workServer(BaseHTTPRequestHandler):      
     def do_GET(self):
@@ -39,25 +48,19 @@ class workServer(BaseHTTPRequestHandler):
         if self.path == '/do_work' or self.path == '/do_work/':
             # start worker thread
             keepWorking = True
-            standardResponse(self, 200)
-            webOut(self, '<html><head><title>Work started</title></head>')
-            webOut(self, '<h2>Worker thread started on ' + hostName + '.</h2>')
         elif self.path == '/stop_work' or self.path == '/stop_work/':
             # stop worker thread
             keepWorking = False
-            standardResponse(self, 200)
-            webOut(self, '<html><head><title>Work stopped</title></head>')
-            webOut(self, '<h2>Worker thread stopped on ' + hostName + '.</h2>')
-        elif self.path == '/':           
-            standardResponse(self, 200)
-            webOut(self, '<html><head><title>Work interface</title></head>')
-            webOut(self, '<body><h2>Worker interface on ' + hostName + '.</h2><p>Usage:</p>')
-            webOut(self, '<p>/do_work = start worker thread<br/>/stop_work = stop worker thread</p>')            
+        elif self.path != '/':
+            body = '<br/>URI not found:  ' + self.path + '<br/>'
+            httpResponse(self, 404, body)
+            return
+        if keepWorking == False:
+            body = '<br/>Worker thread is not running. <a href="./do_work">Start work</a><br/>'
         else:
-            standardResponse(self, 404)
-            webOut(self, '<html><head><title>Not found</title></head>')
-            webOut(self, '<body><p>URI not found:  ' + self.path + '</p>')
-        webOut(self, '</body></html>')
+            body = '<br/>Worker thread is running. <a href="./stop_work">Stop work</a><br/>'
+        body += '<br/>Usage:<br/><br/>/do_work = start worker thread<br/>/stop_work = stop worker thread<br/>'
+        httpResponse(self, 200, body)
 
 # start the worker thread
 worker_thread = threading.Thread(target=workerThread, args=())
