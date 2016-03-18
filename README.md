@@ -14,7 +14,7 @@ VM Scale Sets allow you to deploy and manage a group of identical virtual machin
 
 Please note the following limitations:
 
--	For custom images you can only have a single storage account and are hence limited to 40 VMs in a scale set. This will be increased in the future.
+-	For custom images you can only have a single storage account and are hence limited to 20 VMs in a scale set (or 40 if you set the overprovision property to "false". This will be increased in the future.
 -	Maximum number of platform image VMs in a scale set is 100. This will be increased in the future.
 
 ## Working with scale sets using PowerShell
