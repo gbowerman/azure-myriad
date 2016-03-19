@@ -61,9 +61,9 @@
   },
   "variables":{
     "networkApi":"2015-06-15",
-	"storageApi":"2015-06-15",
-	"computeApi":"2016-03-30",
-	"insightsApi": "2015-04-01",
+    "storageApi":"2015-06-15",
+    "computeApi":"2016-03-30",
+    "insightsApi":"2015-04-01",
     "storageAccountType":"Standard_LRS",
     "saCount":5,
     "newStorageAccountSuffix":"[concat(parameters('vmssName'), 'sa')]",
