@@ -116,7 +116,7 @@
     "lbBEAddressPoolID": "[concat(variables('lbID'),'/backendAddressPools/',variables('lbBEAddressPool'))]",
     "lbWebProbeID": "[concat(variables('lbID'),'/probes/',variables('lbWebProbeName'))]",
     "computeApiVersion": "2016-03-30",
-    "networkApiVersion": "2015-06-15"
+    "networkApiVersion": "2016-03-30"
   },
   "resources": [
     {

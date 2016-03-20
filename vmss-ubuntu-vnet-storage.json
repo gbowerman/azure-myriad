@@ -57,7 +57,7 @@
     },
     "imageReference": "[variables('osType')]",
     "computeApiVersion": "2016-03-30",
-    "networkApiVersion": "2015-06-15",
+    "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15"
   },
   "resources": [

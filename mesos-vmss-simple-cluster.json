@@ -18,15 +18,18 @@
       }
     },
     "region": {
-        "type": "string",
-        "defaultValue": "West US",
-        "allowedValues": ["East US", "West US", "West Europe", "East Asia", "Southeast Asia"]
+      "type": "string",
+      "defaultValue": "West US",
+      "allowedValues": [
+        "East US",
+        "West US",
+        "West Europe",
+        "East Asia",
+        "Southeast Asia"
+      ]
     }
   },
   "variables": {
-    "networkApi": "2015-06-15",
-    "storageApi": "2015-06-15",
-    "computeApi": "2016-03-30",
     "imagePublisher": "CoreOS",
     "imageOffer": "CoreOS",
     "imageSku": "Stable",
@@ -44,51 +47,53 @@
     "mesosQuorum": "1",
     "subnet1Prefix": "10.0.0.0/24",
     "addressPrefix": "10.0.0.0/16",
-    "vmSize": "Standard"
+    "vmSize": "Standard",
+    "computeApiVersion": "2016-03-30",
+    "networkApiVersion": "2016-03-30",
+    "storageApiVersion": "2015-06-15"
   },
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
-      "apiVersion": "[variables('networkApi')]",
+      "apiVersion": "[variables('storageApiVersion')]",
       "location": "[parameters('region')]",
       "properties": {
         "accountType": "Standard_LRS"
       }
     },
     {
-        "apiVersion": "[variables('networkApi')]",
-        "type": "Microsoft.Network/networkSecurityGroups",
-        "name": "[variables('networkSecurityGroupName')]",
-        "location": "[parameters('region')]",
-
-        "properties": {
-            "securityRules": [{
-                "name": "Allow_Subnet",
-                "properties": {
-                    "description": "Allow Subnet",
-                    "protocol": "*",
-                    "sourcePortRange": "*",
-                    "destinationPortRange": "*",
-                    "sourceAddressPrefix": "[variables('authorizedSubnet')]",
-                    "destinationAddressPrefix": "*",
-                    "access": "Allow",
-                    "priority": 100,
-                    "direction": "Inbound"
-                }
-            }]
-        }
+      "apiVersion": "[variables('networkApiVersion')]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('networkSecurityGroupName')]",
+      "location": "[parameters('region')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "Allow_Subnet",
+            "properties": {
+              "description": "Allow Subnet",
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "[variables('authorizedSubnet')]",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
     },
-
-
     {
-      "apiVersion": "[variables('networkApi')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[parameters('region')]",
       "dependsOn": [
-          "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
-          "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
       ],
       "properties": {
         "addressSpace": {
@@ -101,8 +106,8 @@
             "name": "[variables('subnet1Name')]",
             "properties": {
               "addressPrefix": "[variables('subnet1Prefix')]",
-              "networkSecurityGroup" : {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
               }
             }
           }
@@ -113,7 +118,7 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "masterPublicIP",
       "location": "[parameters('region')]",
-      "apiVersion": "[variables('networkApi')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
@@ -123,22 +128,22 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "[variables('computeApi')]",
+      "apiVersion": "[variables('computeApiVersion')]",
       "name": "slaveset",
       "location": "[parameters('region')]",
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
-       "sku": {
-         "name": "Standard_A2",
-         "tier": "[variables('vmSize')]",
-         "capacity": "[parameters('numberOfSlaves')]"
+      "sku": {
+        "name": "Standard_A2",
+        "tier": "[variables('vmSize')]",
+        "capacity": "[parameters('numberOfSlaves')]"
       },
       "properties": {
-         "overprovision": "true", 
-         "upgradePolicy": {
-         "mode": "Manual"
+        "overprovision": "true",
+        "upgradePolicy": {
+          "mode": "Manual"
         },
         "virtualMachineProfile": {
           "storageProfile": {
@@ -165,39 +170,39 @@
               "disablePasswordAuthentication": "true",
               "ssh": {
                 "publicKeys": [
-                 {
-                   "path": "[variables('sshKeyPath')]",
-                   "keyData": "[parameters('sshKeyData')]"
-                 }
-               ]
-              }
-            }
-          },
-         "networkProfile": {
-           "networkInterfaceConfigurations": [
-            {
-              "name": "slaveNodeNic",
-              "properties": {
-              	"primary": "true",
-                "ipConfigurations": [
-                 {
-                   "name": "nicipconfig",
-                   "properties": {
-                      "subnet": {
-                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnet1Name'))]"
-                      }
-                   }
-                 }
+                  {
+                    "path": "[variables('sshKeyPath')]",
+                    "keyData": "[parameters('sshKeyData')]"
+                  }
                 ]
               }
             }
-          ]
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "slaveNodeNic",
+                "properties": {
+                  "primary": "true",
+                  "ipConfigurations": [
+                    {
+                      "name": "nicipconfig",
+                      "properties": {
+                        "subnet": {
+                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnet1Name'))]"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         }
-       }
       }
     },
     {
-      "apiVersion": "[variables('networkApi')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "masterNodeNic",
       "location": "[parameters('region')]",
@@ -223,7 +228,7 @@
       }
     },
     {
-      "apiVersion": "[variables('computeApi')]",
+      "apiVersion": "[variables('computeApiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "mastervm",
       "location": "[parameters('region')]",
@@ -252,12 +257,12 @@
           }
         },
         "storageProfile": {
-            "imageReference": {
-              "publisher": "[variables('imagePublisher')]",
-              "offer": "[variables('imageOffer')]",
-              "sku": "[variables('imageSku')]",
-              "version": "latest"
-            },
+          "imageReference": {
+            "publisher": "[variables('imagePublisher')]",
+            "offer": "[variables('imageOffer')]",
+            "sku": "[variables('imageSku')]",
+            "version": "latest"
+          },
           "osDisk": {
             "name": "mastervm",
             "vhd": {
@@ -277,12 +282,10 @@
       }
     }
   ],
-  "outputs":
-  {
-      "masterURL0":
-      {
-          "value": "[reference('masterPublicIP').dnsSettings.fqdn]",
-          "type": "string"
-      }
+  "outputs": {
+    "masterURL0": {
+      "value": "[reference('masterPublicIP').dnsSettings.fqdn]",
+      "type": "string"
+    }
   }
 }

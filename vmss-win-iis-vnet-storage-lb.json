@@ -108,7 +108,7 @@
     "wadmetricsresourceid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/',parameters('vmssName'))]",
     "wadcfgxend": "[concat('\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>')]",
     "computeApiVersion": "2016-03-30",
-    "networkApiVersion": "2015-06-15",
+    "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15",
     "insightsApiVersion": "2015-04-01"
   },
