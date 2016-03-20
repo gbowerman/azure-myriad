@@ -1,6 +1,6 @@
 ### Autoscale demo app on Ubuntu 15.10 ###
 
-Simple self-contained Ubuntu autoscale example. VM Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 50%.
+Simple self-contained Ubuntu autoscale example. VM Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 30%.
 
 - Deploy the scale set with an instance count of 1 
 - After it is deployed look at the resource group public IP address resource (in portal or resources explorer). Get the IP or domain name.

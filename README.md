@@ -72,10 +72,10 @@ azure group deployment create -g myrg -n dep2 --template-uri https://raw.githubu
 this should ask for parameters dynamically, or you could specify them as arguments
 
 ### get scale set details
-azure resource show -n vmssname -r Microsoft.Compute/virtualMachineScaleSets -o 2015-06-15 -g myrg
+azure resource show -n vmssname -r Microsoft.Compute/virtualMachineScaleSets -o 2016-03-30 -g myrg
  
 ### or for more details:
-azure resource show –n vmssname –r Microsoft.Compute/virtualMachineScaleSets –o 2015-06-15 –g myrg –json –vv
+azure resource show –n vmssname –r Microsoft.Compute/virtualMachineScaleSets –o 2016-03-30 –g myrg –json –vv
 
 
 ## Templates 
@@ -85,7 +85,7 @@ azure resource show –n vmssname –r Microsoft.Compute/virtualMachineScaleSets
 Creates a VNET, storage account, and scale set of identical Ubuntu virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
+Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtual machine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-ubuntu-vnet-storage.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -96,7 +96,7 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
 Creates a VNET, storage account, and scale set of identical Windows virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
+Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtual machine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-win-vnet-storage.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -108,7 +108,7 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
 Creates a VNET, storage account, and scale set of identical CoreOS virtual machines.
 InstanceCount parameter describes the number of VMs.
 
-Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtualMachine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
+Note: If you want to connect to your VMs from outside the VNET you'll need to also create a public IP address associated with a load balancer or virtual machine. Hence think of this template as a fragment you can use as part a larger solution rather than a self-contained solution.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-coreos-vnet-storage.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -117,7 +117,7 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
 
 ### mesos-vmss-simple-cluster.json
 
-Create a simple mesos cluster with a single master, with a VM Scale Set of slaves. Connect to port 505 of the public IP address created in your resource group to see the dashboard.
+Create a simple mesos cluster with a single master, with a VM Scale Set of slaves. Connect to port 5050 of the public IP address created in your resource group to see the dashboard.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fmesos-vmss-simple-cluster.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -126,30 +126,10 @@ Create a simple mesos cluster with a single master, with a VM Scale Set of slave
 
 ### vmss-scale-in-or-out.json
 
-Reduce or increase the number of VM instances in a Scale Set. Platform independent.
+Reduce or increase the number of VM instances in a Scale Set. Platform independent. Note: Check the sku setting in the template and make sure it matches the virtual machine size in your existing VM Scale Set.
 InstanceCount parameter describes the number of VMs.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-scale-in-or-out.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-
-### multiple-vmss-ubuntu-vnet-multiple-storage.json
-
-Create multiple VMSS each with:
-A VNET, three storage accounts, and scale set of identical Ubuntu virtual machines.
-InstanceCount parameter describes the number of VMs.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fmultiple%2Fmultiple-vmss-ubuntu-vnet-multiple-storage-deploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-
-### vmss-nat-pools.json
-
-Create an Ubuntu VMSS with load balancer, public IP and inbound NAT rules. SSH to port 50000 of the public IP address will connect to port 22 of the 1st VM in the scale set. SSH to port 50001 will connect to port 22 of the second VM and so on.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fnat-pools%2Fvmss-nat-pools.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -218,4 +198,21 @@ Simple self-contained Ubuntu/Apache/PHP autoscale & load balancing example. Scal
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+### Autoscale demo app on Ubuntu 15.10 ###
+
+Simple self-contained Ubuntu autoscale example. VM Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 30%.
+
+- Deploy the scale set with an instance count of 1 
+- After it is deployed look at the resource group public IP address resource (in portal or resources explorer). Get the IP or domain name.
+- Browse to the website (port 9000), which shows the current backend VM name.
+- To start doing work on the first VM browse to dns:9000/do_work
+- After a few minutes the VM Scale Set capacity will increase.
+- You can stop doing work by browsing to dns:9000/stop_work.
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-ubuntu-scale%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-ubuntu-scale%2Fazuredeploy.json" target="_blank">
+    <img src="http://armviz.io/visualizebutton.png"/>
+</a>
 
