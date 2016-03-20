@@ -37,11 +37,10 @@
       "defaultValue": "15.10",
       "allowedValues": [
         "15.10",
-        "15.04",
-        "14.04.2-LTS"
+        "14.04.4-LTS"
       ],
       "metadata": {
-        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values are: 15.04, 14.04.2-LTS."
+        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values are: 15.10, 14.04.4-LTS."
       }
     },
     "vmssName": {
@@ -72,7 +71,6 @@
     }
   },
   "variables": {
-    "apiVersion": "2015-06-15",
     "storageAccountType": "Standard_LRS",
     "saCount": 5,
     "namingInfix": "[toLower(parameters('vmssName'))]",
@@ -108,14 +106,17 @@
       "sku": "[parameters('ubuntuOSVersion')]",
       "version": "latest"
     },
-    "imageReference": "[variables('osType')]"
+    "imageReference": "[variables('osType')]",
+    "computeApiVersion": "2016-03-30",
+    "networkApiVersion": "2015-06-15",
+    "storageApiVersion": "2015-06-15"
   },
   "resources": [
     {
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[parameters('resourceLocation')]",
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -136,7 +137,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[concat(variables('uniqueStringArray')[copyIndex()], variables('newStorageAccountSuffix'))]",
       "location": "[parameters('resourceLocation')]",
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "[variables('storageApiVersion')]",
       "copy": {
         "name": "storageLoop",
         "count": "[variables('saCount')]"
@@ -149,7 +150,7 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
       "location": "[parameters('resourceLocation')]",
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
@@ -161,7 +162,7 @@
       "type": "Microsoft.Network/loadBalancers",
       "name": "[variables('loadBalancerName')]",
       "location": "[parameters('resourceLocation')]",
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
       ],
@@ -201,7 +202,7 @@
       "type": "Microsoft.Compute/virtualMachineScaleSets",
       "name": "[variables('namingInfix')]",
       "location": "[parameters('resourceLocation')]",
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "[variables('computeApiVersion')]",
       "dependsOn": [
         "storageLoop",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]",
@@ -276,12 +277,13 @@
                   "type": "DockerExtension",
                   "typeHandlerVersion": "1.0",
                   "autoUpgradeMinorVersion": true,
-                  "settings": { }
+                  "settings": {}
                 }
               }
             ]
           }
-        }
+        },
+        "overprovision": "true"
       }
     }
   ]
