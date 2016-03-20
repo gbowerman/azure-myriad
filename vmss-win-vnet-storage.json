@@ -30,7 +30,6 @@
     }
   },
   "variables": {
-    "apiVersion": "2015-06-15",
     "newStorageAccountSuffix": "[concat(parameters('vmssName'), 'sa')]",
     "uniqueStringArray": [
       "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '0')))]",
@@ -56,14 +55,17 @@
       "sku": "2012-R2-Datacenter",
       "version": "latest"
     },
-    "imageReference": "[variables('osType')]"
+    "imageReference": "[variables('osType')]",
+    "computeApiVersion": "2016-03-30",
+    "networkApiVersion": "2015-06-15",
+    "storageApiVersion": "2015-06-15"
   },
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[concat(variables('uniqueStringArray')[copyIndex()], variables('newStorageAccountSuffix'))]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "[variables('storageApiVersion')]",
       "copy": {
         "name": "storageLoop",
         "count": 5
@@ -76,7 +78,7 @@
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -94,10 +96,10 @@
       }
     },
     {
-     "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
       "name": "[parameters('vmssName')]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "[variables('computeApiVersion')]",
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[0], variables('newStorageAccountSuffix'))]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[1], variables('newStorageAccountSuffix'))]",
@@ -136,7 +138,7 @@
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]"
           },
-           "networkProfile": {
+          "networkProfile": {
             "networkInterfaceConfigurations": [
               {
                 "name": "[variables('nicName')]",
@@ -156,7 +158,8 @@
               }
             ]
           }
-        }
+        },
+        "overprovision": "true"
       }
     }
   ]

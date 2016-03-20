@@ -1,118 +1,120 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "vmSSName": {
-            "type": "string"
-        },
-        "instanceCount": {
-            "type": "string",
-            "metadata": {
-                "description": "Number of VM instances"
-            }
-        },
-        "newStorageAccountSuffix": {
-            "type": "string"
-        },
-        "vmImage": {
-            "type": "string"
-        },
-        "adminUsername": {
-            "type": "string"
-        },
-        "adminPassword": {
-            "type": "securestring"
-        }
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmSSName": {
+      "type": "string"
     },
-    "variables": {
-        "addressPrefix": "10.0.0.0/16",
-        "subnetName": "subnet",
-        "subnetPrefix": "10.0.0.0/24",
-        "virtualNetworkName": "vmssvnet",
-        "location": "[resourceGroup().location]"
+    "instanceCount": {
+      "type": "string",
+      "metadata": {
+        "description": "Number of VM instances"
+      }
     },
-    "resources": [
-        {
-            "apiVersion": "2015-06-15",
-            "type": "Microsoft.Network/virtualNetworks",
-            "name": "[variables('virtualNetworkName')]",
-            "location": "[variables('location')]",
+    "newStorageAccountSuffix": {
+      "type": "string"
+    },
+    "vmImage": {
+      "type": "string"
+    },
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "addressPrefix": "10.0.0.0/16",
+    "subnetName": "subnet",
+    "subnetPrefix": "10.0.0.0/24",
+    "virtualNetworkName": "vmssvnet",
+    "location": "[resourceGroup().location]",
+    "computeApiVersion": "2016-03-30",
+    "networkApiVersion": "2015-06-15"
+  },
+  "resources": [
+    {
+      "apiVersion": "[variables('networkApiVersion')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworkName')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
             "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "[variables('addressPrefix')]"
-                    ]
-                },
-                "subnets": [
+              "addressPrefix": "[variables('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "apiVersion": "[variables('computeApiVersion')]",
+      "name": "[parameters('vmSSName')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "vmsstag1": "Myriad"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+      ],
+      "sku": {
+        "name": "Standard_A1",
+        "tier": "Standard",
+        "capacity": "[parameters('instanceCount')]"
+      },
+      "properties": {
+        "upgradePolicy": {
+          "mode": "Manual"
+        },
+        "virtualMachineProfile": {
+          "storageProfile": {
+            "osDisk": {
+              "name": "vmssosdisk",
+              "caching": "ReadOnly",
+              "createOption": "FromImage",
+              "osType": "Linux",
+              "image": {
+                "uri": "[parameters('vmImage')]"
+              }
+            }
+          },
+          "osProfile": {
+            "computerNamePrefix": "[parameters('vmSSName')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "nic1",
+                "properties": {
+                  "primary": "true",
+                  "ipConfigurations": [
                     {
-                        "name": "[variables('subnetName')]",
-                        "properties": {
-                            "addressPrefix": "[variables('subnetPrefix')]"
+                      "name": "ip1",
+                      "properties": {
+                        "subnet": {
+                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
                         }
+                      }
                     }
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Compute/virtualMachineScaleSets",
-            "apiVersion": "2015-06-15",
-            "name": "[parameters('vmSSName')]",
-            "location": "[variables('location')]",
-            "tags": {
-                "vmsstag1": "Myriad"
-            },
-            "dependsOn": [
-                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-            ],
-            "sku": {
-                "name": "Standard_A1",
-                "tier": "Standard",
-                "capacity": "[parameters('instanceCount')]"
-            },
-            "properties": {
-                "upgradePolicy": {
-                    "mode": "Manual"
-                },
-                "virtualMachineProfile": {
-                    "storageProfile": {
-                        "osDisk": {
-                            "name": "vmssosdisk",
-                            "caching": "ReadOnly",
-                            "createOption": "FromImage",
-                            "osType": "Linux",
-                            "image": {
-                                "uri": "[parameters('vmImage')]"
-                            }
-                        }
-                    },
-                    "osProfile": {
-                        "computerNamePrefix": "[parameters('vmSSName')]",
-                        "adminUsername": "[parameters('adminUsername')]",
-                        "adminPassword": "[parameters('adminPassword')]"
-                    },
-                    "networkProfile": {
-                        "networkInterfaceConfigurations": [
-                            {
-                                "name": "nic1",
-                                "properties": {
-                                    "primary": "true",
-                                    "ipConfigurations": [
-                                        {
-                                            "name": "ip1",
-                                            "properties": {
-                                                "subnet": {
-                                                    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
+                  ]
                 }
-            }
-        }
-    ]
+              }
+            ]
+          }
+        },
+        "overprovision": "true"
+      }
+    }
+  ]
 }
-
