@@ -35,7 +35,7 @@ def webOut(self, outStr):
 # HTTP server response
 def httpResponse(self, retCode, body):
     standardResponse(self, retCode)
-    responseString = '<html><head><title>Work interface</title></head>'
+    responseString = '<html><head><title>Work interface - build</title></head>'
     responseString += '<body><h2>Worker interface on ' + hostName + '</h2><ul><h3>'
     responseString += body
     responseString += '</h3></ul></body></html>'
