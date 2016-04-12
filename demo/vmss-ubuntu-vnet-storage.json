@@ -38,7 +38,7 @@
       "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '3')))]",
       "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '4')))]"
     ],
-    "vmSize": "Standard_A1",
+    "vmSize": "Standard_D1_v2",
     "vhdContainerName": "[concat(parameters('vmssName'), 'vhd')]",
     "osDiskName": "[concat(parameters('vmssName'), 'osdisk')]",
     "virtualNetworkName": "[concat(parameters('vmssName'), 'vnet')]",
@@ -47,7 +47,7 @@
     "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
     "addressPrefix": "10.0.0.0/16",
     "subnetPrefix": "10.0.0.0/24",
-    "storageAccountType": "Standard_LRS",
+    "storageAccountType": "Premium_LRS",
     "location": "[resourceGroup().location]",
     "osType": {
           "publisher": "Canonical",
