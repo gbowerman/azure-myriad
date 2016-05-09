@@ -4,7 +4,7 @@ Simple self-contained Ubuntu autoscale example. VM Scale Set scales up when avg 
 
 - Deploy the scale set with an instance count of 1 
 - After it is deployed look at the resource group public IP address resource (in portal or resources explorer). Get the IP or domain name.
-- Browse to the website (port 9000), which shows the current backend VM name.
+- Browse to the website of vm#0 (port 9000), which shows the current backend VM name.
 - To start doing work on the first VM browse to dns:9000/do_work
 - After a few minutes the VM Scale Set capacity will increase.
 - You can stop doing work by browsing to dns:9000/stop_work.

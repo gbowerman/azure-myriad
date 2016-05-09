@@ -11,6 +11,14 @@ printf 'ExecStart=/usr/bin/python3 %s/workserver.py\n' $workserver_path >> /etc/
 printf 'ExecReload=/bin/kill -HUP $MAINPID\nKillMode=process\nRestart=on-failure\n' >> /etc/systemd/system/workserver.service
 printf '[Install]\nWantedBy=multi-user.target\nAlias=workserver.service' >> /etc/systemd/system/workserver.service
 
+# install python3-bottle (in a loop in case of conflict with install happening
+# on VM init, so won't be able to grab the dpkg lock immediately)
+until apt-get -y update && apt-get -y install python3-bottle
+do
+  echo "Try again"
+  sleep 2
+done
+
 systemctl start workserver
 
 
