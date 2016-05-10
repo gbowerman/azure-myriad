@@ -7,24 +7,24 @@ import socket
 import threading
 import time
 
-hostName = socket.gethostname()
-hostPort = 9000
-keepWorking = False  # boolean to switch worker thread on or off
+hostname = socket.gethostname()
+hostport = 9000
+keepworking = False  # boolean to switch worker thread on or off
 
 
 # thread which maximizes CPU usage while the keepWorking global is True
-def workerThread():
+def workerthread():
     # outer loop to run while waiting
     while (True):
         # main loop to thrash the CPI
-        while (keepWorking == True):
+        while (keepworking == True):
             for x in range(1, 69):
                 y = math.factorial(x)
         time.sleep(3)
 
 
 # start the worker thread
-worker_thread = threading.Thread(target=workerThread, args=())
+worker_thread = threading.Thread(target=workerthread, args=())
 worker_thread.start()
 
 
