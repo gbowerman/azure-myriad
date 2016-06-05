@@ -92,8 +92,6 @@
     "nicName":"[concat(parameters('vmssName'), 'nic')]",
     "ipConfigName":"[concat(parameters('vmssName'), 'ipconfig')]",
     "frontEndIPConfigID":"[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
-    "lbPoolID":"[concat(variables('lbID'),'/backendAddressPools/', variables('bePoolName'))]",
-    "lbProbeID":"[concat(variables('lbID'),'/probes/tcpProbe')]",
     "diagnosticsStorageAccountName":"[concat(variables('uniqueStringArray')[0], variables('newStorageAccountSuffix'))]",
     "diagnosticsStorageAccountResourceGroup":"[resourceGroup().name]",
     "accountid":"[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('diagnosticsStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
@@ -180,38 +178,6 @@
         "backendAddressPools":[
           {
             "name":"[variables('bePoolName')]"
-          }
-        ],
-        "loadBalancingRules":[
-          {
-            "name":"LBRule",
-            "properties":{
-              "frontendIPConfiguration":{
-                "id":"[variables('frontEndIPConfigID')]"
-              },
-              "backendAddressPool":{
-                "id":"[variables('lbPoolID')]"
-              },
-              "protocol":"tcp",
-              "frontendPort":80,
-              "backendPort":80,
-              "enableFloatingIP":false,
-              "idleTimeoutInMinutes":5,
-              "probe":{
-                "id":"[variables('lbProbeID')]"
-              }
-            }
-          }
-        ],
-        "probes":[
-          {
-            "name":"tcpProbe",
-            "properties":{
-              "protocol":"tcp",
-              "port":80,
-              "intervalInSeconds":"5",
-              "numberOfProbes":"2"
-            }
           }
         ],
         "inboundNatPools":[
