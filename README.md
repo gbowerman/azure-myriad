@@ -30,6 +30,12 @@ See [Change the instance count of an Azure VM Scale Set](https://msftstack.wordp
 
 ## Working with scale sets using CLI
 
+tl;dr Install the latest Azure CLI and run:
+
+&nbsp;&nbsp;&nbsp;azure vmss -h
+
+&nbsp;&nbsp;&nbsp;azure vmssvm -h
+
 See [Create a Linux Virtual Mache Scale Set using Azure CLI](https://azure.microsoft.com/documentation/articles/virtual-machine-scale-sets-linux-create-cli/)
 
 
