@@ -3,7 +3,7 @@ Templates for Azure Virtual Machine Scale Sets.
 
 Note: For the latest curated templates for VM Scale Sets go here: <a href="https://github.com/Azure/azure-quickstart-templates">https://github.com/Azure/azure-quickstart-templates</a>
 
-VM Scale Sets allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
+[VM Scale Sets](https://azure.microsoft.com/services/virtual-machine-scale-sets/) allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
 -	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
 -	Performance - deploying multiple VMs results in a single call to the fabric, allowing inherent performance optimizations.
 -	Customization - built on Azure IaaS, Scale Sets support all Windows and Linux VMs including custom images and extensions.
@@ -19,66 +19,23 @@ Please note the following limitations:
 
 ## Working with scale sets using PowerShell
 
-Note: Imperative commands to manage scale sets using CLI and PowerShell are being worked on. The following commands manage templates where the VM Scale Sets are modelled.
+See: [Create a Windows Virtual Machine Scale Set using Azure PowerShell](https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-windows-create/), or just install the latest Azure PowerShell and run: 
 
-Download a recent <a href="https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/">Aure PowerShell</a>.
- 
-You can deploy VMSS templates and query resources using any current Azure PowerShell version.
-
-To get started switch to ARM and create a resource group (switching to ARM won't be needed with the latest PowerShell):
-
-Switch-AzureMode -Name AzureResourceManager New-AzureResourcegroup -name myrg -location 'Southeast Asia'
-
-###	Create a scale set
-New-AzureResourceGroupDeployment -name dep1 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg -TemplateUri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-ubuntu-vnet-storage.json
-
-It will ask you any parameters you missed (like location for example).
-
-### Get scale set details
-
-Get-AzureResource -name myvmss -ResourceGroupName myrg -ResourceType Microsoft.Compute/virtualMachineScaleSets -ApiVersion 2015-06-15
-
-or for more detail pipe it through | ConvertTo-Json -Depth 10
-
-or for even more detail add –debug to your command.
+&nbsp;&nbsp;&nbsp;_gcm \*vmss\*_
 
 ###	Scaling out or scaling in
 
-New-AzureResourceGroupDeployment -name dep2 -vmSSName myvmss -instanceCount 2 -ResourceGroupName myrg –TemplateUri https://github.com/gbowerman/azure-myriad/blob/master/vmss-scale-in-or-out.json 
+See [Change the instance count of an Azure VM Scale Set](https://msftstack.wordpress.com/2016/05/13/change-the-instance-count-of-an-azure-vm-scale-set/)
 
-###	Remove a Scale Set
-
-Easy: Remove the resource group:
-
-Remove-AzureResourceGroup -Name myrg
-
-Precise: Remove a resource:
-
-Remove-AzureResource -Name myvmss -ResourceGroupName myrg -ApiVersion 2015-06-15 -ResourceType Microsoft.Compute/virtualMachineScaleSets
 
 ## Working with scale sets using CLI
 
-You can deploy VMSS templates and query resources using any current Azure CLI version.
-The easiest way to install CLI is from a Docker container. For installing see: <a href="https://azure.microsoft.com/en-us/blog/run-azure-cli-as-a-docker-container-avoid-installation-and-setup/">the azure-cli container announcement</a>.
-For using CLI see the: <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli/">Azure CLI documentation</a>
-
-### VM Scale Set CLI examples
-### create a resource group
-azure group create myrg "Southeast Asia" 
-
-### create a scale set
-azure group deployment create -g myrg -n dep2 --template-uri https://raw.githubusercontent.com/gbowerman/azure-myriad/master/vmss-ubuntu-vnet-storage.json
-
-this should ask for parameters dynamically, or you could specify them as arguments
-
-### get scale set details
-azure resource show -n vmssname -r Microsoft.Compute/virtualMachineScaleSets -o 2016-03-30 -g myrg
- 
-### or for more details:
-azure resource show –n vmssname –r Microsoft.Compute/virtualMachineScaleSets –o 2016-03-30 –g myrg –json –vv
+See [Create a Linux Virtual Mache Scale Set using Azure CLI](https://azure.microsoft.com/documentation/articles/virtual-machine-scale-sets-linux-create-cli/)
 
 
 ## Templates 
+
+Note: Some of these are experimental and some are not maintained. The official repository for VM Scale Set example templates is: [Azure Quick Start Templates](https://github.com/Azure/azure-quickstart-templates)
 
 ### vmss-ubuntu-vnet-storage.json
 

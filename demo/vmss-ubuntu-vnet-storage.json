@@ -50,10 +50,10 @@
     "storageAccountType": "Standard_LRS",
     "location": "[resourceGroup().location]",
     "osType": {
-          "publisher": "Canonical",
-          "offer": "UbuntuServer",
-          "sku": "14.04.2-LTS",
-          "version": "14.04.201506100"
+      "publisher": "Canonical",
+      "offer": "UbuntuServer",
+      "sku": "14.04.2-LTS",
+      "version": "14.04.201506100"
     },
     "imageReference": "[variables('osType')]",
     "computeApiVersion": "2016-03-30",

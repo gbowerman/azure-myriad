@@ -1,11 +1,12 @@
 # workserver.py - simple HTTP server with a do_work / stop_work API
 # GET /do_work activates a worker thread which uses CPU
 # GET /stop_work signals worker thread to stop
-from bottle import route, run
 import math
 import socket
 import threading
 import time
+
+from bottle import route, run
 
 hostname = socket.gethostname()
 hostport = 9000
