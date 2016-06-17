@@ -107,11 +107,11 @@ Port 80 is load balanced to the web app running on each VM Instance.
 </a>
 
 
-### vmss-customimage.json
+### vmss-linux-customimage.json
 
 Create a VMSS from a custom image.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Falanst%2Fazure-myriad%2Fpatch-8%2Fvmss-customimage.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-linux-customimage.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
