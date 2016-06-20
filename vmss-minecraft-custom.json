@@ -130,7 +130,17 @@
             }
           }
         ],
-   
+        "probes": [
+          {
+            "name": "tcpProbe",
+            "properties": {
+              "protocol": "tcp",
+              "port": 25565,
+              "intervalInSeconds": "5",
+              "numberOfProbes": "2"
+            }
+          }
+        ],
         "inboundNatPools": [
           {
             "name": "[variables('natPoolName')]",
