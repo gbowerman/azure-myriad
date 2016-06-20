@@ -115,6 +115,13 @@ Create a VMSS from a custom image.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+### vmss-minecraft-custom.json
+
+Create a VMSS from a custom Minecraft server image, including a load balancer rule to route incoming Minecraft default TCP port connections to 25565.
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-minecraft-custom.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
 
 ### autoscale/vmss-win-autoscale.json ###
 
