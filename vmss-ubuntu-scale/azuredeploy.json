@@ -8,6 +8,8 @@
         "East US",
         "East US 2",
         "West US",
+        "Canada Central",
+        "Canada East",
         "Central US",
         "South Central US",
         "North Central US",
@@ -19,7 +21,10 @@
         "Japan East",
         "Brazil South",
         "Australia East",
-        "Australia Southeast"
+        "Australia Southeast",
+        "South India",
+        "Central India",
+        "West India"
       ],
       "metadata": {
         "description": "Azure region where all resources will be deployed. This is distinct from resource group location."
@@ -75,6 +80,13 @@
       "[concat(uniqueString(concat(resourceGroup().id, variables('newStorageAccountSuffix'), '4')))]"
     ],
     "vhdContainerName": "[concat(parameters('vmssName'), 'vhd')]",
+    "vhdContainerArray": [
+      "[concat('https://', variables('uniqueStringArray')[0], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+      "[concat('https://', variables('uniqueStringArray')[1], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+      "[concat('https://', variables('uniqueStringArray')[2], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+      "[concat('https://', variables('uniqueStringArray')[3], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+      "[concat('https://', variables('uniqueStringArray')[4], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]"
+    ],
     "osDiskName": "[concat(parameters('vmssName'), 'osdisk')]",
     "addressPrefix": "10.0.0.0/16",
     "subnetPrefix": "10.0.0.0/24",
@@ -231,13 +243,7 @@
         "virtualMachineProfile": {
           "storageProfile": {
             "osDisk": {
-              "vhdContainers": [
-                "[concat('https://', variables('uniqueStringArray')[0], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
-                "[concat('https://', variables('uniqueStringArray')[1], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
-                "[concat('https://', variables('uniqueStringArray')[2], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
-                "[concat('https://', variables('uniqueStringArray')[3], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
-                "[concat('https://', variables('uniqueStringArray')[4], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]"
-              ],
+              "vhdContainers": "[take(variables('vhdContainerArray'), variables('saCount'))]",
               "name": "[variables('osDiskName')]",
               "caching": "ReadOnly",
               "createOption": "FromImage"
