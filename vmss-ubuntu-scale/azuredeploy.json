@@ -32,7 +32,7 @@
     },
     "vmSku": {
       "type": "string",
-      "defaultValue": "Standard_D1_v2",
+      "defaultValue": "Standard_DS1",
       "metadata": {
         "description": "Size of VMs in the VM Scale Set."
       }
@@ -65,11 +65,11 @@
     }
   },
   "variables": {
-    "networkApi": "2016-03-30",
+    "networkApi": "2016-06-01",
     "storageApi": "2015-06-15",
     "computeApi": "2016-03-30",
     "insightsApi": "2015-04-01",
-    "storageAccountType": "Standard_LRS",
+    "storageAccountType": "Premium_LRS",
     "saCount": 5,
     "newStorageAccountSuffix": "[concat(parameters('vmssName'), 'sa')]",
     "uniqueStringArray": [
@@ -99,7 +99,7 @@
     "natPoolName": "[concat(parameters('vmssName'), 'natpool')]",
     "bePoolName": "[concat(parameters('vmssName'), 'bepool')]",
     "natStartPort": 50000,
-    "natEndPort": 50099,
+    "natEndPort": 50120,
     "natBackendPort": 22,
     "nicName": "[concat(parameters('vmssName'), 'nic')]",
     "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
@@ -213,7 +213,7 @@
               },
               "protocol": "tcp",
               "frontendPortRangeStart": "9000",
-              "frontendPortRangeEnd": "9099",
+              "frontendPortRangeEnd": "9120",
               "backendPort": "9000"
             }
           }
