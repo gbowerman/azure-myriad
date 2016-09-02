@@ -52,8 +52,8 @@
     "osType": {
       "publisher": "Canonical",
       "offer": "UbuntuServer",
-      "sku": "14.04.2-LTS",
-      "version": "14.04.201506100"
+      "sku": "16.04.0-LTS",
+      "version": "latest"
     },
     "imageReference": "[variables('osType')]",
     "computeApiVersion": "2016-03-30",
