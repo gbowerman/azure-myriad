@@ -66,7 +66,7 @@
   },
   "variables": {
     "networkApi": "2016-06-01",
-    "storageApi": "2015-06-15",
+    "storageApi": "2016-06-01",
     "computeApi": "2016-03-30",
     "insightsApi": "2015-04-01",
     "storageAccountType": "Standard_LRS",
@@ -152,8 +152,11 @@
         "name": "storageLoop",
         "count": "[variables('saCount')]"
       },
+      "sku": {
+        "name": "[variables('storageAccountType')]"
+      },
+      "kind": "Storage",
       "properties": {
-        "accountType": "[variables('storageAccountType')]"
       }
     },
     {
