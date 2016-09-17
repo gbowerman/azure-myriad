@@ -39,6 +39,7 @@
     "subnet1Name": "Data",
     "uniqueName": "[resourceGroup().name]",
     "storageAccountName": "[concat(variables('uniqueName'), 'dcsan')]",
+    "storageAccountType": "Standard_LRS",
     "virtualNetworkName": "[concat(variables('uniqueName'), 'dcvn')]",
     "networkSecurityGroupName": "[concat(variables('uniqueName'), 'dcnsg')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
@@ -49,8 +50,8 @@
     "addressPrefix": "10.0.0.0/16",
     "vmSize": "Standard",
     "computeApiVersion": "2016-03-30",
-    "networkApiVersion": "2016-03-30",
-    "storageApiVersion": "2015-06-15"
+    "networkApiVersion": "2016-06-01",
+    "storageApiVersion": "2016-01-01"
   },
   "resources": [
     {
@@ -58,8 +59,10 @@
       "name": "[variables('storageAccountName')]",
       "apiVersion": "[variables('storageApiVersion')]",
       "location": "[parameters('region')]",
-      "properties": {
-        "accountType": "Standard_LRS"
+      "properties": {},
+      "kind": "Storage",
+      "sku": {
+        "name": "[variables('storageAccountType')]"
       }
     },
     {

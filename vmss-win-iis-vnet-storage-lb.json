@@ -108,7 +108,7 @@
     "wadmetricsresourceid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/',parameters('vmssName'))]",
     "wadcfgxend": "[concat('\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>')]",
     "computeApiVersion": "2016-03-30",
-    "networkApiVersion": "2016-03-30",
+    "networkApiVersion": "2016-06-01",
     "storageApiVersion": "2016-01-01",
     "insightsApiVersion": "2015-04-01"
   },
@@ -126,8 +126,7 @@
         "name": "[variables('storageAccountType')]"
       },
       "kind": "Storage",
-      "properties": {
-      }
+      "properties": {}
     },
     {
       "apiVersion": "[variables('networkApiVersion')]",
@@ -327,7 +326,7 @@
                   },
                   "protectedSettings": {
                     "storageAccountName": "[variables('diagnosticsStorageAccountName')]",
-                    "storageAccountKey": "[listkeys(variables('accountid'), '2015-06-15').key1]",
+                    "storageAccountKey": "[listkeys(variables('accountid'), variables('storageApi')).keys[0].value]",
                     "storageAccountEndPoint": "https://core.windows.net"
                   }
                 }

@@ -57,8 +57,8 @@
     },
     "imageReference": "[variables('osType')]",
     "computeApiVersion": "2016-03-30",
-    "networkApiVersion": "2016-03-30",
-    "storageApiVersion": "2015-06-15"
+    "networkApiVersion": "2016-06-01",
+    "storageApiVersion": "2016-01-01"
   },
   "resources": [
     {
@@ -70,8 +70,10 @@
         "name": "storageLoop",
         "count": 5
       },
-      "properties": {
-        "accountType": "[variables('storageAccountType')]"
+      "properties": {},
+      "kind": "Storage",
+      "sku": {
+        "name": "[variables('storageAccountType')]"
       }
     },
     {
