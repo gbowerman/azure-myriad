@@ -37,10 +37,6 @@
     }
   },
   "variables": {
-    "networkApi": "2016-06-01",
-    "storageApi": "2016-01-01",
-    "computeApi": "2016-03-30",
-    "insightsApi": "2015-04-01",
     "location": "[resourceGroup().location]",
     "storageAccountType": "Standard_LRS",
     "saCount": 5,
@@ -92,14 +88,18 @@
       "sku": "16.04.0-LTS",
       "version": "latest"
     },
-    "imageReference": "[variables('osType')]"
+    "imageReference": "[variables('osType')]",
+    "computeApiVersion": "2016-03-30",
+    "networkApiVersion": "2016-06-01",
+    "storageApiVersion": "2016-01-01",
+    "insightsApiVersion": "2015-04-01"
   },
   "resources": [
     {
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('networkApi')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -120,7 +120,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[concat(variables('uniqueStringArray')[copyIndex()], variables('newStorageAccountSuffix'))]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('storageApi')]",
+      "apiVersion": "[variables('storageApiVersion')]",
       "copy": {
         "name": "storageLoop",
         "count": "[variables('saCount')]"
@@ -129,14 +129,13 @@
         "name": "[variables('storageAccountType')]"
       },
       "kind": "Storage",
-      "properties": {
-      }
+      "properties": {}
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('networkApi')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
@@ -148,7 +147,7 @@
       "type": "Microsoft.Network/loadBalancers",
       "name": "[variables('loadBalancerName')]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('networkApi')]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
       ],
@@ -200,7 +199,8 @@
       "type": "Microsoft.Compute/virtualMachineScaleSets",
       "name": "[parameters('vmssName')]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('computeApi')]",
+      "apiVersion": "[variables('computeApiVersion')]",
+      "overprovision": "false",
       "dependsOn": [
         "storageLoop",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]",
@@ -212,7 +212,6 @@
         "capacity": "[parameters('instanceCount')]"
       },
       "properties": {
-        "overprovision": "false",
         "upgradePolicy": {
           "mode": "Manual"
         },
@@ -295,7 +294,7 @@
                   },
                   "protectedSettings": {
                     "storageAccountName": "[variables('diagnosticsStorageAccountName')]",
-                    "storageAccountKey": "[listkeys(variables('accountid'), variables('storageApi')).keys[0].value]",
+                    "storageAccountKey": "[listkeys(variables('accountid'), variables('storageApiVersion')).keys[0].value]",
                     "storageAccountEndPoint": "https://core.windows.net"
                   }
                 }
@@ -307,7 +306,7 @@
     },
     {
       "type": "Microsoft.Insights/autoscaleSettings",
-      "apiVersion": "[variables('insightsApi')]",
+      "apiVersion": "[variables('insightsApiVersion')]",
       "name": "autoscalewad",
       "location": "[variables('location')]",
       "dependsOn": [
@@ -371,5 +370,3 @@
     }
   ]
 }
-
-
