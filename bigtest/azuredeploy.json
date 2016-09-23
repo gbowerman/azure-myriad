@@ -36,7 +36,17 @@
       "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '1')))]",
       "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '2')))]",
       "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '3')))]",
-      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '4')))]"
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '4')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '5')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '6')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '7')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '8')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '9')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '10')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '11')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '12')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '13')))]",
+      "[concat(uniqueString(concat(resourceGroup().id, deployment().name, variables('newStorageAccountSuffix'), '14')))]"
     ],
     "vmSize": "Standard_A1",
     "vhdContainerName": "[concat(parameters('vmssName'), 'vhd')]",
@@ -46,7 +56,7 @@
     "nicName": "[concat(parameters('vmssName'), 'nic')]",
     "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
     "addressPrefix": "10.0.0.0/16",
-    "subnetPrefix": "10.0.0.0/24",
+    "subnetPrefix": "10.0.0.0/16",
     "storageAccountType": "Standard_LRS",
     "location": "[resourceGroup().location]",
     "osType": {
@@ -68,7 +78,7 @@
       "apiVersion": "[variables('storageApiVersion')]",
       "copy": {
         "name": "storageLoop",
-        "count": 5
+        "count": 15
       },
       "sku": {
         "name": "[variables('storageAccountType')]"
@@ -109,6 +119,16 @@
         "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[2], variables('newStorageAccountSuffix'))]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[3], variables('newStorageAccountSuffix'))]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[4], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[5], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[6], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[7], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[8], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[9], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[10], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[11], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[12], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[13], variables('newStorageAccountSuffix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('uniqueStringArray')[14], variables('newStorageAccountSuffix'))]",
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
       "sku": {
@@ -130,7 +150,17 @@
                 "[concat('https://', variables('uniqueStringArray')[1], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
                 "[concat('https://', variables('uniqueStringArray')[2], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
                 "[concat('https://', variables('uniqueStringArray')[3], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
-                "[concat('https://', variables('uniqueStringArray')[4], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]"
+                "[concat('https://', variables('uniqueStringArray')[4], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[5], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[6], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[7], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[8], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[9], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[10], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[11], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[12], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[13], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]",
+                "[concat('https://', variables('uniqueStringArray')[14], variables('newStorageAccountSuffix'), '.blob.core.windows.net/', variables('vhdContainerName'))]"
               ],
               "name": "[variables('osDiskName')]",
               "caching": "ReadOnly",
