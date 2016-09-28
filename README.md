@@ -1,7 +1,7 @@
 ﻿# azure-myriad
 Templates for Azure Virtual Machine Scale Sets. 
 
-Note: For the latest curated templates for VM Scale Sets go here: <a href="https://github.com/Azure/azure-quickstart-templates">https://github.com/Azure/azure-quickstart-templates</a>
+Note: If you're looking for supported templates for VM Scale Sets go here: <a href="https://github.com/Azure/azure-quickstart-templates">https://github.com/Azure/azure-quickstart-templates</a>
 
 [VM Scale Sets](https://azure.microsoft.com/services/virtual-machine-scale-sets/) allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
 -	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
@@ -14,8 +14,8 @@ Note: For the latest curated templates for VM Scale Sets go here: <a href="https
 
 Please note the following limitations:
 
--	For custom images you can only have a single storage account and are hence limited to 20 VMs in a scale set (or 40 if you set the overprovision property to "false". This will be increased in the future.
--	Maximum number of platform image VMs in a scale set is 100. This will be increased in the future.
+-	For custom images you can only have a single storage account and are hence limited to 20 VMs in a scale set (or 40 if you set the overprovision property to "false". This limitation is being removed soon, and there is a preview currently underway for managed disks which fixes it.
+-	Maximum number of platform image VMs in a scale set is 100. This will be increased in the future, and there is a preview currently underway for larger scale sets.
 
 ## Working with scale sets using PowerShell
 
@@ -93,16 +93,6 @@ Reduce or increase the number of VM instances in a Scale Set. Platform independe
 InstanceCount parameter describes the number of VMs.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-scale-in-or-out.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-
-### vmss-win-iis-vnet-storage-lb.json
-
-Create a VMSS with load balancer, public IP and Windows VMs with IIS and a basic MVC app configured\installed via the custom script extension.
-Port 80 is load balanced to the web app running on each VM Instance.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fnat-pools%2Fvmss-win-iis-vnet-storage-lb.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
