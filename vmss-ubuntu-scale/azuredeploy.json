@@ -191,7 +191,6 @@
       "name": "[parameters('vmssName')]",
       "location": "[variables('location')]",
       "apiVersion": "[variables('computeApiVersion')]",
-      "overprovision": "false",
       "dependsOn": [
         "storageLoop",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]",
@@ -203,6 +202,7 @@
         "capacity": "[parameters('instanceCount')]"
       },
       "properties": {
+        "overprovision": "false",
         "upgradePolicy": {
           "mode": "Manual"
         },
