@@ -83,7 +83,7 @@
     "computeApiVersion": "2016-03-30",
     "networkApiVersion": "2016-06-01",
     "storageApiVersion": "2016-01-01",
-    "insightsApiVersion": "2016-06-01"
+    "insightsApiVersion": "2015-04-01"
   },
   "resources": [
     {
