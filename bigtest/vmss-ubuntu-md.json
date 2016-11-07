@@ -88,6 +88,7 @@
               "caching": "ReadOnly",
               "createOption": "FromImage"
             },
+            "dataDisks": [ ],
             "imageReference": {
               "publisher": "[variables('imagePublisher')]",
               "offer": "[variables('imageOffer')]",
