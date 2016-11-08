@@ -12,12 +12,6 @@
         "description": "Number of VM instances"
       }
     },
-    "vmssTagName": {
-      "type": "string"
-    },
-    "vmssTagValue": {
-      "type": "string"
-    },
     "adminUsername": {
       "type": "string"
     },
@@ -65,9 +59,6 @@
       "apiVersion": "[variables('computeApiVersion')]",
       "name": "[parameters('vmssNamePrefix')]",
       "location": "[resourceGroup().location]",
-      "tags": {
-        "[parameters('vmssTagName')]": "[parameters('vmssTagValue')]"
-      },
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks/', variables('newVNETName'))]"
       ],
