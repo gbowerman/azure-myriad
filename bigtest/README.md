@@ -2,11 +2,9 @@
 
 Templates to test large VM scale sets (300 -> 1000 VMs).
 
-Note 9/23/16: 
+Note 11/28/16: 
 
-This won't work unless your subscription has been whitelisted to test large cross tenant scale sets.
-
-Also, the 'md' templates require a subscription which is participating in the managed disk preview.
+The 'md' managed disks templates require a subscription which is participating in the managed disk preview.
 
 ### vmss-300-unmanaged.json - Up to 300 VMs, un-managed disks, Ubuntu 16.04
 
