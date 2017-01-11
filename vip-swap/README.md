@@ -7,6 +7,7 @@ In order to test swapping load balancers between 2 VM scale sets, this takes a s
 - After a few minutes the VM Scale Set capacity will increase.
 - You can stop doing work by browsing to dns:9000/stop_work.
 
+### First scale set
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvip-swap%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
@@ -14,3 +15,10 @@ In order to test swapping load balancers between 2 VM scale sets, this takes a s
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
+### Second scale set
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvip-swap%2Fazuredeploy2.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvip-swap%2Fazuredeploy2.json" target="_blank">
+    <img src="http://armviz.io/visualizebutton.png"/>
+</a>
