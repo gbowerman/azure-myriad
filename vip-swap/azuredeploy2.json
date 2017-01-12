@@ -271,7 +271,7 @@
         "[concat('Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]"
       ],
       "properties": {
-        "name": "autoscalehost",
+        "name": "autohost2",
         "targetResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
         "enabled": true,
         "profiles": [
