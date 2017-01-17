@@ -68,7 +68,7 @@
         "capacity": "[parameters('instanceCount')]"
       },
       "properties": {
-        "largeScaleEnabled": "true",
+        "singlePlacementGroup": "false",
         "upgradePolicy": {
           "mode": "Automatic"
         },
