@@ -57,7 +57,7 @@
 	},
 	"templateBase": {
 	    "type": "string",
-	    "defaultValue": "https://raw.githubusercontent.com/gatneil/templates/Ignite/Ignite/elastic/",
+	    "defaultValue": "https://raw.githubusercontent.com/gatneil/templates/cors/Ignite/elastic/",
 	    "metadata": {
 		"description": "Change this value to your repo name if deploying from a fork"
 	    }
