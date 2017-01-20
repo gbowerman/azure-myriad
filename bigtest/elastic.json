@@ -1,0 +1,382 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+	"clusterName": {
+	    "type": "string",
+	    "defaultValue": "es-azure"
+	},
+	"vmSku": {
+	    "type": "string",
+	    "defaultValue": "Standard_DS1_v2",
+	    "metadata": {
+		"description": "Size of VMs in the VM Scale Set."
+	    }
+	},
+	"masterSize": {
+	    "type": "string",
+	    "defaultValue": "Standard_DS1_v2",
+	    "metadata": {
+		"description": "Size of master VMs."
+	    }
+	},
+	"ubuntuOSVersion": {
+	    "type": "string",
+	    "defaultValue": "14.04.4-LTS",
+	    "allowedValues": [
+		"14.04.4-LTS"
+	    ],
+	    "metadata": {
+		"description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values are: 14.04.4-LTS."
+	    }
+	},
+	"vmssName": {
+	    "type": "string",
+	    "metadata": {
+		"description": "String used as a base for naming resources. Must be 3-61 characters in length and globally unique across Azure. A hash is prepended to this string for some resources, and resource-specific information is appended."
+	    },
+	    "maxLength": 61
+	},
+	"instanceCount": {
+	    "type": "int",
+	    "metadata": {
+		"description": "Number of VM instances (100 or less)."
+	    }
+	},
+	"adminUsername": {
+	    "type": "string",
+	    "metadata": {
+		"description": "Admin username on all VMs."
+	    }
+	},
+	"adminPassword": {
+	    "type": "securestring",
+	    "metadata": {
+		"description": "Admin password on all VMs."
+	    }
+	},
+	"templateBase": {
+	    "type": "string",
+	    "defaultValue": "https://raw.githubusercontent.com/gatneil/templates/Ignite/Ignite/elastic/",
+	    "metadata": {
+		"description": "Change this value to your repo name if deploying from a fork"
+	    }
+	}
+    },
+    "variables": {
+	"storageAccountType": "Premium_LRS",
+	"namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
+	"longNamingInfix": "[toLower(parameters('vmssName'))]",
+	"newStorageAccountSuffix": "[concat(variables('namingInfix'), 'sa')]",
+	"vhdContainerName": "[concat(variables('namingInfix'), 'vhd')]",
+	"osDiskName": "[concat(variables('namingInfix'), 'osdisk')]",
+	"addressPrefix": "10.0.0.0/8",
+	"subnetPrefix": "10.0.0.0/16",
+	"virtualNetworkName": "[concat(variables('namingInfix'), 'vnet')]",
+	"publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
+	"subnetName": "[concat(variables('namingInfix'), 'subnet')]",
+	"publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
+	"nicName": "[concat(variables('namingInfix'), 'nic')]",
+	"masterName": "[concat(variables('namingInfix'), 'master')]",
+	"ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
+	"osType": {
+	    "publisher": "Canonical",
+	    "offer": "UbuntuServer",
+	    "sku": "[parameters('ubuntuOSVersion')]",
+	    "version": "latest"
+	},
+	"imageReference": "[variables('osType')]",
+	"computeApiVersion": "2016-04-30-preview",
+	"networkApiVersion": "2016-03-30",
+	"storageApiVersion": "2015-06-15",
+	"insightsApiVersion": "2015-04-01",
+	"templateBaseUrl": "[parameters('templateBase')]"
+    },
+    "resources": [
+	{
+	    "apiVersion": "[variables('networkApiVersion')]",
+	    "type": "Microsoft.Network/networkSecurityGroups",
+	    "name": "masterNSG",
+	    "location": "[resourceGroup().location]",
+	    "properties": {
+		"securityRules": [
+		    {
+			"name": "Elasticsearch",
+			"properties": {
+			    "description": "Allows inbound HTTP traffic from anyone",
+			    "protocol": "Tcp",
+			    "sourcePortRange": "9200",
+			    "destinationPortRange": "9200",
+			    "sourceAddressPrefix": "*",
+			    "destinationAddressPrefix": "*",
+			    "access": "Allow",
+			    "priority": 200,
+			    "direction": "Inbound"
+			}
+		    }
+		]
+	    }
+	},
+	{
+	    "type": "Microsoft.Network/virtualNetworks",
+	    "name": "[variables('virtualNetworkName')]",
+	    "location": "[resourceGroup().location]",
+	    "apiVersion": "[variables('networkApiVersion')]",
+	    "properties": {
+		"addressSpace": {
+		    "addressPrefixes": [
+			"[variables('addressPrefix')]"
+		    ]
+		},
+		"subnets": [
+		    {
+			"name": "[variables('subnetName')]",
+			"properties": {
+			    "addressPrefix": "[variables('subnetPrefix')]"
+			}
+		    }
+		]
+	    }
+	},
+	{
+	    "type": "Microsoft.Network/publicIPAddresses",
+	    "name": "[variables('publicIPAddressName')]",
+	    "location": "[resourceGroup().location]",
+	    "apiVersion": "[variables('networkApiVersion')]",
+	    "properties": {
+		"publicIPAllocationMethod": "Dynamic",
+		"dnsSettings": {
+		    "domainNameLabel": "[variables('longNamingInfix')]"
+		}
+	    }
+	},
+	{
+            "apiVersion": "[variables('computeApiVersion')]",
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "es-master-set",
+            "location": "[resourceGroup().location]",
+            "properties": {
+		"platformUpdateDomainCount": 2,
+		"platformFaultDomainCount": 2,
+		"managed": "true"
+            }
+	},
+	{
+            "apiVersion": "[variables('networkApiVersion')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(variables('nicName'), copyindex())]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+		"[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]",
+		"[resourceId('Microsoft.Network/networkSecurityGroups', 'masterNSG')]"
+            ],
+            "copy": {
+		"name": "masterNodesNicLoop",
+		"count": 2
+            },
+            "properties": {
+		"ipConfigurations": [
+		    {
+			"name": "ipconfig1",
+			"properties": {
+			    "privateIPAllocationMethod": "Static",
+			    "privateIPAddress": "[concat('10.0.0.1', copyindex())]",
+			    "subnet": {
+				"id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName')), '/subnets/', variables('subnetName'))]"
+			    },
+			    "networkSecurityGroup": {
+				"id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'masterNSG')]"
+			    }
+			}
+		    }
+		]
+            }
+	},
+	{
+            "apiVersion": "[variables('networkApiVersion')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(variables('nicName'), '2')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+		"[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]",
+		"[resourceId('Microsoft.Network/networkSecurityGroups', 'masterNSG')]"
+            ],
+            "properties": {
+		"ipConfigurations": [
+		    {
+			"name": "ipconfig1",
+			"properties": {
+			    "privateIPAllocationMethod": "Static",
+			    "privateIPAddress": "[concat('10.0.0.1', '2')]",
+			    "subnet": {
+				"id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName')), '/subnets/', variables('subnetName'))]"
+			    },
+			    "networkSecurityGroup": {
+				"id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'masterNSG')]"
+			    },
+			    "publicIPAddress": {
+				"id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+			    }
+			}
+		    }
+		]
+            }
+	},
+	{
+            "apiVersion": "[variables('computeApiVersion')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(variables('masterName'), copyindex())]",
+            "location": "[resourceGroup().location]",
+            "copy": {
+		"name": "masterVmLoop",
+		"count": 3
+            },
+            "dependsOn": [
+		"[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyindex())]",
+		"[concat('Microsoft.Compute/availabilitySets/', 'es-master-set')]"
+            ],
+            "properties": {
+		"availabilitySet": {
+		    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'es-master-set')]"
+		},
+		"hardwareProfile": {
+		    "vmSize": "[parameters('masterSize')]"
+		},
+		"osProfile": {
+		    "computerName": "[concat('master-vm', copyIndex())]",
+		    "adminUsername": "[parameters('adminUsername')]",
+		    "adminPassword": "[parameters('adminPassword')]",
+		    "linuxConfiguration": {}
+		},
+		"storageProfile": {
+		    "imageReference": "[variables('imageReference')]",
+		    "osDisk": {
+			"createOption": "FromImage",
+			"diskSizeGB": 100
+		    }
+		},
+		"networkProfile": {
+		    "networkInterfaces": [
+			{
+			    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('nicName'), copyindex()))]"
+			}
+		    ]
+		}
+            },
+            "resources": [
+		{
+		    "type": "Microsoft.Compute/virtualMachines/extensions",
+		    "name": "[concat(variables('masterName'), copyindex(), '/installelasticsearch')]",
+		    "apiVersion": "2015-06-15",
+		    "location": "[resourceGroup().location]",
+		    "dependsOn": [
+			"[concat('Microsoft.Compute/virtualMachines/', variables('masterName'), copyindex())]"
+		    ],
+		    "properties": {
+			"publisher": "Microsoft.OSTCExtensions",
+			"type": "CustomScriptForLinux",
+			"typeHandlerVersion": "1.4",
+			"autoUpgradeMinorVersion": true,
+			"settings": {
+			    "fileUris": [
+				"[concat(variables('templateBaseUrl'), 'install-elasticsearch.sh')]"
+			    ],
+			    "commandToExecute": "[concat('bash install-elasticsearch.sh -m -n ', parameters('clusterName'))]"
+			}
+                    }
+		}
+            ]
+	},
+	{
+	    "type": "Microsoft.Compute/virtualMachineScaleSets",
+	    "name": "[variables('namingInfix')]",
+	    "location": "[resourceGroup().location]",
+	    "apiVersion": "[variables('computeApiVersion')]",
+	    "dependsOn": [
+		"[concat('Microsoft.Compute/virtualMachines/', variables('masterName'), '0')]",
+		"[concat('Microsoft.Compute/virtualMachines/', variables('masterName'), '1')]",
+		"[concat('Microsoft.Compute/virtualMachines/', variables('masterName'), '2')]",
+		"[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+	    ],
+	    "sku": {
+		"name": "[parameters('vmSku')]",
+		"tier": "Standard",
+		"capacity": "[parameters('instanceCount')]"
+	    },
+	    "properties": {
+		"largeScaleEnabled": "true",
+		"overprovision": "true",
+		"upgradePolicy": {
+		    "mode": "Manual"
+		},
+		"virtualMachineProfile": {
+		    "storageProfile": {
+			"osDisk": {
+			    "createOption": "FromImage",
+			    "diskSizeGB": 100
+			},
+			"imageReference": "[variables('imageReference')]",
+	      		"dataDisks": [
+			    {
+				"lun": "1",
+				"createOption": "empty",
+				"diskSizeGB": "1023"
+			    }
+			]
+		    },
+		    "osProfile": {
+			"computerNamePrefix": "[variables('namingInfix')]",
+			"adminUsername": "[parameters('adminUsername')]",
+			"adminPassword": "[parameters('adminPassword')]"
+		    },
+		    "networkProfile": {
+			"networkInterfaceConfigurations": [
+			    {
+				"name": "[variables('nicName')]",
+				"properties": {
+				    "primary": true,
+				    "ipConfigurations": [
+					{
+					    "name": "[variables('ipConfigName')]",
+					    "properties": {
+						"subnet": {
+						    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
+						}
+					    }
+					}
+				    ]
+				}
+			    }
+			]
+		    },
+		    "extensionProfile": {
+			"extensions": [
+			    {
+				"name": "elasticsearch",
+				"properties": {
+				    "publisher": "Microsoft.OSTCExtensions",
+				    "type": "CustomScriptForLinux",
+				    "typeHandlerVersion": "1.4",
+				    "autoUpgradeMinorVersion": true,
+				    "settings": {
+					"fileUris": [
+					    "[concat(variables('templateBaseUrl'), 'install-elasticsearch.sh')]"
+					],
+					"commandToExecute": "[concat('bash install-elasticsearch.sh -n ', parameters('clusterName'))]"
+				    }
+				}
+			    }
+			]
+		    }
+		}
+	    }
+	}
+    ],
+    "outputs": {
+	"cluster-health": {
+	    "type": "string",
+	    "value": "[concat('http://', reference(resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpAddressName'))).dnsSettings.fqdn, ':9200/_cluster/health?pretty')]"
+	}
+    }
+}
+
