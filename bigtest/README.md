@@ -6,7 +6,7 @@ Note 11/28/16:
 
 The 'md' managed disks templates require a subscription which is participating in the managed disk preview.
 
-### elastic.json - Up to 100 VMs, managed disks, Elastic search cluster, Ubuntu 14.04
+### elastic.json - Up to 1000 VMs, managed disks, Elastic search cluster, Ubuntu 14.04
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fbigtest%2Felastic.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
