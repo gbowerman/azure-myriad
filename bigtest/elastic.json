@@ -64,10 +64,8 @@
 	}
     },
     "variables": {
-	"storageAccountType": "Premium_LRS",
 	"namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
 	"longNamingInfix": "[toLower(parameters('vmssName'))]",
-	"newStorageAccountSuffix": "[concat(variables('namingInfix'), 'sa')]",
 	"vhdContainerName": "[concat(variables('namingInfix'), 'vhd')]",
 	"osDiskName": "[concat(variables('namingInfix'), 'osdisk')]",
 	"addressPrefix": "10.0.0.0/8",
@@ -88,8 +86,6 @@
 	"imageReference": "[variables('osType')]",
 	"computeApiVersion": "2016-04-30-preview",
 	"networkApiVersion": "2016-03-30",
-	"storageApiVersion": "2015-06-15",
-	"insightsApiVersion": "2015-04-01",
 	"templateBaseUrl": "[parameters('templateBase')]"
     },
     "resources": [
