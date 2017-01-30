@@ -38,7 +38,7 @@ The 'md' managed disks templates in this repo demonstrate the Azure Managed Disk
 </a>
 
 
-### vmss-app-gateway-md.json - Up to 1000 VMs, App Gateway, no Azure load balancer, unmanaged disks
+### vmss-app-gateway-md.json - Up to 1000 VMs, App Gateway with layer-7 load balancing, managed disks
 
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fbigtest%2Fvmss-app-gateway-md.json" target="_blank">
