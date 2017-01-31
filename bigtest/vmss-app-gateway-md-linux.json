@@ -265,6 +265,26 @@
                 }
               }
             ]
+          },
+          "extensionProfile": {
+            "extensions": [
+              {
+                "name": "bottleextension",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Extensions",
+                  "type": "CustomScript",
+                  "typeHandlerVersion": "2.0",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                    "fileUris": [
+                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/installserver.sh",
+                      "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/bigtest/workserver.py"
+                    ],
+                    "commandToExecute": "bash installserver.sh"
+                  }
+                }
+              }
+            ]
           }
         }
       }
