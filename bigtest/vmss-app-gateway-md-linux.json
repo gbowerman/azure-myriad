@@ -96,18 +96,6 @@
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "[variables('networkApiVersion')]",
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic",
-        "dnsSettings": {
-          "domainNameLabel": "[variables('longNamingInfix')]"
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('appGwPublicIPAddressName')]",
       "location": "[resourceGroup().location]",
       "apiVersion": "[variables('networkApiVersion')]",
