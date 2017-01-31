@@ -49,7 +49,7 @@
     "imageReference": {
       "publisher": "Canonical",
       "offer": "UbuntuServer",
-      "sku": "16.04.0-LTS",
+      "sku": "16.04-LTS",
       "version": "latest"
     },
     "virtualNetworkID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
