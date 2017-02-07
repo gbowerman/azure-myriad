@@ -25,11 +25,11 @@
     "imageVersion": "16.04-LTS",
     "addressPrefix": "10.0.0.0/8",
     "namingInfix": "[toLower(parameters('vmssNamePrefix'))]",
-	"sizeOfDiskInGB": "100",
+	  "sizeOfDiskInGB": "1023",
     "newVNETName": "[concat(variables('namingInfix'), 'vnet')]",
     "subnetName": "subnet",
     "subnetPrefix": "10.0.0.0/16",
-    "storageAccountType": "Standard_GRS",
+    "storageAccountType": "Standard_LRS",
     "networkApiVersion": "2016-03-30",
     "computeApiVersion": "2016-04-30-preview"
   },
@@ -64,7 +64,7 @@
         "[resourceId('Microsoft.Network/virtualNetworks/', variables('newVNETName'))]"
       ],
       "sku": {
-        "name": "Standard_A1",
+        "name": "Standard_DS1_v2",
         "tier": "Standard",
         "capacity": "[parameters('instanceCount')]"
       },
@@ -80,7 +80,7 @@
               "caching": "ReadOnly",
               "createOption": "FromImage"
             },
-			"dataDisks": [
+			      "dataDisks": [
             {
               "diskSizeGB": "[variables('sizeOfDiskInGB')]",
               "lun": 0,
@@ -115,6 +115,26 @@
                       }
                     }
                   ]
+                }
+              }
+            ]
+          },
+          "extensionProfile": {
+            "extensions": [
+              {
+                "name": "lapextension",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Extensions",
+                  "type": "CustomScript",
+                  "typeHandlerVersion": "2.0",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                    "fileUris": [
+                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/installserver.sh",
+                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/workserver.py"
+                    ],
+                    "commandToExecute": "bash installserver.sh"
+                  }
                 }
               }
             ]
