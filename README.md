@@ -78,15 +78,6 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
 </a>
 
 
-### mesos-vmss-simple-cluster.json
-
-Create a simple mesos cluster with a single master, with a VM Scale Set of slaves. Connect to port 5050 of the public IP address created in your resource group to see the dashboard.
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fmesos-vmss-simple-cluster.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-
 ### vmss-scale-in-or-out.json
 
 Reduce or increase the number of VM instances in a Scale Set. Platform independent. Note: Check the sku setting in the template and make sure it matches the virtual machine size in your existing VM Scale Set.

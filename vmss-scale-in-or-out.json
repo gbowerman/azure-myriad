@@ -15,7 +15,7 @@
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "apiVersion": "2016-03-30",
+      "apiVersion": "2016-04-30-preview",
       "name": "[parameters('vmSSName')]",
       "location": "[resourceGroup().location]",
       "sku": {
