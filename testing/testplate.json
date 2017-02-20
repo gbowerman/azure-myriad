@@ -50,10 +50,10 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddressesaztpip)]"
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses/aztpip)]"
               },
               "subnet": {
-                "id": "resourceId('Microsoft.Network/virtualNetworks/aztvnet/subnets/subnet')]"
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/aztvnet/subnets/subnet')]"
               }
             }
           }
