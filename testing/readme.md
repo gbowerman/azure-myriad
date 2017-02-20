@@ -16,7 +16,7 @@ Deploy a simple Ubuntu/Docker scale set.
 
 Testing assigning a network security group to a scale set.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Ftesting%2Fvmss-nsg-nic.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Ftesting%2Ftestplate.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 <br/><br/>
