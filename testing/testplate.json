@@ -75,7 +75,7 @@
         "storageProfile": {
           "imageReference": {
             "publisher": "Canonical",
-            "offer": "UuntuServer",
+            "offer": "UbuntuServer",
             "sku": "16.04-LTS",
             "version": "latest"
           },
