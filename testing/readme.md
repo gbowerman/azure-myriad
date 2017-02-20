@@ -12,9 +12,9 @@ Deploy a simple Ubuntu/Docker scale set.
 <br/><br/>
 
 
-### vmss-nsg-nic.json ###
+### testplate.json ###
 
-Testing assigning a network security group to a scale set.
+Just a template that creates a VM, testing auto-generated templates
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Ftesting%2Ftestplate.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
