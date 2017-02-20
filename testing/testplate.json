@@ -50,10 +50,10 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses/aztpip')]"
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses','aztpip')]"
               },
               "subnet": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks/aztvnet/subnets/subnet')]"
+                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks','aztvnet'), '/subnets/subnet')]"
               }
             }
           }
@@ -95,7 +95,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces/aztnic')]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces','aztnic')]",
               "properties": {
                 "primary": true
               }
