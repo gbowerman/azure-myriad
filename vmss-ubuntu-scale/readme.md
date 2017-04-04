@@ -1,4 +1,4 @@
-### Autoscale demo app on Ubuntu 16.04 ###
+## Autoscale demo app on Ubuntu 16.04
 
 Simple self-contained Ubuntu autoscale example. VM Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 30%.
 
@@ -15,6 +15,8 @@ Simple self-contained Ubuntu autoscale example. VM Scale Set scales up when avg 
 <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-ubuntu-scale%2Fazuredeploy.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
+
+### Public IP and DNS testing testing example
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-ubuntu-scale%2Fazuredeploypip.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
