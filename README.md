@@ -1,7 +1,13 @@
-﻿# azure-myriad
-Templates for Azure Virtual Machine Scale Sets. 
+﻿# azure-myriad - templates for Azure virtual machine scale sets
 
-Note: If you're looking for supported templates for VM Scale Sets go here: <a href="https://github.com/Azure/azure-quickstart-templates">https://github.com/Azure/azure-quickstart-templates</a>
+## Do not use these templates - they may not be up to date
+
+This repo is for experimental templates which are not maintained. Therefore there is no guarantee they will still be working, or be using the latest recommendations if you try and use them.
+
+If you're looking for supported templates for VM Scale Sets go here: <a href="https://github.com/Azure/azure-quickstart-templates">https://github.com/Azure/azure-quickstart-templates</a>
+
+If you are looking for templates specifically for Azure Managed disks and can't find the one you're looking for in Quickstart templates, try [https://github.com/chagarw/MDPP](https://github.com/chagarw/MDPP).
+
 
 [VM Scale Sets](https://azure.microsoft.com/services/virtual-machine-scale-sets/) allow you to deploy and manage a group of identical virtual machines as a set. Advantages include:
 -	Autoscale - simply change the instance count and Scale Sets will increase or decrease the number of VMs evenly across update and fault domains.
