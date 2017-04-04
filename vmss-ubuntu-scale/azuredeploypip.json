@@ -62,7 +62,7 @@
       "version": "latest"
     },
     "imageReference": "[variables('osType')]",
-    "computeApiVersion": "2016-04-30-preview",
+    "computeApiVersion": "2017-03-30",
     "networkApiVersion": "2016-06-01",
     "insightsApiVersion": "2015-04-01"
   },
