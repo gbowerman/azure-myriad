@@ -190,12 +190,23 @@
                 "name": "[variables('nicName')]",
                 "properties": {
                   "primary": "true",
+                  "dnsSettings": {
+                    "dnsServers": [
+                      "10.0.0.6"
+                    ]
+                  },
                   "ipConfigurations": [
                     {
                       "name": "[variables('ipConfigName')]",
                       "properties": {
                         "subnet": {
                           "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('subnetName'))]"
+                        },
+                        "publicipaddressconfiguration": {
+                          "name": "pub1",
+                          "properties": {
+                            "idleTimeoutInMinutes": 15
+                          }
                         },
                         "loadBalancerBackendAddressPools": [
                           {
