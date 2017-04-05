@@ -4,7 +4,7 @@ The templates and instructions in this repo are for the Azure VM scale set publi
 
 4/5/2017: To participate in the limited preview your Azure subscription needs a specific feature flag. The preview will be opened up more widely in the future. The templates and instructions below will not work without the feature flag. 
 
-In general Azure scale set VMs do not require their own public IP addresses, because rather than each VM directly facing the internet, it is more common and more secure to associate a public IP address to a load balancer or an individual VM (aka a jumpbox) which then routes incoming connections to scale set VMs as needed (e.g. through inbound NAT rules).
+In general Azure scale set VMs do not require their own public IP addresses, because rather than each VM directly facing the internet, it is more economical and secure to associate a public IP address to a load balancer or an individual VM (aka a jumpbox) which then routes incoming connections to scale set VMs as needed (e.g. through inbound NAT rules).
 
 However some scenarios do require scale set VMs to have their own public IP addresses. A common example of this is a gaming scenario, where a console needs to make a direct connection to a cloud VM which is doing game processing (e.g. game physicis etc.).
 
@@ -27,7 +27,7 @@ To create a VM scale set that assigns a public IP address to each VM, make sure 
     }
 ```
 
-## Creating a scale set with configurable DNS
+### Creating a scale set with configurable DNS
 To create a VM scale set with a custom DNS configuration, add a dnsSettings JSON packet to the scale set networkInterfaceConfigurations section. Example:
 ```
     "dnsSettings":{
@@ -36,7 +36,7 @@ To create a VM scale set with a custom DNS configuration, add a dnsSettings JSON
 ```
 Example template: [azuredeploypip.json](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip.json)
 
-## Querying the public IP address of the VMs in a scale set
+### Querying the public IP address of the VMs in a scale set
 Until there is full SDK, command line and portal support, the recommended way to query the public IP addresses assigned to scale set VMs is to use the REST API with version _2017-03-30_. E.g.
 ```
 GET https://management.azure.com/subscriptions/{your sub ID}/resourceGroups/{RG name}/providers/Microsoft.Compute/virtualMachineScaleSets/{VMSS name}/publicipaddresses?api-version=2017-03-30
@@ -83,7 +83,7 @@ GET https://management.azure.com/subscriptions/your-subscription-id/resourceGrou
     }
 ```
 
-## Public IP address template examples
+### Public IP address template examples
 
 The example below is a simple self-contained Ubuntu autoscale example which uses Azure Managed Disks. The scale set scales out when avg CPU across all VMs > 60%, and scales in when avg CPU < 30%. With public IP per VM configured, you can access each VM via both inbound NAT rules (using the load balancer public IP address with ports starting at 50000), and directly by going to each VMs public IP address at port 9000.
 
@@ -100,3 +100,5 @@ The example below is a simple self-contained Ubuntu autoscale example which uses
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
+## Providing feedback
+Please log issues against this repo to provide your feedback.
