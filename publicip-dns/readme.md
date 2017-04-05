@@ -26,6 +26,7 @@ To create a VM scale set that assigns a public IP address to each VM, make sure 
         }
     }
 ```
+Example template: [azuredeploypip.json](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip.json)
 
 ### Creating a scale set with configurable DNS
 To create a VM scale set with a custom DNS configuration, add a dnsSettings JSON packet to the scale set networkInterfaceConfigurations section. Example:
@@ -34,7 +35,6 @@ To create a VM scale set with a custom DNS configuration, add a dnsSettings JSON
         "dnsServers":["10.0.0.6"]
     }
 ```
-Example template: [azuredeploypip.json](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip.json)
 
 ### Querying the public IP address of the VMs in a scale set
 Until there is full SDK, command line and portal support, the recommended way to query the public IP addresses assigned to scale set VMs is to use the REST API with version _2017-03-30_. E.g.
