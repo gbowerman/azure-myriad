@@ -189,11 +189,7 @@
               {
                 "name": "[variables('nicName')]",
                 "properties": {
-                  "primary": "true",
-                  "dnsSettings": {
-                    "dnsServers": [
-                      "10.0.0.6"
-                    ]
+                  "primary": "true"
                   },
                   "ipConfigurations": [
                     {
