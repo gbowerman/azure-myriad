@@ -85,7 +85,7 @@ GET https://management.azure.com/subscriptions/your-subscription-id/resourceGrou
 
 ### Public IP address template examples
 
-Please help us create more template examples by submitting your templates to this repo. Thanks!
+Please help us create more template examples by submitting pull requests for your templates to this repo. Thanks!
 
 This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip.json) is a simple self-contained Ubuntu autoscale example which uses Azure Managed Disks. The scale set scales out when avg CPU across all VMs > 60%, and scales in when avg CPU < 30%. With public IP per VM configured, you can access each VM via both inbound NAT rules (using the load balancer public IP address with ports starting at 50000), and directly by going to each VMs public IP address at port 9000.
 
