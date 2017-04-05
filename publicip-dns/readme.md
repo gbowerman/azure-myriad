@@ -89,9 +89,9 @@ Please help us create more template examples by submitting pull requests for you
 
 This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip.json) is a simple self-contained Ubuntu autoscale example which uses Azure Managed Disks. The scale set scales out when avg CPU across all VMs > 60%, and scales in when avg CPU < 30%. With public IP per VM configured, you can access each VM via both inbound NAT rules (using the load balancer public IP address with ports starting at 50000), and directly by going to each VMs public IP address at port 9000.
 
-- Deploy the scale set with an instance count of 1 
+- Deploy the scale set with an instance count of 1.
 - Browse to the website of vm#0 (port 9000), which shows the current backend VM name.
-- To start doing work on the first VM browse to dns:9000/do_work
+- To start doing work on the first VM browse to dns:9000/do_work.
 - After a few minutes the VM Scale Set capacity will increase.
 - You can stop doing work by browsing to dns:9000/stop_work.
 
