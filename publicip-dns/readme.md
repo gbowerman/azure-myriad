@@ -13,7 +13,7 @@ For DNS, previously scale sets relied on the specific DNS settings of the VNET a
 ## Getting started
 
 ### Registering
-Send your Azure subscription ID to the Network/VMSS PM team to enable the limited preview feature flag.
+Use [this handy form](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u) to send your Azure subscription ID to the Network/VMSS PM team to enable the limited preview feature flag.
 
 ### Creating a scale set with public IP per VM
 To create a VM scale set that assigns a public IP address to each VM, make sure the API version of the Microsoft.Compute/virtualMAchineScaleSets resource is 2017-03-30, and add a _publicipaddressconfiguration_ JSON packet to the scale set ipConfigurations section. Example:
