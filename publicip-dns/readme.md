@@ -1,19 +1,68 @@
-# VM scale set public IP per VM and configurable DNS preview 
+# Azure VM scale set networking preview page 
 
-The templates and instructions in this repo are for the Azure VM scale set public up per VM and configurable DNS limited preview.
+The templates and instructions in this repo are for new and recent network features being added to Azure VM scale sets. Some of these features are recently GA, and other are in preview, either limited (your subscription needs to be enabled to use them) or public (anyone can use them).
 
-4/5/2017: To participate in the limited preview your Azure subscription needs a specific feature flag. The preview will be opened up more widely in the future. The templates and instructions below will not work without the feature flag. 
+## Feature status
+Last updated: 5/9/2017
 
-In general Azure scale set VMs do not require their own public IP addresses, because rather than each VM directly facing the internet, it is more economical and secure to associate a public IP address to a load balancer or an individual VM (aka a jumpbox) which then routes incoming connections to scale set VMs as needed (e.g. through inbound NAT rules).
+| Feature                    | Description                                                             | Status          | Start using |
+|----------------------------|-------------------------------------------------------------------------|-----------------|-------------|
+| Configurable DNS server    | Define DNS server addresses for your VMSS VM NICs to use                | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
+| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
+| Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
+| Multiple CA for VMSS       | Multiple Customer Address space per VMSS VM                             | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
+| NSG for VMSS               | Configure Network Security Group at a VM scale set level                | GA              | See below   |
+| Public IPv4 address per VM | Assign a public IP address to each VMSS VM                              | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 
-However some scenarios do require scale set VMs to have their own public IP addresses. A common example of this is a gaming scenario, where a console needs to make a direct connection to a cloud VM which is doing game processing (e.g. game physicis etc.).
 
+## Registering
+Use [this handy form](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u) to send your Azure subscription ID to the Network/VMSS PM team to enable the limited preview feature flag. Please include the scenarios you wish to test so we can set the required feature flag(s) and share any usage guidelines (like region availability).
+
+
+## Configurable DNS Setting
 For DNS, previously scale sets relied on the specific DNS settings of the VNET and subnet they were created in. With configurable DNS, you can now configure the DNS settings for a scale set directly. The DNS settings will then apply to all VMs in the scale set.
 
-## Getting started
+### Creating a scale set with configurable DNS servers
+To create a VM scale set with a custom DNS configuration, add a dnsSettings JSON packet to the scale set networkInterfaceConfigurations section. Example:
+```
+    "dnsSettings":{
+        "dnsServers":["10.0.0.6"], ["10.0.0.5"]
+    }
+```
 
-### Registering
-Use [this handy form](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u) to send your Azure subscription ID to the Network/VMSS PM team to enable the limited preview feature flag.
+### Creating a scale set with configurable domain name
+To create a VM scale set with a custom DNS name, add a dnsSetting JSON packet to the scale set networkInterfaceConfigurations section. Example:
+
+```
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "nic1",
+                "properties": {
+                  "primary": "true",
+                  "ipConfigurations": [
+                    {
+                      "name": "ip1",
+                      "properties": {
+                        "subnet": {
+                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('vnetName'), '/subnets/subnet1')]"
+                        },
+                        "publicIPAddressconfiguration": {
+                          "name": "publicip",
+                          "properties": {
+                            "idleTimeoutInMinutes": 10,
+                              "dnsSetting": {
+                                "domainNameLabel": "[parameters('vmssDnsName')]"
+                              }
+                          }
+                        }
+```
+
+## Public IP per VM
+In general Azure scale set VMs do not require their own public IP addresses, because rather than each VM directly facing the internet, it is more economical and secure to associate a public IP address to a load balancer or an individual VM (aka a jumpbox) which then routes incoming connections to scale set VMs as needed (e.g. through inbound NAT rules).
+
+However some scenarios do require scale set VMs to have their own public IP addresses. An example of this is gaming, where a console needs to make a direct connection to a cloud VM which is doing game processing (e.g. game physics etc.).
+
 
 ### Creating a scale set with public IP per VM
 To create a VM scale set that assigns a public IP address to each VM, make sure the API version of the Microsoft.Compute/virtualMAchineScaleSets resource is 2017-03-30, and add a _publicipaddressconfiguration_ JSON packet to the scale set ipConfigurations section. Example:
@@ -28,13 +77,6 @@ To create a VM scale set that assigns a public IP address to each VM, make sure 
 ```
 Example template: [azuredeploypip.json](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip.json)
 
-### Creating a scale set with configurable DNS
-To create a VM scale set with a custom DNS configuration, add a dnsSettings JSON packet to the scale set networkInterfaceConfigurations section. Example:
-```
-    "dnsSettings":{
-        "dnsServers":["10.0.0.6"]
-    }
-```
 
 ### Querying the public IP address of the VMs in a scale set
 Until there is full SDK, command line and portal support, the recommended way to query the public IP addresses assigned to scale set VMs is to use the REST API with version _2017-03-30_. E.g.
@@ -103,4 +145,4 @@ This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dn
 </a>
 
 ## Providing feedback
-Please log issues against this repo to provide your feedback.
+Please log issues against this repo to provide feedback.
