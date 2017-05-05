@@ -8,7 +8,7 @@ Last updated: 5/9/2017
 | Feature                    | Description                                                             | Status          | Start using |
 |----------------------------|-------------------------------------------------------------------------|-----------------|-------------|
 | Configurable DNS server    | Define DNS server addresses for your VMSS VM NICs to use                | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
-| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
+| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Limited preview | Stand-by    |
 | Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 | Multiple CA for VMSS       | Multiple Customer Address space per VMSS VM                             | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 | NSG for VMSS               | Configure Network Security Group at a VM scale set level                | GA              | See below   |
@@ -19,7 +19,7 @@ Last updated: 5/9/2017
 Use [this handy form](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u) to send your Azure subscription ID to the Network/VMSS PM team to enable the limited preview feature flag. Please include the scenarios you wish to test so we can set the required feature flag(s) and share any usage guidelines (like region availability).
 
 
-## Configurable DNS Setting
+## Configurable DNS Settings
 For DNS, previously scale sets relied on the specific DNS settings of the VNET and subnet they were created in. With configurable DNS, you can now configure the DNS settings for a scale set directly. The DNS settings will then apply to all VMs in the scale set.
 
 ### Creating a scale set with configurable DNS servers
