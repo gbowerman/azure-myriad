@@ -3,7 +3,7 @@
 The templates and instructions in this repo are for new and recent network features being added to Azure VM scale sets. Some of these features are recently GA, and other are in preview, either limited (your subscription needs to be enabled to use them) or public (anyone can use them).
 
 ## Feature status
-Last updated: 5/4/2017
+Last updated: 5/9/2017
 
 | Feature                    | Description                                                             | Status          | Start using |
 |----------------------------|-------------------------------------------------------------------------|-----------------|-------------|
@@ -143,6 +143,46 @@ This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dn
 <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpublicip-dns%2Fazuredeploypip.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
+
+## NSG for VMSS
+Network Security Groups can now be applied directly to a VM scale set in the network interface configuration.
+
+Example: 
+```
+"networkProfile": {
+    "networkInterfaceConfigurations": [
+        {
+            "name": "nic1",
+            "properties": {
+                "primary": "true",
+                "ipConfigurations": [
+                    {
+                        "name": "ip1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('vnetName'), '/subnets/subnet1')]"
+                            }
+                "loadBalancerInboundNatPools": [
+                                {
+                                    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('lbName'), '/inboundNatPools/natPool1')]"
+                                }
+                            ],
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('lbName'), '/backendAddressPools/addressPool1')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
+                }
+            }
+        }
+    ]
+}
+```
 
 ## Providing feedback
 Please log issues against this repo to provide feedback.
