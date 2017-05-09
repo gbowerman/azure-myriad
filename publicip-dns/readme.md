@@ -58,6 +58,11 @@ To create a VM scale set with a custom DNS name, add a dnsSetting JSON packet to
                         }
 ```
 
+The output, in terms of individual VM dns name would look like: 
+```
+<vmname><vmindex>.<specifiedVmssDomainNameLabel>
+```
+
 ## Public IP per VM
 In general Azure scale set VMs do not require their own public IP addresses, because rather than each VM directly facing the internet, it is more economical and secure to associate a public IP address to a load balancer or an individual VM (aka a jumpbox) which then routes incoming connections to scale set VMs as needed (e.g. through inbound NAT rules).
 
