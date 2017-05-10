@@ -51,7 +51,7 @@ To create a VM scale set with a custom DNS name, add a dnsSetting JSON packet to
                           "name": "publicip",
                           "properties": {
                             "idleTimeoutInMinutes": 10,
-                              "dnsSetting": {
+                              "dnsSettings": {
                                 "domainNameLabel": "[parameters('vmssDnsName')]"
                               }
                           }
