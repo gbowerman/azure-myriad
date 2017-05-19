@@ -8,7 +8,7 @@ Last updated: 5/9/2017
 | Feature                    | Description                                                             | Status          | Start using |
 |----------------------------|-------------------------------------------------------------------------|-----------------|-------------|
 | Configurable DNS server    | Define DNS server addresses for your VMSS VM NICs to use                | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
-| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Limited preview | Stand-by    |
+| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)  |
 | Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 | Multiple CA for VMSS       | Multiple Customer Address space per VMSS VM                             | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 | NSG for VMSS               | Configure Network Security Group at a VM scale set level                | GA              | See below   |
