@@ -142,10 +142,10 @@ This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dn
 - After a few minutes the VM Scale Set capacity will increase.
 - You can stop doing work by browsing to dns:9000/stop_work.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpublicip-dns%2Fazuredeploypip.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fnetwork%2Fazuredeploypip.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpublicip-dns%2Fazuredeploypip.json" target="_blank">
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fnetwork%2Fazuredeploypip.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
