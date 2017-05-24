@@ -220,6 +220,7 @@ Example scale set networkProfile showing multiple nic entries (also showing mult
         }
     ]
 }
+```
 
 ## NSG for VMSS
 Network Security Groups can now be applied directly to a VM scale set in the network interface configuration.
