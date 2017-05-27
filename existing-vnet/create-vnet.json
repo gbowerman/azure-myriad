@@ -23,7 +23,7 @@
     "addressPrefix": "10.0.0.0/16",
     "subnetPrefix": "10.0.0.0/24",
     "location": "[resourceGroup().location]",
-    "networkApiVersion": "2016-06-01"
+    "networkApiVersion": "2017-04-01"
   },
   "resources": [
     {
