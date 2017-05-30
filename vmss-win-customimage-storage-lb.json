@@ -115,8 +115,8 @@
     "lbFEIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/',variables('lbFEName'))]",
     "lbBEAddressPoolID": "[concat(variables('lbID'),'/backendAddressPools/',variables('lbBEAddressPool'))]",
     "lbWebProbeID": "[concat(variables('lbID'),'/probes/',variables('lbWebProbeName'))]",
-    "computeApiVersion": "2016-03-30",
-    "networkApiVersion": "2016-03-30"
+    "computeApiVersion": "2017-03-30",
+    "networkApiVersion": "2017-04-01"
   },
   "resources": [
     {

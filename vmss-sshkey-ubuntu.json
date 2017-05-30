@@ -22,10 +22,10 @@
         "description": "Admin username on all VMs."
       }
     },
-    "adminPassword": {
-      "type": "securestring",
+    "publicKey": {
+      "type": "string",
       "metadata": {
-        "description": "Admin password on all VMs."
+        "description": "SSH rsa public key file as a string."
       }
     }
   },
@@ -39,6 +39,7 @@
     "subnetPrefix": "10.0.0.0/24",
     "storageAccountType": "Standard_LRS",
     "location": "[resourceGroup().location]",
+    "sshKeyPath": "[concat('/home/',parameters('adminUserName'),'/.ssh/authorized_keys')]",
     "osType": {
       "publisher": "Canonical",
       "offer": "UbuntuServer",
@@ -99,7 +100,17 @@
           "osProfile": {
             "computerNamePrefix": "[parameters('vmSSName')]",
             "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('adminPassword')]"
+           "linuxConfiguration": {
+              "disablePasswordAuthentication": "true",
+              "ssh": {
+                "publicKeys": [
+                {
+                  "path": "[variables('sshKeyPath')]",
+                  "keyData": "[parameters('publicKey')]"
+                }
+                ]
+              }
+            }
           },
           "networkProfile": {
             "networkInterfaceConfigurations": [
