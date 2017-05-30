@@ -7,6 +7,7 @@ Last updated: 5/22/2017 - added multiple NIC per VM example..
 
 | Feature                    | Description                                                             | Status          | Start using |
 |----------------------------|-------------------------------------------------------------------------|-----------------|-------------|
+| Accelerated networking     | Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, greatly improving its networking performance | Public preview | See below |
 | Configurable DNS server    | Define DNS server addresses for your VMSS VM NICs to use                | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 | DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)  |
 | Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
@@ -18,6 +19,27 @@ Last updated: 5/22/2017 - added multiple NIC per VM example..
 ## Registering
 Use [this handy form](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u) to send your Azure subscription ID to the Network/VMSS PM team to enable the limited preview feature flag. Please include the scenarios you wish to test so we can set the required feature flag(s) and share any usage guidelines (like region availability).
 
+
+## Accelerated Networking
+To use accelerated networking, set enableAcceleratedNetworking to _true_ in your scale set's networkInterfaceConfigurations settings. E.g.
+```
+"networkProfile": {
+    "networkInterfaceConfigurations": [
+    {
+        "name": "niconfig1",
+        "properties": {
+        "primary": true,
+        "enableAcceleratedNetworking" : true,
+        "ipConfigurations": [
+                ]
+            }
+            }
+        ]
+        }
+    }
+    ]
+}
+```
 
 ## Configurable DNS Settings
 For DNS, previously scale sets relied on the specific DNS settings of the VNET and subnet they were created in. With configurable DNS, you can now configure the DNS settings for a scale set directly. The DNS settings will then apply to all VMs in the scale set.
