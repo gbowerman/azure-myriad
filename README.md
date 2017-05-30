@@ -60,6 +60,12 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+Here's a similar template which authenticates with a public key instead of a password..
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-sshkey-ubuntu.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
 ### vmss-win-vnet-storage.json
 
 Creates a VNET, storage account, and scale set of identical Windows virtual machines.
@@ -155,7 +161,7 @@ Simple self-contained Ubuntu/Apache/PHP autoscale & load balancing example. Scal
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### Autoscale demo app on Ubuntu 15.10 ###
+### Autoscale demo app on Ubuntu 16.04 ###
 
 Simple self-contained Ubuntu autoscale example. VM Scale Set scales up when avg CPU across all VMs > 60%, scales down when avg CPU < 30%.
 
