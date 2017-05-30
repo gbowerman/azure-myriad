@@ -60,7 +60,9 @@ Note: If you want to connect to your VMs from outside the VNET you'll need to al
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-Here's a similar template which authenticates with a public key instead of a password..
+### vmss-sshkey-ubuntu.json
+
+Here's a similar template which authenticates with an SSH public key instead of a password..
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fvmss-sshkey-ubuntu.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
