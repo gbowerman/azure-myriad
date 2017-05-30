@@ -3,7 +3,7 @@
 The templates and instructions in this repo are for new and recent network features being added to Azure VM scale sets. Some of these features are recently GA, and other are in preview, either limited (your subscription needs to be enabled to use them) or public (anyone can use them).
 
 ## Feature status
-Last updated: 5/22/2017 - added multiple NIC per VM example..
+Last updated: 5/30/2017 - added multiple NIC per VM example..
 
 | Feature                    | Description                                                             | Status          | Start using |
 |----------------------------|-------------------------------------------------------------------------|-----------------|-------------|
