@@ -1,0 +1,147 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmssNamePrefix": {
+      "type": "string",
+      "maxLength": 12
+    },
+    "instanceCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of VM instances"
+      }
+    },
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "imagePublisher": "Canonical",
+    "imageOffer": "UbuntuServer",
+    "imageVersion": "16.04-DAILY-LTS",
+    "addressPrefix": "10.0.0.0/8",
+    "namingInfix": "[toLower(parameters('vmssNamePrefix'))]",
+	  "sizeOfDiskInGB": "1023",
+    "newVNETName": "[concat(variables('namingInfix'), 'vnet')]",
+    "subnetName": "subnet",
+    "subnetPrefix": "10.0.0.0/16",
+    "storageAccountType": "Standard_LRS",
+    "networkApiVersion": "2017-04-01",
+    "computeApiVersion": "2017-03-30"
+  },
+  "resources": [
+    {
+      "apiVersion": "[variables('networkApiVersion')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('newVNETName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "apiVersion": "[variables('computeApiVersion')]",
+      "name": "[parameters('vmssNamePrefix')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks/', variables('newVNETName'))]"
+      ],
+      "sku": {
+        "name": "Standard_DS1_v2",
+        "tier": "Standard",
+        "capacity": "[parameters('instanceCount')]"
+      },
+      "properties": {
+        "singlePlacementGroup": "false",
+        "upgradePolicy": {
+          "mode": "Rolling",
+          "automaticOSUpgrade": "true"
+        },
+        "overprovision": "true",
+        "virtualMachineProfile": {
+          "storageProfile": {
+            "osDisk": {
+              "caching": "ReadOnly",
+              "createOption": "FromImage"
+            },
+			      "dataDisks": [
+            {
+              "diskSizeGB": "[variables('sizeOfDiskInGB')]",
+              "lun": 0,
+              "createOption": "Empty"
+            }
+          ],
+            "imageReference": {
+              "publisher": "[variables('imagePublisher')]",
+              "offer": "[variables('imageOffer')]",
+              "sku": "[variables('imageVersion')]",
+              "version": "latest"
+            }
+          },
+          "osProfile": {
+            "computerNamePrefix": "[parameters('vmssNamePrefix')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "[concat('nic', parameters('vmssNamePrefix'))]",
+                "properties": {
+                  "primary": "true",
+                  "ipConfigurations": [
+                    {
+                      "name": "[concat('ipconfig', parameters('vmssNamePrefix'))]",
+                      "properties": {
+                        "subnet": {
+                          "Id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('newVNETName'), '/subnets/', variables('subnetName'))]"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "extensionProfile": {
+            "extensions": [
+              {
+                "name": "lapextension",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Extensions",
+                  "type": "CustomScript",
+                  "typeHandlerVersion": "2.0",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                    "fileUris": [
+                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/installserver.sh",
+                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/workserver.py"
+                    ],
+                    "commandToExecute": "bash installserver.sh"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

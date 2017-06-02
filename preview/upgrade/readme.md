@@ -62,13 +62,14 @@ CRP API version is 2017-03-30
 
 ## Example templates
 
-### Automatic rolling upgrades
-
+### Automatic rolling upgrades - Ubuntu 16.04-LTS
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fupgrade%2Fautoupdate.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fupgrade%2Fautoupdate.json" target="_blank">
-    <img src="http://armviz.io/visualizebutton.png"/>
+
+### Automatic rolling upgrades - Ubuntu 16.04-DAILY-LTS for testing
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fupgrade%2Fdailyupdate.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
 ### Manual rolling upgrades
@@ -76,7 +77,5 @@ CRP API version is 2017-03-30
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fupgrade%2Fmanualupdate.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fupgrade%2Fmanualupdate.json" target="_blank">
-    <img src="http://armviz.io/visualizebutton.png"/>
-</a>
+
 
