@@ -13,6 +13,7 @@ Last updated: 5/30/2017 - added multiple NIC per VM example..
 | Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 | Multiple IPs per VM for VMSS       | Multiple Customer Address space per VMSS VM                             | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 | NSG for VMSS               | Configure Network Security Group at a VM scale set level                | GA              | See below   |
+| IPv6 support with Load Balancer | Support private IPv6 addresses on VMSS VM NICs and routing via load balancer pools | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 | Public IPv4 address per VM | Assign a public IP address to each VMSS VM                              | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
 
 
@@ -83,6 +84,83 @@ To create a VM scale set with a custom DNS name, add a dnsSetting JSON packet to
 The output, in terms of individual VM dns name would look like: 
 ```
 <vmname><vmindex>.<specifiedVmssDomainNameLabel>
+```
+
+## IPv6 support for private IPs and Load Balancer pools
+To use IPv6, create an IPv6 public address. E.g.
+```
+{
+    "apiVersion": "2016-03-30",
+    "type": "Microsoft.Network/publicIPAddresses",
+    "name": "[parameters('ipv6PublicIPAddressName')]",
+    "location": "[parameters('location')]",
+    "properties": {
+        "publicIPAddressVersion": "IPv6",
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+            "domainNameLabel": "[parameters('dnsNameforIPv6LbIP')]"
+        }
+    }
+}
+```
+Create your load balancer front end IP Configurations for IPv4, IPv6 as needed
+
+```
+"frontendIPConfigurations": [
+    {
+        "name": "LoadBalancerFrontEndIPv6",
+        "properties": {
+            "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('ipv6PublicIPAddressName'))]"
+            }
+        }
+    }
+]
+```
+Define backend pools as needed..
+```
+"backendAddressPools": [
+    {
+        "name": "BackendPoolIPv4"
+    },
+    {
+        "name": "BackendPoolIPv6"
+    }
+]
+```
+Define load balancer rules..
+```
+{
+    "name": "LBRuleIPv6-46000",
+    "properties": {
+        "frontendIPConfiguration": {
+            "id": "[variables('ipv6FrontEndIPConfigID')]"
+        },
+        "backendAddressPool": {
+            "id": "[variables('ipv6LbBackendPoolID')]"
+        },
+        "protocol": "tcp",
+        "frontendPort": 46000,
+        "backendPort": 60001,
+        "probe": {
+            "id": "[variables('ipv4ipv6lbProbeID')]"
+        }
+    }
+}
+```
+Reference the IPv6 pool in the VMSS IPConfigurations..
+```
+{
+    "name": "ipv6IPConfig",
+    "properties": {
+        "privateIPAddressVersion": "IPv6",
+        "loadBalancerBackendAddressPools": [
+            {
+                "id": "[variables('ipv6LbBackendPoolID')]"
+            }
+        ]
+    }
+}
 ```
 
 ## Public IP per VM
