@@ -162,8 +162,16 @@ Reference the IPv6 pool in the VMSS IPConfigurations..
     }
 }
 ```
+Notes:
 
-## Public IP per VM
+1.	VMSS Network Profile -> NetworkInterfaceConfiguration supports 2 networkInterfaceIPConfigurations (one for IPv4, one for IPv6)
+2.	The networkInterfaceIPConfiguration has an enum – privateIPAddressVersion = IPv4 or IPv6 – in order to identify which one is ipv4 and which one is ipv6
+When we say, ipv6 ipconfiguration that means an ipconfiguration with privateIPAddressVersion = IPv6.
+3.	Subnet on IPv6 ipconfiguration is null (we don’t support CA’s yet). Other validations apply too (such as counts).
+4.	VMSS API version at least 2017-03-30
+5.	Load Balancer needs to have IPv4 +  IPv6 configuration – 2 public IP’s (distinguished by publicIPAddressVersion = IPv4|IPv6), 2 backend address pools, lb rules etc. IPv4 nic ipconfig refers to ipv4 load balancer backend pools and IPv6 refers to ipv6 pools.
+
+## Public IPv4 per VM
 In general Azure scale set VMs do not require their own public IP addresses, because rather than each VM directly facing the internet, it is more economical and secure to associate a public IP address to a load balancer or an individual VM (aka a jumpbox) which then routes incoming connections to scale set VMs as needed (e.g. through inbound NAT rules).
 
 However some scenarios do require scale set VMs to have their own public IP addresses. An example of this is gaming, where a console needs to make a direct connection to a cloud VM which is doing game processing (e.g. game physics etc.).
