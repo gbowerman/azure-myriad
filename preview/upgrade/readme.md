@@ -1,10 +1,12 @@
 # Azure VM scale set automatic upgrades
 
-Welcome to the VM scale set automatic OS image update preview page. Last update: 6/05/17.
+Welcome to the VM scale set automatic OS image update preview page. Last update: 6/10/17.
 
 Note: This is currently a limited preview - you won't be able to use this feature unless your Azure subscription is registered to use it.
 
 Note: Automatic OS upgrades are being previewed only for non-Service Fabric scale sets for now. Adding support for Service Fabric is work in progress.
+
+Sign up for the automatic upgrade and rolling upgrade feature previews [here](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbRynq-GTEl8lLqDPOris8e0JUMU9BQllYT1c5SzlIRlA4UTI0V0FUMDU3MC4u).
 
 ## Pre-requisites
 Automatic OS upgrades are offered when the following conditions are met:
