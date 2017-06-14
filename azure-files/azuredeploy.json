@@ -34,6 +34,24 @@
       "metadata": {
         "description": "Admin password on all VMs."
       }
+    },
+    "storageAccountName": {
+      "type": "string",
+            "metadata": {
+        "description": "Storage account name for Azure file share."
+      }
+    },
+    "storageAccountKey": {
+      "type": "securestring",
+            "metadata": {
+        "description": "Storage account key for Azure file share."
+      }
+    },
+    "shareName": {
+      "type": "string",
+            "metadata": {
+        "description": "Azure file share name."
+      }
     }
   },
   "variables": {
@@ -227,80 +245,15 @@
                   "autoUpgradeMinorVersion": true,
                   "settings": {
                     "fileUris": [
-                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/installserver.sh",
-                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/workserver.py"
+                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/mountazurefiles.sh"
                     ],
-                    "commandToExecute": "bash installserver.sh"
+                    "commandToExecute": "[concat('bash mountazurefiles.sh ', parameters('storageAccountName'), ' ', parameters('storageAccountKey'), ' ', parameters('shareName'))]"
                   }
                 }
               }
             ]
           }
         }
-      }
-    },
-    {
-      "type": "Microsoft.Insights/autoscaleSettings",
-      "apiVersion": "[variables('insightsApiVersion')]",
-      "name": "autoscalehost",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]"
-      ],
-      "properties": {
-        "name": "autoscalehost",
-        "targetResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
-        "enabled": true,
-        "profiles": [
-          {
-            "name": "Profile1",
-            "capacity": {
-              "minimum": "1",
-              "maximum": "10",
-              "default": "1"
-            },
-            "rules": [
-              {
-                "metricTrigger": {
-                  "metricName": "Percentage CPU",
-                  "metricNamespace": "",
-                  "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
-                  "timeGrain": "PT1M",
-                  "statistic": "Average",
-                  "timeWindow": "PT5M",
-                  "timeAggregation": "Average",
-                  "operator": "GreaterThan",
-                  "threshold": 60
-                },
-                "scaleAction": {
-                  "direction": "Increase",
-                  "type": "ChangeCount",
-                  "value": "1",
-                  "cooldown": "PT1M"
-                }
-              },
-              {
-                "metricTrigger": {
-                  "metricName": "Percentage CPU",
-                  "metricNamespace": "",
-                  "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmSSName'))]",
-                  "timeGrain": "PT1M",
-                  "statistic": "Average",
-                  "timeWindow": "PT5M",
-                  "timeAggregation": "Average",
-                  "operator": "LessThan",
-                  "threshold": 30
-                },
-                "scaleAction": {
-                  "direction": "Decrease",
-                  "type": "ChangeCount",
-                  "value": "1",
-                  "cooldown": "PT1M"
-                }
-              }
-            ]
-          }
-        ]
       }
     }
   ]
