@@ -52,6 +52,12 @@
             "metadata": {
         "description": "Azure file share name."
       }
+    },    
+    "mountpointPath": {
+      "type": "string",
+            "metadata": {
+        "description": "Path on VM to mount file share."
+      }
     }
   },
   "variables": {
@@ -247,7 +253,7 @@
                     "fileUris": [
                       "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/mountazurefiles.sh"
                     ],
-                    "commandToExecute": "[concat('bash mountazurefiles.sh ', parameters('storageAccountName'), ' ', parameters('storageAccountKey'), ' ', parameters('shareName'))]"
+                    "commandToExecute": "[concat('bash mountazurefiles.sh ', parameters('storageAccountName'), ' ', parameters('storageAccountKey'), ' ', parameters('shareName'), ' ', parameters('mountpointPath'))]"
                   }
                 }
               }
