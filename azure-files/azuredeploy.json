@@ -243,7 +243,7 @@
           "extensionProfile": {
             "extensions": [
               {
-                "name": "lapextension",
+                "name": "filesextension",
                 "properties": {
                   "publisher": "Microsoft.Azure.Extensions",
                   "type": "CustomScript",
@@ -251,7 +251,7 @@
                   "autoUpgradeMinorVersion": true,
                   "settings": {
                     "fileUris": [
-                      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-bottle-autoscale/mountazurefiles.sh"
+                      "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/azure-files/mountazurefiles.sh"
                     ],
                     "commandToExecute": "[concat('bash mountazurefiles.sh ', parameters('storageAccountName'), ' ', parameters('storageAccountKey'), ' ', parameters('shareName'), ' ', parameters('mountpointPath'))]"
                   }
