@@ -19,8 +19,8 @@ apt-get -y update
 # Mapping for distro to SMB support mapping
 # Check if user is on-prem - Check for encryption support (check for kernel versin > 4.11 or greater Ubintu, SUSE)
 
-sudo apt-get install cifs-utils
-mkdir "$mountpointpath"
-sudo mount -t cifs //"$storageaccountname".file.core.windows.net/"filesharename" "$mountpointpath" -o vers=3.0,username="$storageaccountname",password="$storageaccountkey",dir_mode=0755,file_mode=0664
+apt-get install cifs-utils
+mkdir $mountpointpath
+mount -t cifs //"$storageaccountname".file.core.windows.net/"filesharename" "$mountpointpath" -o vers=3.0,username="$storageaccountname",password="$storageaccountkey",dir_mode=0755,file_mode=0664
 [ "$?" == 0 ]  && echo "succeed!" || echo "failed!"
 
