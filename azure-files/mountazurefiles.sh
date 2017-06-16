@@ -6,11 +6,6 @@
 
 # For more details refer to https://azure.microsoft.com/en-us/documentation/articles/storage-how-to-use-files-linux/
 
-storageaccountname=$1
-storageaccountkey=$2
-filesharename=$3
-mountpointpath=$4
-
 apt-get -y update
 
 # Check for distro use proper command to unstall CIFS Utils
@@ -20,7 +15,6 @@ apt-get -y update
 # Check if user is on-prem - Check for encryption support (check for kernel versin > 4.11 or greater Ubintu, SUSE)
 
 apt-get install cifs-utils
-mkdir $mountpointpath
-mount -t cifs //"$storageaccountname".file.core.windows.net/"filesharename" "$mountpointpath" -o vers=3.0,username="$storageaccountname",password="$storageaccountkey",dir_mode=0755,file_mode=0664
-[ "$?" == 0 ]  && echo "succeed!" || echo "failed!"
+mkdir $4
+mount -t cifs //$1.file.core.windows.net/$3 $4 -o vers=3.0,username=$1,password=$2,dir_mode=0755,file_mode=0664
 
