@@ -1,3 +1,5 @@
+
+
 #!/bin/bash
 # $1 = Azure storage account name
 # $2 = Azure storage account key
@@ -17,4 +19,12 @@ apt-get -y update
 apt-get install cifs-utils
 mkdir $4
 mount -t cifs //$1.file.core.windows.net/$3 $4 -o vers=3.0,username=$1,password=$2,dir_mode=0755,file_mode=0664
+
+#Creating a dummy marker files for testing
+echo "hello from $HOSTNAME" > $4/$HOSTNAME.txt                                                                         
+
+#logging output
+cat  $4/$HOSTNAME.txt 
+ls $4
+
 
