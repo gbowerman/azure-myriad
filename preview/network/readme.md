@@ -189,7 +189,7 @@ To create a VM scale set that assigns a public IP address to each VM, make sure 
         }
     }
 ```
-Example template: [azuredeploypip.json](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip.json)
+Example template: [azuredeploypip.json](https://github.com/gbowerman/azure-myriad/blob/master/preview/network/azuredeploypip.json)
 
 
 ### Querying the public IP address of the VMs in a scale set
