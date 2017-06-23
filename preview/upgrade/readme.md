@@ -22,6 +22,11 @@ Automatic OS upgrades are offered when the following conditions are met:
 		Sku: 2012-R2-Datacenter
 		Version: latest
 		
+		Publisher: MicrosoftWindowsServer
+		Offer: WindowsServer
+		Sku: 2016-Datacenter
+		Version: latest
+
 		Publisher: Canonical
 		Offer: UbuntuServer
 		Sku: 16.04-LTS
