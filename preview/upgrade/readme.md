@@ -63,8 +63,30 @@ The maximum number of virtual machine instances which can fail to be successfull
 This check will happen per batch after each batch is upgraded.
 If the number of instances which have failed to be upgraded in this rolling upgrade exceeds this number, the rolling update aborts. The default value is 0.
 
+## How to manually trigger a rolling upgrade
+
+1) Make a post request to /subscriptions/<subId>/resourceGroups/<rgName>/Microsoft.Compute/virtualMachineScaleSets/<vmssName>/osRollingUpgrade 
+Calls to this API will only change the OS disks of your machine if there is a new OS to update your VMs to, and it will conform to the rolling upgrade policies you specify in the rollingUpgradePolicy section of the vmss configuration.
+
+2) Change the OS version in your VMSS
 
 CRP API version is 2017-03-30
+
+## Manuall rolling upgrade FAQ
+
+Q. When a particular batch of VMs is picked for upgrade. Does this model ensure the existing HTTP connections are allowed to drain, and no new HTTP requests will be routed to the VMs in this batch, till deployment is complete? 
+
+A. We do not move onto the next batch until the previous batch has completed being upgraded. 
+In order to get the behavior that you are requesting you will need to add a custom health probe for your load balancer, and you need to start reporting unhealthy on your custom health probe when your OS receives a shutdown notification. You need to delay OS shutdown until you are no longer receiving traffic (you have been reporting unhealthy on your health probe for long enough).
+
+There is no in built mechanism, it is up to partner teams to stop and start traffic using custom loadbalancer probes.
+
+You are right about health probes not supporting http, although it is my understanding that that feature may be forthcoming (not sure what the product plan is there though)
+
+The health probe need not be you website though, you can create a synthetic API that responds healthy always unless you are undergoing an update, or about to undergo an update or reboot.
+
+There is no in built mechanism for draining, it is up to your app to stop and start traffic using custom loadbalancer probes. E.g. you can create a synthetic API that responds healthy always unless you are undergoing an update, or about to undergo an update or reboot.
+
 
 ## Example templates
 
@@ -84,4 +106,32 @@ CRP API version is 2017-03-30
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+## Example automatic rolling upgrade status
 
+GET on /subscriptions/subscription_id/resourceGroups/resource_group/providers/Microsoft.Compute/virtualMachineScaleSets/vmss_name/rollingUpgrades/latest?api-version=2-17-03-30
+
+```
+{
+  "properties": {
+    "policy": {
+      "batchInstancePercent": 20,
+      "maxUnhealthyUpgradedInstanceCount": 0,
+      "pauseTimeBetweenBatches": "PT0S"
+    },
+    "runningStatus": {
+      "code": "Completed",
+      "startTime": "2017-06-16T03:40:14.0924763+00:00",
+      "lastAction": "Start",
+      "lastActionTime": "2017-06-22T08:45:43.1838042+00:00"
+    },
+    "progress": {
+      "successfulInstanceCount": 3,
+      "failedInstanceCount": 0,
+      "inprogressInstanceCount": 0,
+      "pendingInstanceCount": 0
+    }
+  },
+  "type": "Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades",
+  "location": "southcentralus"
+}
+```
