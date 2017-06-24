@@ -177,7 +177,6 @@ In general Azure scale set VMs do not require their own public IP addresses, bec
 
 However some scenarios do require scale set VMs to have their own public IP addresses. An example of this is gaming, where a console needs to make a direct connection to a cloud VM which is doing game processing (e.g. game physics etc.).
 
-
 ### Creating a scale set with public IP per VM
 To create a VM scale set that assigns a public IP address to each VM, make sure the API version of the Microsoft.Compute/virtualMAchineScaleSets resource is 2017-03-30, and add a _publicipaddressconfiguration_ JSON packet to the scale set ipConfigurations section. Example:
 
@@ -193,7 +192,11 @@ Example template: [azuredeploypip.json](https://github.com/gbowerman/azure-myria
 
 
 ### Querying the public IP address of the VMs in a scale set
-Until there is full SDK, command line and portal support, the recommended way to query the public IP addresses assigned to scale set VMs is to use the REST API with version _2017-03-30_. E.g.
+Until there is full SDK, command line and portal support, the recommended way to query the public IP addresses assigned to scale set VMs is to use the [Azure Resource Explorer](https://resources.azure.com), or the REST API with version _2017-03-30_.
+
+To view public IP addresses for a scale set using the Resource Explorer, look at the _publicipaddresses_ section under your scale set. E.g.:
+https://resources.azure.com/subscriptions/_your_sub_id_/resourceGroups/_your_rg_/providers/Microsoft.Compute/virtualMachineScaleSets/_your_vmss_/publicipaddresses
+
 ```
 GET https://management.azure.com/subscriptions/{your sub ID}/resourceGroups/{RG name}/providers/Microsoft.Compute/virtualMachineScaleSets/{VMSS name}/publicipaddresses?api-version=2017-03-30
 ```
@@ -258,8 +261,11 @@ This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dn
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
+## Multiple IP addresses per NIC
+You can have up to 50 public IP addresses per NIC.
+
 ## Multiple NICs per VM
-Example scale set networkProfile showing multiple nic entries (also showing multiple public IP per VM):
+You can have up to 8 NICs per VM depending on VM size. The following is an example scale set networkProfile showing multiple nic entries (also showing multiple public IP per VM):
 ```
 "networkProfile": {
     "networkInterfaceConfigurations": [
