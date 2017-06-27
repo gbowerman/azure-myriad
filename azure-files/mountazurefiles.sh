@@ -9,14 +9,10 @@
 
 # For more details refer to https://azure.microsoft.com/en-us/documentation/articles/storage-how-to-use-files-linux/
 
+# update package lists
 apt-get -y update
 
-# Check for distro use proper command to unstall CIFS Utils
-# Check if user is on-cloud or on-prem - Check for SMB 3.0 or 2.1
-# Check if storage account and VM are in same region
-# Mapping for distro to SMB support mapping
-# Check if user is on-prem - Check for encryption support (check for kernel versin > 4.11 or greater Ubintu, SUSE)
-
+# install cifs-utils and mount file share
 apt-get install cifs-utils
 mkdir $4
 mount -t cifs //$1.file.core.windows.net/$3 $4 -o vers=3.0,username=$1,password=$2,dir_mode=0755,file_mode=0664
@@ -25,11 +21,8 @@ mount -t cifs //$1.file.core.windows.net/$3 $4 -o vers=3.0,username=$1,password=
 linkpoint=`echo $4 | sed 's/.*\///'`
 eval ln -s $4 ~$5/$linkpoint
 
-#Creating a dummy marker files for testing
+# create marker files for testing
 echo "hello from $HOSTNAME" > $4/$HOSTNAME.txt                                                                         
 
-#logging output
-cat  $4/$HOSTNAME.txt 
-ls $4
 
 
