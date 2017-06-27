@@ -254,7 +254,7 @@
                     "fileUris": [
                       "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/azure-files/mountazurefiles.sh"
                     ],
-                    "commandToExecute": "[concat('bash mountazurefiles.sh ', parameters('storageAccountName'), ' ', parameters('storageAccountKey'), ' ', parameters('shareName'), ' ', parameters('mountpointPath'), parameters('adminUsername'))]"
+                    "commandToExecute": "[concat('bash mountazurefiles.sh ', parameters('storageAccountName'), ' ', parameters('storageAccountKey'), ' ', parameters('shareName'), ' ', parameters('mountpointPath'), ' ', parameters('adminUsername'))]"
                   }
                 }
               }
