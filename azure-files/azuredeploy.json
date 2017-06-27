@@ -55,8 +55,9 @@
     },    
     "mountpointPath": {
       "type": "string",
+      "defaultValue": "/mnt/azurefiles",
             "metadata": {
-        "description": "Path on VM to mount file share."
+        "description": "Path on VM to mount file share - will also link to user home dir."
       }
     }
   },
@@ -253,7 +254,7 @@
                     "fileUris": [
                       "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/azure-files/mountazurefiles.sh"
                     ],
-                    "commandToExecute": "[concat('bash mountazurefiles.sh ', parameters('storageAccountName'), ' ', parameters('storageAccountKey'), ' ', parameters('shareName'), ' ', parameters('mountpointPath'))]"
+                    "commandToExecute": "[concat('bash mountazurefiles.sh ', parameters('storageAccountName'), ' ', parameters('storageAccountKey'), ' ', parameters('shareName'), ' ', parameters('mountpointPath'), parameters('adminUsername'))]"
                   }
                 }
               }
