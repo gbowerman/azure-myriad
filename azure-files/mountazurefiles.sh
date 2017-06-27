@@ -22,7 +22,7 @@ mkdir $4
 mount -t cifs //$1.file.core.windows.net/$3 $4 -o vers=3.0,username=$1,password=$2,dir_mode=0755,file_mode=0664
 
 # create a symlink from /mountpath/xxx to /u/username/xxx
-linkpoint=`echo $4 | sed 's/.*\///'``
+linkpoint=`echo $4 | sed 's/.*\///'`
 ln -s $4 /u/$5/$linkpoint
 
 #Creating a dummy marker files for testing
