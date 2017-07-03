@@ -233,8 +233,8 @@
                   "autoUpgradeMinorVersion": true,
                   "settings": {
                     "fileUris": [
-                      "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/publicip-dns/installserver.sh",
-                      "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/publicip-dns/workserver.py"
+                      "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/preview/network/installserver.sh",
+                      "https://raw.githubusercontent.com/gbowerman/azure-myriad/master/preview/network/workserver.py"
                     ],
                     "commandToExecute": "bash installserver.sh"
                   }
