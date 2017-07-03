@@ -47,7 +47,6 @@
     "vmSize": "Standard_A1",
     "nicName": "[concat(parameters('vmssName'), 'nic')]",
     "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
-    "storageAccountType": "Standard_LRS",
     "location": "[resourceGroup().location]",
     "osType": {
       "publisher": "Canonical",

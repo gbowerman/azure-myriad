@@ -29,7 +29,6 @@
     "newVNETName": "[concat(variables('namingInfix'), 'vnet')]",
     "subnetName": "subnet",
     "subnetPrefix": "10.0.0.0/16",
-    "storageAccountType": "Standard_LRS",
     "networkApiVersion": "2017-04-01",
     "computeApiVersion": "2017-03-30"
   },

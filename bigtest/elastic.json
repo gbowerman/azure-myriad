@@ -15,7 +15,6 @@
     },
     "masterSize": {
       "type": "string",
-      "defaultValue": "Standard_D3_v2",
       "metadata": {
         "description": "Size of master VMs."
       }
