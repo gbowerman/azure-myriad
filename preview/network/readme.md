@@ -49,7 +49,7 @@ For DNS, previously scale sets relied on the specific DNS settings of the VNET a
 To create a VM scale set with a custom DNS configuration, add a dnsSettings JSON packet to the scale set networkInterfaceConfigurations section. Example:
 ```
     "dnsSettings":{
-        "dnsServers":["10.0.0.6"], ["10.0.0.5"]
+        "dnsServers":["10.0.0.6", "10.0.0.5"]
     }
 ```
 
