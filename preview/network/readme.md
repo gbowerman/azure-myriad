@@ -1,6 +1,6 @@
 # Azure VM scale set networking preview page 
 
-The templates and instructions in this repo are for new and recent network features being added to Azure VM scale sets. Some of these features are recently GA, and other are in preview, either limited (your subscription needs to be enabled to use them) or public (anyone can use them).
+The templates and instructions in this repo are for new and recent network features being added to Azure VM scale sets. 
 
 ## Feature status
 Last updated: 07/03/2017 - public preview.
