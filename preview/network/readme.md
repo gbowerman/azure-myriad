@@ -3,24 +3,23 @@
 The templates and instructions in this repo are for new and recent network features being added to Azure VM scale sets. Some of these features are recently GA, and other are in preview, either limited (your subscription needs to be enabled to use them) or public (anyone can use them).
 
 ## Feature status
-Last updated: 6/13/2017 - split accelerated networking by platform..
+Last updated: 07/03/2017 - public preview.
 
 | Feature                    | Description                                                             | Status          | Start using |
 |----------------------------|-------------------------------------------------------------------------|-----------------|-------------|
 | Accelerated networking - Windows | Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, greatly improving its networking performance | Public preview | See below |
 | Accelerated networking - Linux | Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, greatly improving its networking performance | Public preview | See below |
-| Configurable DNS server    | Define DNS server addresses for your VMSS VM NICs to use                | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
-| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)  |
-| Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
-| Multiple IPs per VM for VMSS       | Multiple Customer Address space per VMSS VM                             | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
+| Configurable DNS server    | Define DNS server addresses for your VMSS VM NICs to use                | Public preview | See below|
+| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Public preview | See below |
+| Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | Public preview | See below|
+| Multiple IPs per VM for VMSS       | Multiple Customer Address space per VMSS VM                     | Public preview | See below|
 | NSG for VMSS               | Configure Network Security Group at a VM scale set level                | GA              | See below   |
-| IPv6 support with Load Balancer | Support private IPv6 addresses on VMSS VM NICs and routing via load balancer pools | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
-| Public IPv4 address per VM | Assign a public IP address to each VMSS VM                              | Limited preview | [Sign-up](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u)|
+| IPv6 support with Load Balancer | Support private IPv6 addresses on VMSS VM NICs and routing via load balancer pools | See below|
+| Public IPv4 address per VM | Assign a public IP address to each VMSS VM                              | pUBLIC preview | See below|
 
 
 ## Registering
-Use [this handy form](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR3nO_Bpm1Q9BkpyqngZiqHFUNkkzNjZBTkJWSktZQVBQTFZNOTNNOEczMi4u) to send your Azure subscription ID to the Network/VMSS PM team to enable the limited preview feature flag. Please include the scenarios you wish to test so we can set the required feature flag(s) and share any usage guidelines (like region availability).
-
+These features are in public preview and available to use without registering.
 
 ## Accelerated Networking
 To use accelerated networking, set enableAcceleratedNetworking to _true_ in your scale set's networkInterfaceConfigurations settings. E.g.
