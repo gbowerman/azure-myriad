@@ -45,7 +45,7 @@
     },
     "osType": {
       "publisher": "microsoft-ads", 
-      "offer": "linux-data-science-ubuntu",
+      "offer": "linux-data-science-vm-ubuntu",
       "sku": "linuxdsvmubuntu", 
       "version": "latest"
     },
