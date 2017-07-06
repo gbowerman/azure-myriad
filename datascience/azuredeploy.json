@@ -43,7 +43,7 @@
       "publisher": "microsoft-ads",
       "product": "standard-data-science-vm"
     },
-  "osType": {
+    "osType": {
       "sku": "standard-data-science-vm", 
       "publisher": "microsoft-ads", 
       "version": "latest", 
