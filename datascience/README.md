@@ -8,7 +8,7 @@ SSH/RDP to the ip/dns address port 50001 to connect to VM#1
 etc..
 ```
 
-![Windows 2016 screenshot](../blob/master/datascience/img/datasciencewin2016.PNG)
+![Windows 2016 screenshot](../datascience/img/datasciencewin2016.PNG)
 
 
 ## Deploy Windows 2016 Data Science VM to Azure
