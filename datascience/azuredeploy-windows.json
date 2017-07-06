@@ -41,7 +41,7 @@
     "marketplacePlan": {
       "name": "windows2016",
       "publisher": "microsoft-ads",
-      "product": "standard-data-science-vm"
+      "product": "windows-data-science-vm"
     },
     "osType": {
       "publisher": "microsoft-ads", 
