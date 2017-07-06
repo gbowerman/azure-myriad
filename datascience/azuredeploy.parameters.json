@@ -16,18 +16,6 @@
     },
     "adminPassword": {
       "value": "GEN-PASSWORD"
-    },
-    "storageAccountName": {
-      "value": "GEN-UNIQUE-8"
-    },
-    "storageAccountKey": {
-      "value": "storageaccountkey"
-    },
-    "shareName": {
-      "value": "azurefilesshare"
-    },    
-    "mountpointPath": {
-      "value": "/mnt/azurefiles"
     }
   }
 }
