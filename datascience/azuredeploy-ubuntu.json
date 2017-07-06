@@ -39,15 +39,15 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "marketplacePlan": {
-      "name": "standard-data-science-vm",
+      "name": "linuxdsvmubuntu",
       "publisher": "microsoft-ads",
-      "product": "standard-data-science-vm"
+      "product": "linux-data-science-vm-ubuntu"
     },
     "osType": {
-      "sku": "standard-data-science-vm", 
       "publisher": "microsoft-ads", 
-      "version": "latest", 
-      "offer": "standard-data-science-vm"
+      "offer": "linux-data-science-ubuntu",
+      "sku": "linuxdsvmubuntu", 
+      "version": "latest"
     },
     "addressPrefix": "10.0.0.0/16",
     "subnetPrefix": "10.0.0.0/24",
@@ -61,7 +61,7 @@
     "bePoolName": "[concat(parameters('vmssName'), 'bepool')]",
     "natStartPort": 50000,
     "natEndPort": 50120,
-    "natBackendPort": 3389,
+    "natBackendPort": 22,
     "nicName": "[concat(parameters('vmssName'), 'nic')]",
     "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
