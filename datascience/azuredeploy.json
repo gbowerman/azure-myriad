@@ -38,6 +38,17 @@
   },
   "variables": {
     "location": "[resourceGroup().location]",
+    "marketplacePlan": {
+      "name": "standard-data-science-vm",
+      "publisher": "microsoft-ads",
+      "product": "standard-data-science-vm"
+    },
+  "osType": {
+      "sku": "standard-data-science-vm", 
+      "publisher": "microsoft-ads", 
+      "version": "latest", 
+      "offer": "standard-data-science-vm"
+    },
     "addressPrefix": "10.0.0.0/16",
     "subnetPrefix": "10.0.0.0/24",
     "virtualNetworkName": "[concat(parameters('vmssName'), 'vnet')]",
@@ -54,12 +65,6 @@
     "nicName": "[concat(parameters('vmssName'), 'nic')]",
     "ipConfigName": "[concat(parameters('vmssName'), 'ipconfig')]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
-    "osType": {
-      "sku": "standard-data-science-vm", 
-      "publisher": "microsoft-ads", 
-      "version": "latest", 
-      "offer": "standard-data-science-vm"
-    },
     "imageReference": "[variables('osType')]",
     "computeApiVersion": "2017-03-30",
     "networkApiVersion": "2017-04-01"
@@ -152,6 +157,7 @@
         "tier": "Standard",
         "capacity": "[parameters('instanceCount')]"
       },
+      "plan": "[variables('marketplacePlan')]",
       "properties": {
         "overprovision": "false",
         "upgradePolicy": {
