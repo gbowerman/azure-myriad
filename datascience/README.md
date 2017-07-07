@@ -1,5 +1,7 @@
 ﻿# VM scale set based on the Azure Data Science VM 
-This template creates a VM scale set with a load balancer and public IP address - based on the Azure Data Science VM
+This template creates a VM scale set with a load balancer and public IP address - based on the Azure Data Science VM.
+
+The template creates a load balancer and a public IP address. Inbound NAT pools are defined to route incoming connections to the VMs in the set.
 
 Inbound NAT rules are configured as follows:
 ```
