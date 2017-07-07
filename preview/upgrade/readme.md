@@ -32,7 +32,13 @@ Automatic OS upgrades are offered when the following conditions are met:
 		Sku: 16.04-LTS
 		Version: latest
 
-	
+	For testing purposes you can use this nightly build during preview as well:
+
+		Publisher: Canonical
+		Offer: UbuntuServer
+		Sku: 16.04-DAILY-LTS
+		Version: latest
+
 
 ## How to configure auto-updates
 
