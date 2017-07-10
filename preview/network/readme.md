@@ -187,7 +187,7 @@ To create a VM scale set that assigns a public IP address to each VM, make sure 
         }
     }
 ```
-Example template: [azuredeploypip.json](https://github.com/gbowerman/azure-myriad/blob/master/preview/network/azuredeploypip.json)
+Example template that deploys a scale set with public IP per VM, and also sets up autoscale: [azuredeploypip-autoscale.json](https://github.com/gbowerman/azure-myriad/blob/master/preview/network/azuredeploypip-autoscale.json)
 
 
 ### Querying the public IP address of the VMs in a scale set
@@ -245,7 +245,7 @@ GET https://management.azure.com/subscriptions/your-subscription-id/resourceGrou
 
 Please help us create more template examples by submitting pull requests for your templates to this repo. Thanks!
 
-This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip.json) is a simple self-contained Ubuntu autoscale example which uses Azure Managed Disks. The scale set scales out when avg CPU across all VMs > 60%, and scales in when avg CPU < 30%. With public IP per VM configured, you can access each VM via both inbound NAT rules (using the load balancer public IP address with ports starting at 50000), and directly by going to each VMs public IP address at port 9000.
+This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dns/azuredeploypip-autoscale.json) is a simple self-contained Ubuntu autoscale example which uses Azure Managed Disks. The scale set scales out when avg CPU across all VMs > 60%, and scales in when avg CPU < 30%. With public IP per VM configured, you can access each VM via both inbound NAT rules (using the load balancer public IP address with ports starting at 50000), and directly by going to each VMs public IP address at port 9000.
 
 - Deploy the scale set with an instance count of 1.
 - Browse to the website of vm#0 (port 9000), which shows the current backend VM name.
@@ -253,10 +253,10 @@ This [example](https://github.com/gbowerman/azure-myriad/blob/master/publicip-dn
 - After a few minutes the VM Scale Set capacity will increase.
 - You can stop doing work by browsing to dns:9000/stop_work.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fnetwork%2Fazuredeploypip.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fnetwork%2Fazuredeploypip-autoscale.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fnetwork%2Fazuredeploypip.json" target="_blank">
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Fpreview%2Fnetwork%2Fazuredeploypip-autoscale.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
