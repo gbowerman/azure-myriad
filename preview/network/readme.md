@@ -3,23 +3,23 @@
 The templates and instructions in this repo are for new and recent network features being added to Azure VM scale sets. 
 
 ## Feature status
-Last updated: 07/03/2017 - public preview.
+Last updated: 07/10/2017.
+
+The new scale set networking features are now documented here - this link overrides the notes below: [https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-networking](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-networking)
+
 
 | Feature                    | Description                                                             | Status          | Start using |
 |----------------------------|-------------------------------------------------------------------------|-----------------|-------------|
 | Accelerated networking - Windows | Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, greatly improving its networking performance | Public preview | See below |
 | Accelerated networking - Linux | Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, greatly improving its networking performance | Public preview | See below |
-| Configurable DNS server    | Define DNS server addresses for your VMSS VM NICs to use                | Public preview | See below|
-| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | Public preview | See below |
-| Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | Public preview | See below|
-| Multiple IPs per VM for VMSS       | Multiple Customer Address space per VMSS VM                     | Public preview | See below|
+| Configurable DNS server    | Define DNS server addresses for your VMSS VM NICs to use                | GA | See below|
+| DNS label                  | Include a domain name label with your scale set VM public IP addresses  | GA | See below |
+| Multiple NICs per VM       | Support multiple NICs on each VMSS VM                                   | GA| See below|
+| Multiple IPs per VM for VMSS       | Multiple Customer Address space per VMSS VM                     | GA | See below|
 | NSG for VMSS               | Configure Network Security Group at a VM scale set level                | GA              | See below   |
 | IPv6 support with Load Balancer | Support private IPv6 addresses on VMSS VM NICs and routing via load balancer pools | See below|
-| Public IPv4 address per VM | Assign a public IP address to each VMSS VM                              | pUBLIC preview | See below|
+| Public IPv4 address per VM | Assign a public IP address to each VMSS VM                              | GA | See below|
 
-
-## Registering
-These features are in public preview and available to use without registering.
 
 ## Accelerated Networking
 To use accelerated networking, set enableAcceleratedNetworking to _true_ in your scale set's networkInterfaceConfigurations settings. E.g.
