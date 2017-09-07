@@ -16,16 +16,22 @@
       },
       "maxValue": 100
     },
+    "zone": {
+      "type": "string",
+      "metadata": {
+        "description": "1, 2, or 3"
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
         "description": "Admin username on all VMs."
       }
     },
-    "publicKey": {
-      "type": "string",
+    "adminPassword": {
+      "type": "securestring",
       "metadata": {
-        "description": "SSH rsa public key file as a string."
+        "description": "Admin password on all VMs."
       }
     }
   },
@@ -39,7 +45,6 @@
     "subnetPrefix": "10.0.0.0/24",
     "storageAccountType": "Standard_LRS",
     "location": "[resourceGroup().location]",
-    "sshKeyPath": "[concat('/home/',parameters('adminUserName'),'/.ssh/authorized_keys')]",
     "osType": {
       "publisher": "Canonical",
       "offer": "UbuntuServer",
@@ -76,6 +81,9 @@
       "type": "Microsoft.Compute/virtualMachineScaleSets",
       "name": "[parameters('vmssName')]",
       "location": "[variables('location')]",
+      "zones": [
+        "[parameters('zone')]"
+      ],
       "apiVersion": "[variables('computeApiVersion')]",
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -100,17 +108,7 @@
           "osProfile": {
             "computerNamePrefix": "[parameters('vmSSName')]",
             "adminUsername": "[parameters('adminUsername')]",
-           "linuxConfiguration": {
-              "disablePasswordAuthentication": "true",
-              "ssh": {
-                "publicKeys": [
-                {
-                  "path": "[variables('sshKeyPath')]",
-                  "keyData": "[parameters('publicKey')]"
-                }
-                ]
-              }
-            }
+            "adminPassword": "[parameters('adminPassword')]"
           },
           "networkProfile": {
             "networkInterfaceConfigurations": [
@@ -133,7 +131,8 @@
             ]
           }
         },
-        "overprovision": "true"
+        "overprovision": "true",
+        "zoneBalance": true
       }
     }
   ]

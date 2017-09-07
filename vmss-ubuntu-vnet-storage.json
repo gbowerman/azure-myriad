@@ -30,7 +30,7 @@
     }
   },
   "variables": {
-    "vmSize": "Standard_A1",
+    "vmSize": "Standard_D1_v2",
     "virtualNetworkName": "[concat(parameters('vmssName'), 'vnet')]",
     "subnetName": "[concat(parameters('vmssName'), 'subnet')]",
     "nicName": "[concat(parameters('vmssName'), 'nic')]",

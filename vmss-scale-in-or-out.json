@@ -19,7 +19,7 @@
       "name": "[parameters('vmSSName')]",
       "location": "[resourceGroup().location]",
       "sku": {
-        "name": "Standard_A2",
+        "name": "Standard_D1_v2",
         "tier": "Standard",
         "capacity": "[parameters('instanceCount')]"
       }
