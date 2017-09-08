@@ -1,4 +1,4 @@
-# Azure VM scale set zones testing
+# Azure VM scale set testing
 
 Note: These templates will not work unless your Azure subscription has special feature flags enabled.
 
