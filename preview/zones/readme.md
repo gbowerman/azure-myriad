@@ -1,13 +1,5 @@
-# Azure VM scale set testing
+# Azure VM scale set Availability Zones preview
 
-Note: These templates will not work unless your Azure subscription has special feature flags enabled.
+This preview site has moved to:
 
-### Multi-Zone
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Ftest%2Fmultizone.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-### Single zone
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fgbowerman%2Fazure-myriad%2Fmaster%2Ftest%2Fsinglezone.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
+[Azure VM scale set Availability Zones preview](https://github.com/Azure/vm-scale-sets/tree/master/preview/zones)
