@@ -35,13 +35,6 @@
     },
     "customImageUri": {
       "type": "string"
-    },
-    "osType": {
-      "type": "string",
-      "allowedValues": [
-        "Windows",
-        "Linux"
-      ]
     }
   },
   "variables": {
@@ -83,7 +76,7 @@
       "properties": {
         "storageProfile": {
           "osDisk": {
-            "osType": "[parameters('osType')]",
+            "osType": "Windows",
             "osState": "Generalized",
             "blobUri": "[parameters('customImageUri')]",
             "caching": "ReadWrite",
@@ -190,7 +183,8 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/loadBalancers/',variables('loadBalancerName'))]",
-        "[concat('Microsoft.Network/virtualNetworks/',variables('virtualNetworkName'))]"
+        "[concat('Microsoft.Network/virtualNetworks/',variables('virtualNetworkName'))]",
+        "[concat('Microsoft.Compute/images/', variables('imageName'))]"
       ],
       "sku": {
         "name": "[parameters('vmSize')]",

@@ -26,6 +26,9 @@
     },
     "adminPassword": {
       "type": "securestring"
+    },
+    "customImageUri": {
+      "type": "string"
     }
   },
   "variables": {
@@ -33,6 +36,7 @@
     "longNamingInfix": "[toLower(parameters('vmssName'))]",
     "addressPrefix": "10.0.0.0/16",
     "subnetPrefix": "10.0.0.0/24",
+    "imageName": "[concat(variables('namingInfix'), 'img')]",
     "virtualNetworkName": "[concat(variables('namingInfix'), 'vnet')]",
     "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
     "subnetName": "[concat(variables('namingInfix'), 'subnet')]",
@@ -51,6 +55,23 @@
     "networkApiVersion": "2017-04-01"
   },
   "resources": [
+    {
+      "type": "Microsoft.Compute/images",
+      "apiVersion": "2016-04-30-preview",
+      "name": "[variables('imageName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Linux",
+            "osState": "Generalized",
+            "blobUri": "[parameters('customImageUri')]",
+            "caching": "ReadWrite",
+            "storageAccountType": "Standard_LRS"
+          }
+        }
+      }
+    },
     {
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
@@ -130,6 +151,7 @@
       "name": "[parameters('vmSSName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
+        "[concat('Microsoft.Compute/images/', variables('imageName'))]",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]",
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
@@ -145,14 +167,8 @@
         },
         "virtualMachineProfile": {
           "storageProfile": {
-            "osDisk": {
-              "name": "vmssosdisk",
-              "caching": "ReadOnly",
-              "createOption": "FromImage",
-              "osType": "Linux",
-              "image": {
-                "uri": "[parameters('vmImage')]"
-              }
+            "imageReference": {
+              "id": "[resourceId('Microsoft.Compute/images', variables('imageName'))]"
             }
           },
           "osProfile": {
