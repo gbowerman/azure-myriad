@@ -2,7 +2,7 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "vmSSName": {
+    "vmssName": {
       "type": "string",
       "metadata": {
         "description": "The Name of the VM Scale Set"
@@ -21,12 +21,6 @@
         "description": "The size of the VM instances Created"
       }
     },
-    "dnsNamePrefix": {
-      "type": "string",
-      "metadata": {
-        "description": "The Prefix for the DNS name of the new IP Address created"
-      }
-    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -39,82 +33,70 @@
         "description": "The Password of the admininstrative user for each VM instance created"
       }
     },
-    "location": {
+    "customImageUri": {
+      "type": "string"
+    },
+    "osType": {
       "type": "string",
-      "metadata": {
-        "description": "Deployment location"
-      }
-    },
-    "imageSource": {
-      "type": "string",
-      "metadata": {
-        "description": "The source of the blob containing the custom image"
-      }
-    },
-    "frontEndLBPort": {
-      "type": "int",
-      "metadata": {
-        "description": "The front end port to load balance"
-      },
-      "defaultValue": 80
-    },
-    "backEndLBPort": {
-      "type": "int",
-      "metadata": {
-        "description": "The front end port to load balance"
-      },
-      "defaultValue": 80
-    },
-    "probeIntervalInSeconds": {
-      "type": "int",
-      "metadata": {
-        "description": "The interval between load balancer health probes"
-      },
-      "defaultValue": 15
-    },
-    "numberOfProbes": {
-      "type": "int",
-      "metadata": {
-        "description": "The number of probes that need to fail before a VM instance is deemed unhealthy"
-      },
-      "defaultValue": 5
-    },
-    "probeRequestPath": {
-      "type": "string",
-      "metadata": {
-        "description": "The path used for the load balancer health probe"
-      },
-      "defaultValue": "/iisstart.htm"
+      "allowedValues": [
+        "Windows",
+        "Linux"
+      ]
     }
   },
   "variables": {
+    "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
+    "longNamingInfix": "[toLower(parameters('vmssName'))]",
     "addressPrefix": "10.0.0.0/16",
-    "subnetName": "Subnet",
+    "subnetName": "[concat(variables('namingInfix'), 'subnet')]",
     "subnetPrefix": "10.0.0.0/24",
-    "virtualNetworkName": "vmssvnet",
+    "imageName": "[concat(variables('namingInfix'), 'img')]",
+    "virtualNetworkName": "[concat(variables('namingInfix'), 'vnet')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-    "publicIPAddressName": "publicip1",
+    "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
     "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
-    "nicName": "networkInterface1",
+    "nicName": "[concat(variables('namingInfix'), 'nic')]",
     "nicId": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]",
-    "lbName": "loadBalancer1",
-    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
+    "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
+    "frontEndLBPort": 80,
+    "backEndLBPort": 80,
+    "probeIntervalInSeconds": 15,
+    "numberOfProbes": 5,
+    "probeRequestPath": "/iisstart.htm",
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
     "lbFEName": "loadBalancerFrontEnd",
     "lbWebProbeName": "loadBalancerWebProbe",
-    "lbBEAddressPool": "loadBalancerBEAddressPool",
+    "bePoolName": "[concat(variables('namingInfix'), 'bepool')]",
     "lbFEIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/',variables('lbFEName'))]",
-    "lbBEAddressPoolID": "[concat(variables('lbID'),'/backendAddressPools/',variables('lbBEAddressPool'))]",
+    "lbBEAddressPoolID": "[concat(variables('lbID'),'/backendAddressPools/',variables('bePoolName'))]",
     "lbWebProbeID": "[concat(variables('lbID'),'/probes/',variables('lbWebProbeName'))]",
     "computeApiVersion": "2017-03-30",
     "networkApiVersion": "2017-04-01"
   },
   "resources": [
     {
+      "type": "Microsoft.Compute/images",
+      "apiVersion": "[variables('computeApiVersion')]",
+      "name": "[variables('imageName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "storageProfile": {
+          "osDisk": {
+            "osType": "[parameters('osType')]",
+            "osState": "Generalized",
+            "blobUri": "[parameters('customImageUri')]",
+            "caching": "ReadWrite",
+            "storageAccountType": "Standard_LRS"
+          }
+        }
+      }
+    },
+    {
       "apiVersion": "[variables('networkApiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -132,22 +114,22 @@
       }
     },
     {
-      "apiVersion": "[variables('networkApiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "[variables('networkApiVersion')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsNamePrefix')]"
+          "domainNameLabel": "[variables('longNamingInfix')]"
         }
       }
     },
     {
       "apiVersion": "[variables('networkApiVersion')]",
-      "name": "[variables('lbName')]",
+      "name": "[variables('loadBalancerName')]",
       "type": "Microsoft.Network/loadBalancers",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/',variables('publicIPAddressName'))]"
       ],
@@ -164,7 +146,7 @@
         ],
         "backendAddressPools": [
           {
-            "name": "[variables('lbBEAddressPool')]"
+            "name": "[variables('bePoolNAme')]"
           }
         ],
         "loadBalancingRules": [
@@ -181,8 +163,8 @@
                 "id": "[variables('lbWebProbeID')]"
               },
               "protocol": "tcp",
-              "frontendPort": "[parameters('frontEndLBPort')]",
-              "backendPort": "[parameters('backEndLBPort')]",
+              "frontendPort": "[variables('frontEndLBPort')]",
+              "backendPort": "[variables('backEndLBPort')]",
               "enableFloatingIP": false
             }
           }
@@ -192,10 +174,10 @@
             "name": "[variables('lbWebProbeName')]",
             "properties": {
               "protocol": "http",
-              "port": "[parameters('backEndLBPort')]",
-              "intervalInSeconds": "[parameters('probeIntervalInSeconds')]",
-              "numberOfProbes": "[parameters('numberOfProbes')]",
-              "requestPath": "[parameters('probeRequestPath')]"
+              "port": "[variables('backEndLBPort')]",
+              "intervalInSeconds": "[variables('probeIntervalInSeconds')]",
+              "numberOfProbes": "[variables('numberOfProbes')]",
+              "requestPath": "[variables('probeRequestPath')]"
             }
           }
         ]
@@ -204,10 +186,10 @@
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
       "apiVersion": "[variables('computeApiVersion')]",
-      "name": "[parameters('vmSSName')]",
-      "location": "[parameters('location')]",
+      "name": "[parameters('vmssName')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Network/loadBalancers/',variables('lbName'))]",
+        "[concat('Microsoft.Network/loadBalancers/',variables('loadBalancerName'))]",
         "[concat('Microsoft.Network/virtualNetworks/',variables('virtualNetworkName'))]"
       ],
       "sku": {
@@ -221,18 +203,12 @@
         },
         "virtualMachineProfile": {
           "storageProfile": {
-            "osDisk": {
-              "name": "vmssosdisk",
-              "caching": "ReadOnly",
-              "createOption": "FromImage",
-              "osType": "Windows",
-              "image": {
-                "uri": "[parameters('imageSource')]"
-              }
+            "imageReference": {
+              "id": "[resourceId('Microsoft.Compute/images', variables('imageName'))]"
             }
           },
           "osProfile": {
-            "computerNamePrefix": "[parameters('vmSSName')]",
+            "computerNamePrefix": "[parameters('vmssName')]",
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]"
           },
